@@ -1,0 +1,28 @@
+<form [formGroup]="verifyEmail" (ngSubmit)="submitForm()">
+    <!-- <h1 mat-dialog-title class="center-title">{{inputdata.title}}</h1> -->
+     <h2 class="center-title">Email verification</h2>
+    <mat-icon class="close-icon" (click)="close()">close</mat-icon>
+    
+    
+    <div mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Enter your email</mat-label>
+            <input matInput
+             placeholder="userName@example.com"
+             formControlName="email"> 
+         </mat-form-field>
+
+         
+        
+    </div>
+    <div mat-dialog-actions class="centered-actions">
+    <button mat-raised-button color ="primary" cdkFocusInitial>Verify</button>
+   
+    
+    </div>
+    </form>
+
+   
+
+
+ 

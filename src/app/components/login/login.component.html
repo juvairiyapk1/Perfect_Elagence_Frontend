@@ -1,0 +1,33 @@
+<form [formGroup]="userLogin" (ngSubmit)="submitForm()">
+<h1 mat-dialog-title class="center-title">{{inputdata.title}}</h1>
+<mat-icon class="close-icon" (click)="closeLogin()">close</mat-icon>
+
+
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Enter your email</mat-label>
+        <input matInput
+         placeholder="userName@example.com"
+         formControlName="email"> 
+     </mat-form-field>
+     <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password"> 
+    </mat-form-field>
+
+</div>
+<div mat-dialog-actions class="centered-actions">
+<button mat-raised-button color ="primary">Login</button>
+<p class="password" (click)="openEmailVerifyPopUp()">Forgot password?</p>
+<hr>
+
+<!-- <button mat-raised-button color ="warn">Login With Mobile OTP
+    <mat-icon>phone</mat-icon>
+</button>
+<hr>
+<button mat-raised-button color ="accent">Login With Email OTP
+    <mat-icon>email</mat-icon>
+</button> -->
+
+</div>
+</form>

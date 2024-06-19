@@ -1,0 +1,38 @@
+<!-- component -->
+<div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12">
+  <div class="relative bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
+    <div class="mx-auto flex w-full max-w-md flex-col space-y-16">
+      <div class="flex flex-col items-center justify-center text-center space-y-2">
+        <div class="font-semibold text-3xl">
+          <p>OTP Verification</p>
+        </div>
+        <div class="flex flex-row text-sm font-medium text-gray-400">
+        
+        </div>
+      </div>
+      
+      <div>
+        <form [formGroup]="otpForm" (ngSubmit)="verify()" name="otpInput">
+          <div class="flex flex-col space-y-16">
+            <mat-form-field>
+              <mat-label>Enter OTP</mat-label>
+              <input matInput formControlName="otpInput">
+            </mat-form-field>
+
+            <div class="flex flex-col space-y-5">
+              <div>
+                <button type="submit" mat-raised-button color="primary">
+                  Verify Account
+                </button>
+                <!-- <button type="submit" mat-raised-button color="primary">
+                  Resend OTP
+                </button> -->
+              </div>
+              
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

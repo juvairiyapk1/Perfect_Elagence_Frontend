@@ -1,0 +1,21 @@
+nav{
+  background-color: rgb(152, 10, 10);
+  padding: 0.8rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+
+#menu {
+  transition: top 0.3s ease-in-out;
+  @apply hidden md:flex;
+  color: white;
+}
+
+.mat-icon {
+  cursor: pointer;
+  color: white;
+}
+
+ 

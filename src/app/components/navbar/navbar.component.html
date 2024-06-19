@@ -1,0 +1,27 @@
+
+ <nav >
+  <div class="container mx-auto flex justify-between items-center">
+    <a href="#" class="text-white text-2xl font-serif">Perfect Elegance</a>
+    <div 
+      id="menu"
+      class="absolute top-0 left-0 w-full h-full flex-col items-center justify-center bg-red-800 md:bg-transparent md:relative md:w-auto md:h-auto md:flex-row md:flex md:gap-8"
+      [ngClass]="{'flex': isMenuVisible, 'hidden': !isMenuVisible, 'md:flex': true}">
+      <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Home</a>
+      <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">About</a>
+      <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Services</a>
+      <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Contact</a> 
+      @if((isLoggedIn)=='false'){
+      <button mat-riased-button class="bg-white text-red-800 h-8 px-4 rounded" (click)="openLoginPopUp()">Login</button>
+      }
+      
+      @else if((isLoggedIn)=='true'){
+        <button class="bg-white text-red-800 h-8 px-4 rounded" (click)="logout()">Logout</button>
+      }
+       
+    </div>
+    <div class="text-2xl md:hidden">
+      <mat-icon (click)="toggleMenu()">menu</mat-icon>
+      <mat-icon></mat-icon>
+    </div>
+  </div>
+</nav>

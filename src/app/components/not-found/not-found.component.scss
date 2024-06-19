@@ -1,0 +1,35 @@
+.page-not-found-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+
+
+h1 {
+    font-size: 3rem; 
+    margin: 1rem 0; 
+  }
+  p {
+    font-size: 1.2rem; 
+    margin: 0.5rem 0; 
+  }
+
+  .page-not-found {
+    margin-top: 2rem; 
+    text-align: center;
+    color: red;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-not-found-container {
+    h1 {
+      font-size: 2rem; 
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+}
