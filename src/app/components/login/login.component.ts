@@ -78,11 +78,13 @@ export class LoginComponent implements OnInit{
               this.closeLogin();
 
               if (roles.includes(Roles.USER)) { 
-                this.router.navigateByUrl("/home");
+                this.router.navigateByUrl("/user/home");
                 this.toast.success("Login successful");
+
               } else if (roles.includes(Roles.ADMIN)) { 
-                this.toast.success("Login successful");
                 this.router.navigateByUrl("/admin/dashboard");
+                this.toast.success("Login successful");
+
             
               }
             });

@@ -9,6 +9,7 @@ import { AdminDashboardComponent } from './adminComponent/admin-dashboard/admin-
 import { UserListComponent } from './adminComponent/UserList/user-list/user-list.component';
 import { authGuard } from './gurd/auth.guard';
 import { SideNavComponent } from './adminComponent/side-nav/side-nav.component';
+import { UserSideNavComponent } from './userComponents/user-side-nav/user-side-nav.component';
 
 
 const routes: Routes = [
@@ -24,7 +25,12 @@ const routes: Routes = [
     {path:'user_list',component:UserListComponent}
   ]},
 
- { path: 'home', component: HomeComponent,canActivate:[authGuard] },
+ 
+ {path:'user',
+  component:UserSideNavComponent,
+  children:[
+  { path: 'home', component: HomeComponent },
+ ]},
 
  {path:'**',component:NotFoundComponent}
 ];

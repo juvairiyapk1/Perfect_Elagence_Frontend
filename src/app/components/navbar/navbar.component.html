@@ -5,17 +5,32 @@
     <div 
       id="menu"
       class="absolute top-0 left-0 w-full h-full flex-col items-center justify-center bg-red-800 md:bg-transparent md:relative md:w-auto md:h-auto md:flex-row md:flex md:gap-8"
-      [ngClass]="{'flex': isMenuVisible, 'hidden': !isMenuVisible, 'md:flex': true}">
+      [ngClass]="{'flex': isMenuVisible, 'hidden': !isMenuVisible, 'md:flex': true}">      
+       @if(!isLoggedIn){
       <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Home</a>
-      <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">About</a>
-      <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Services</a>
-      <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Contact</a> 
-      @if((isLoggedIn)=='false'){
+      <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">About us</a>
+      <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Contact us</a> 
+      
       <button mat-riased-button class="bg-white text-red-800 h-8 px-4 rounded" (click)="openLoginPopUp()">Login</button>
       }
       
-      @else if((isLoggedIn)=='true'){
-        <button class="bg-white text-red-800 h-8 px-4 rounded" (click)="logout()">Logout</button>
+      @else if(isLoggedIn){
+        <a routerLink="user/home" class="text-white hover:text-gray-300 py-2 md:py-0">Home</a>
+
+        <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Chat</a>
+        <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Upgrade</a>
+        <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Explore</a>
+        <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Help</a>
+
+        <div class="user-profile">
+          <img alt="User Image" class="user-image">
+          <ng-template #defaultImage>
+            <img src="path/to/default-image.jpg" alt="Default User Image" class="user-image">
+          </ng-template>
+          <span>{{ user.name }}</span>
+        </div>
+        
+        
       }
        
     </div>

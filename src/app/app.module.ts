@@ -28,7 +28,8 @@ import { SideNavComponent } from './adminComponent/side-nav/side-nav.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { EmailOtpVerificationComponent } from './components/email-otp-verification/email-otp-verification.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
-import { UserEditComponent } from './adminComponent/UserList/user-edit/user-edit.component';
+import { UserSideNavComponent } from './userComponents/user-side-nav/user-side-nav.component';
+
 
 
 @NgModule({
@@ -48,7 +49,7 @@ import { UserEditComponent } from './adminComponent/UserList/user-edit/user-edit
     VerifyEmailComponent,
     EmailOtpVerificationComponent,
     ChangePasswordComponent,
-    UserEditComponent
+    UserSideNavComponent
   ],
   imports: [
     BrowserModule,
