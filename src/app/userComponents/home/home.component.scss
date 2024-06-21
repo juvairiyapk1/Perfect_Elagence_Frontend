@@ -9,6 +9,7 @@
   .profile-card {
     width: 100%;
     max-width: 468px;
+    font-size:12px;
   }
   
   @media (min-width: 600px) {
@@ -29,4 +30,17 @@
     height: 40px;
     border-radius: 50%;
   }
+
+//  .card_subtitle{
+//     color: black;
+//   }
+
+  .card_content{
+    color: black;
+  }
+
+  .card_title{
+    color: red;
+  }
+  
   

@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
 export class UserSideNavComponent implements AfterViewInit{
 
   @ViewChild(MatSidenav)sidenav!:MatSidenav;
-  
+  user!:string|null;
 
   constructor(private observer:BreakpointObserver,
     private cdRef: ChangeDetectorRef,
@@ -25,8 +25,9 @@ export class UserSideNavComponent implements AfterViewInit{
     private router:Router,
     
   ){
-    
-
+    if(typeof window !== 'undefined' && window.localStorage){
+      this.user=localStorage.getItem('userName')
+     }
   }
   
 
@@ -48,6 +49,7 @@ export class UserSideNavComponent implements AfterViewInit{
   logout(): void {
     this.service.logout().subscribe(() => {
       this.store.dispatch(clearToken());
+      localStorage.clear();
       this.router.navigateByUrl('coverPage');
     }, error => {
       console.error('Error logging out', error);

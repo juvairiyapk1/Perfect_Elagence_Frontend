@@ -19,7 +19,7 @@ import { USER } from '../../model/Interface';
 })
 export class NavbarComponent implements OnInit {
   isMenuVisible = false;
-  user!:USER
+  user!:string|null;
   isLoggedIn!:boolean;
 
 
@@ -31,23 +31,20 @@ export class NavbarComponent implements OnInit {
   
   ){
     
-
   }
   ngOnInit(): void {
     
    this.store.select(selectToken).subscribe(token=>{
     if(token){
        this.isLoggedIn = true;
+       if(typeof window !== 'undefined' && window.localStorage){
+        this.user=localStorage.getItem('userName')
+       }
     }else{
       this.isLoggedIn= false;
     }
-   })
-      
-        
-     
-
-    console.log(this.isLoggedIn+"hell")
-    }
+   });
+  }
   
   
 

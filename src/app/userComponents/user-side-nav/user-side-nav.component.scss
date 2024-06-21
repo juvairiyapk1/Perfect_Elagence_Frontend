@@ -20,7 +20,7 @@
     margin-left: 32px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    // align-items: start;
     font-size: 2rem;
     color: lightgray;
     border-radius: 10px;
@@ -37,6 +37,7 @@
   
   .profile {
     text-align: center;
+    
   }
   
   .profile-header {

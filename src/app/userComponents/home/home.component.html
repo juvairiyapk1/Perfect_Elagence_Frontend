@@ -1,17 +1,18 @@
 <div class="card-container">
-    @for (profile of profiles; track $index) {
+    @for (profile of profiles; track profile) {
     <mat-card class="profile-card" >
       <mat-card-header>
         <div mat-card-avatar class="profile-avatar"></div>
-        <mat-card-title>{{profile.name}}</mat-card-title>
-        <mat-card-subtitle>{{profile.dob}}, {{profile.location}}</mat-card-subtitle>
+        <mat-card-title class="card_title">{{profile.name}}</mat-card-title>
+        <mat-card-subtitle class="card_subtitle">{{profile.dob}},{{profile.homeLocation}},{{profile.relegion}}</mat-card-subtitle>
       </mat-card-header>
       @if(profile.image){
       <img mat-card-image [src]="profile.image" alt="Photo of {{profile.name}}">
       }
-      <mat-card-content>
+      <mat-card-content class="card_content">
         <p>Education: {{profile.education}}</p>
-        <p>Occupation: {{profile.occupation}}</p>
+        <p>Occupation: {{profile.profession}}</p>
+        
       </mat-card-content>
       <mat-card-actions>
         <button mat-icon-button>

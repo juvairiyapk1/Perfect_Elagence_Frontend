@@ -129,7 +129,7 @@
          <mat-label>Education</mat-label>
          <mat-select formControlName="education">
              @for(edu of education; track edu){
-             <mat-option value="edu">{{edu}}</mat-option>
+             <mat-option [value]="edu">{{edu}}</mat-option>
              }
          </mat-select>
         </mat-form-field>

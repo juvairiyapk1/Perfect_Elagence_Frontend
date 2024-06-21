@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit{
       this.service.login(userData).subscribe(
         (response) => {
           if (response.token != null) {
+            localStorage.setItem('userName',response.name);
             const jwtToken = response.token;
             this.store.dispatch(AuthActions.setToken({ token: jwtToken}));
              

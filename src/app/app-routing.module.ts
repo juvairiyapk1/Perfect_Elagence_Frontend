@@ -10,6 +10,7 @@ import { UserListComponent } from './adminComponent/UserList/user-list/user-list
 import { authGuard } from './gurd/auth.guard';
 import { SideNavComponent } from './adminComponent/side-nav/side-nav.component';
 import { UserSideNavComponent } from './userComponents/user-side-nav/user-side-nav.component';
+import { ProfileComponent } from './userComponents/profile/profile.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,7 @@ const routes: Routes = [
   component:UserSideNavComponent,
   children:[
   { path: 'home', component: HomeComponent },
+  {path:'profile',component:ProfileComponent},
  ]},
 
  {path:'**',component:NotFoundComponent}

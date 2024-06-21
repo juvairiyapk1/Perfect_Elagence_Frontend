@@ -13,11 +13,13 @@ export class HomeComponent implements OnInit{
   constructor(private service:UserService){}
 
   ngOnInit(): void {
-    this.service.getAllUsers().subscribe(data => {
-        this.profiles=data;
-    });
+    this.service.getAllUsers().subscribe(
+      data => {
+        this.profiles = data;
+      },
+      error => {
+        console.error('Error fetching profiles:', error);
+      }
+    );
   }
-
-
-
 }

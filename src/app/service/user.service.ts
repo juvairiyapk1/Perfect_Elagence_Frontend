@@ -1,10 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, switchMap, take } from 'rxjs';
 import { PROFILE } from '../model/Interface';
+import { Store } from '@ngrx/store';
+import { selectToken } from '../state/auth.selectors';
 
 
-const BASE_URL = ['http://localhost:8080/'];
+const BASE_URL = 'http://localhost:8080/';
 
 
 @Injectable({
@@ -13,10 +15,31 @@ const BASE_URL = ['http://localhost:8080/'];
 
 export class UserService {
 
+  token$:Observable<string|null>;
 
-  constructor(private http:HttpClient) { }
 
-  getAllUsers():Observable<PROFILE[]>{
-   return this.http.get<PROFILE[]>('user/OtherUsers',{})
+  constructor(private http:HttpClient,
+    private store:Store
+  ) { 
+    this.token$=store.select(selectToken);
   }
+
+  getAllUsers(): Observable<PROFILE[]> {
+    console.log("inside getAll users");
+    return this.token$.pipe(
+      take(1),
+      switchMap(token => {
+      
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        });
+        
+        return this.http.get<PROFILE[]>(`${BASE_URL}user/OtherUsers`, { headers });
+      })
+    );
+  }
+  
+
+  
+  
 }

@@ -49,11 +49,11 @@ export interface USER_ADMIN{
 export interface PROFILE{
       name: string;
       dob: Date;
-      location: string
-      religion: string
-      education: string
-      occupation: string
-      image?:string 
+      homeLocation: string;
+      relegion: string;
+      education: string;
+      profession: string;
+      image?:string;
 
 }
 

@@ -29,6 +29,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 import { EmailOtpVerificationComponent } from './components/email-otp-verification/email-otp-verification.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { UserSideNavComponent } from './userComponents/user-side-nav/user-side-nav.component';
+import { ProfileComponent } from './userComponents/profile/profile.component';
 
 
 
@@ -49,7 +50,8 @@ import { UserSideNavComponent } from './userComponents/user-side-nav/user-side-n
     VerifyEmailComponent,
     EmailOtpVerificationComponent,
     ChangePasswordComponent,
-    UserSideNavComponent
+    UserSideNavComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
