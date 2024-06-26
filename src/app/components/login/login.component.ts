@@ -71,8 +71,10 @@ export class LoginComponent implements OnInit{
               
                 
               const loggedIn = response.logged;
+              const userId = response.id;
               if (typeof localStorage !== 'undefined') {
                 localStorage.setItem('isLoggedIn', loggedIn);
+                localStorage.setItem('userId',userId);
               }
 
              

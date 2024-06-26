@@ -1,1 +1,194 @@
 
+<div class="">
+  <div class="flex flex-wrap justify-between items-center border-b pb-2 mb-4 w-full">
+      <h1 class="text-xl font-semibold text-black">My Profile</h1>
+  </div>
+  <div class="flex flex-wrap items-center justify-between bg-card p-4 rounded mb-4">
+    <div class="flex items-center mb-4 sm:mb-0">
+      <!-- <img aria-hidden="true" alt="camera-icon" [src]="uploadedFileUrl || 'https://placehold.co/100x100'" class="mr-2" /> -->
+      
+      <input type="file" class="hidden" id="fileInput" (change)="handleFileInput($event)" name="multipartFile"/>
+      <label for="fileInput" class="cursor-pointer text-muted-foreground">Select Photo</label>
+    </div>
+    <button class="bg-gradient-to-r from-green-400 to-green-600 text-white py-2 px-3 rounded" type="submit" (click)="uploadFileToActivity()" >Upload Photo</button>
+  </div>
+
+  <!-- @if (uploadProgress !== null) {
+  <div  class="mt-4">
+    <p>Upload Progress: {{ uploadProgress }}%</p>
+  </div>
+}
+@if (uploadedFileUrl) {
+  <div class="mt-4">
+    <p>Uploaded File URL: <a [href]="uploadedFileUrl" target="_blank">{{ uploadedFileUrl }}</a></p>
+  </div>
+} -->
+
+
+  <div class="flex flex-wrap bg-card p-4 rounded mb-4">
+      
+      <img [src]="profileData.image" alt="Profile Picture" class="mr-4 rounded mb-4 sm:mb-0" />
+      
+      <div class="text-lg text-black">
+          <h2 class="text-lg font-semibold">{{profile?.name|uppercase}}</h2>
+          <p>{{profile?.height}} cm, {{profile?.weight}} kg</p>
+          <p>{{profile?.maritalStatus}}</p>
+          <p>{{profile?.education}}</p>
+          <p>{{profile?.homeLocation}}</p>
+      </div>
+  </div>
+  <div class="bg-card p-4 rounded text-black mb-4">
+      <div class="flex flex-wrap justify-between items-center border-b pb-2 mb-2">
+          <h3 class="text-lg font-semibold text-blue-900">Basic Information</h3>
+          <button class="text-white text-sm bg-blue-800 rounded">Edit</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+              <p><span class="text-lg">Name: {{profile?.name}}</span></p>
+              <p><span class="text-lg">Gender: {{profile?.gender}}</span></p>
+              <p><span class="text-lg">Marital Status: {{profile?.maritalStatus}}</span></p>
+              <p><span class="text-lg">Physical Status: {{profile?.physicaleStatus}}</span></p>
+          </div>
+          <div>
+              <p><span class="text-lg">Date of birth: {{profile?.dob}}</span></p>
+              <p><span class="text-lg">Profile Created for: {{profile?.createProfileFor}}</span></p>
+              <p><span class="text-lg">Education: {{profile?.education}}</span></p>
+              <p><span class="text-lg">Profession: {{profile?.profession}}</span></p>
+          </div>
+      </div>
+  </div>
+  <div class="bg-card p-4 rounded text-black mb-4">
+      <div class="flex flex-wrap justify-between items-center border-b pb-2 mb-2">
+          <h3 class="text-lg font-bold text-blue-900">Educational and Professional Information</h3>
+          <button class="text-white text-sm bg-blue-800 rounded">Edit</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+              <p><span class="text-lg">Willing to Relocate:{{profileData.willingToRelocate}}</span></p>
+          </div>
+          <div>
+              <p><span class="text-lg">Educational Institute:{{profileData.educationInstitute}}</span></p>
+              <p><span class="text-lg">Marriage Plan:</span> <a href="#" class="text-primary hover:underline"></a></p>
+              <p><span class="text-lg">Languages known:{{profileData.languagesKnown}}</span></p>
+          </div>
+      </div>
+  </div>
+  <div class="bg-card p-4 rounded text-black mb-4">
+      <div class="flex flex-wrap justify-between items-center border-b pb-2 mb-2">
+          <h3 class="text-lg font-semibold text-blue-900">Physical Attributes</h3>
+          <button class="text-white text-sm bg-blue-800 rounded">Edit</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+              <p><span class="text-lg">Complexion:</span></p>
+              <p><span class="text-lg">Body type:</span></p>
+              <p><span class="text-lg">Hair type:</span></p>
+          </div>
+          <div>
+              <p><span class="text-lg">Blood group:{{profileData.bloodGroup}}</span></p>
+              <p><span class="text-lg">Hair color:</span></p>
+              <p><span class="text-lg">Eye color:{{profileData.eyeColor}}</span></p>
+          </div>
+      </div>
+  </div>
+  <div class="bg-card p-4 rounded text-black mb-4">
+      <div class="flex flex-wrap justify-between items-center border-b pb-2 mb-2">
+          <h3 class="text-lg font-semibold text-blue-900">Location and Contact Details</h3>
+          <button class="text-white text-sm bg-blue-800 rounded">Edit</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+              <p><span class="text-lg">Present Location: {{profile?.currentLocation}}</span></p>
+              <p><span class="text-lg">Home Location:</span></p>
+          </div>
+          <div>
+              <p><span class="text-lg">Residential Status: {{profile?.homeLocation}}</span></p>
+          </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border pb-2 mb-2 border-cyan-700">
+          <div>
+              <p><span class="text-lg">Mobile: {{profile?.phoneNumber}}</span></p>
+              <p><span class="text-lg">Email: {{profile?.email}}</span></p>
+              <p><span class="text-lg">Contact person: {{profile?.contactPersonAndRelationship}}</span></p>
+          </div>
+          <div>
+              <p><span class="text-lg">Phone: {{profile?.primaryNumber}}</span></p>
+              <p><span class="text-lg">Contact type: {{profile?.preferredContactType}}</span></p>
+          </div>
+      </div>
+  </div>
+  <div class="bg-card p-4 rounded text-black mb-4">
+      <div class="flex flex-wrap justify-between items-center border-b pb-2 mb-2">
+          <h3 class="text-lg font-semibold text-blue-900">Family Details</h3>
+          <button class="text-white text-sm bg-blue-800 rounded">Edit</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+              <p><span class="text-lg">Family Type:{{profileData.familyType}}</span></p>
+              <p><span class="text-lg">Home type:{{profileData.homeType}}</span></p>
+              <p><span class="text-lg">Father Details:{{profileData.fatherDetails}}</span></p>
+              <p><span class="text-lg">No. Elder Brother:{{profileData.NoOfElderBro}}</span></p>
+              <p><span class="text-lg">No. Elder Sister:{{profileData.NoOfElderSis}}</span></p>
+              <p><span class="text-lg">No. Married Brother:{{profileData.NoOfYoungerBro}}</span></p>
+          </div>
+          <div>
+              <p><span class="text-lg">Financial status:</span></p>
+              <p><span class="text-lg">Living situation:{{profileData.livingSituation}}</span></p>
+              <p><span class="text-lg">Mother Details:{{profileData.motherDetails}}</span></p>
+              <p><span class="text-lg">No. Younger Brother:{{profileData.NoOfYoungerBro}}</span></p>
+              <p><span class="text-lg">No. Younger Sister:{{profileData.NoOfYoungerSis}}</span></p>
+              <p><span class="text-lg">No. Married Sister:{{profileData.NoOfMarriedSis}}</span></p>
+          </div>
+      </div>
+  </div>
+  <div class="bg-slate-700 p-4 rounded mb-4">
+      <p><span class="text-lg text-white">Partner Preferences</span></p>
+  </div>
+  <div class="bg-card p-4 rounded text-black mb-4">
+      <div class="flex flex-wrap justify-between items-center border-b pb-2 mb-2">
+          <h3 class="text-lg font-semibold text-blue-900">Basic Preferences</h3>
+          <button class="text-white text-sm bg-blue-800 rounded">Edit</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+              <p><span class="text-lg">Age Preferences:</span></p>
+              <p><span class="text-lg">Height Preferences:</span></p>
+              <p><span class="text-lg">Physical Status:</span></p>
+              <p><span class="text-lg">Drinking Habits:</span></p>
+              <p><span class="text-lg">Appearance:</span></p>
+          </div>
+          <div>
+              <p><span class="text-lg">Marital status:</span></p>
+              <p><span class="text-lg">Complexion:</span></p>
+              <p><span class="text-lg">Language spoken:</span></p>
+              <p><span class="text-lg">Religion:</span></p>
+              <p><span class="text-lg">Mother tongue:</span></p>
+          </div>
+      </div>
+  </div>
+  <div class="bg-card p-4 rounded text-black mb-4">
+      <div class="flex flex-wrap justify-between items-center border-b pb-2 mb-2">
+          <h3 class="text-lg font-semibold text-blue-900">Educational and Professional Preference</h3>
+          <button class="text-white text-sm bg-blue-800 rounded">Edit</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+              <p><span class="text-lg">Education:</span></p>
+              <p><span class="text-lg">Profession:</span></p>
+          </div>
+      </div>
+  </div>
+  <div class="bg-card p-4 rounded text-black mb-4">
+      <div class="flex flex-wrap justify-between items-center border-b pb-2 mb-2">
+          <h3 class="text-lg font-semibold text-blue-900">Location Preference</h3>
+          <button class="text-white text-sm bg-blue-800 rounded">Edit</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+              <p><span class="text-lg">Present country:</span></p>
+              <p><span class="text-lg">Present city:</span></p>
+          </div>
+      </div>
+  </div>
+</div>
+

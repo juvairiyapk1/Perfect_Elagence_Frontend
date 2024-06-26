@@ -4,10 +4,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { clearToken } from '../../state/auth.actions';
+
 import { AuthService } from '../../state/auth.service';
 import { RegisterServiceService } from '../../service/register-service.service';
-import { USER } from '../../model/Interface';
+
+import { ProfileService } from '../../service/profile.service';
 
 
 
@@ -28,6 +29,7 @@ export class NavbarComponent implements OnInit {
     private router:Router,
     private service:AuthService,
     private registerService:RegisterServiceService,
+    private profileService:ProfileService
   
   ){
     
@@ -43,7 +45,8 @@ export class NavbarComponent implements OnInit {
     }else{
       this.isLoggedIn= false;
     }
-   });
+  });
+   
   }
   
   

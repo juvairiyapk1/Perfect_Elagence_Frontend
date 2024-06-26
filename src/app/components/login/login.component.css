@@ -1,0 +1,45 @@
+.mat-dialog-container {
+  position: relative;
+}
+
+.close-icon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  color: inherit;
+}
+
+.center-title {
+  text-align: center;
+  color: rgb(152, 10, 10);
+}
+
+.mat-card {
+  margin: 2%;
+  text-align: left;
+}
+
+.mat-mdc-form-field {
+  width: 98%;
+  margin: 1%;
+}
+
+.mat-50 {
+  width: 48%;
+  margin: 1%;
+}
+
+button {
+  margin: 2px;
+  width: 250px;
+}
+
+.centered-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.password {
+  color: red;
+}/*# sourceMappingURL=login.component.css.map */

@@ -15,19 +15,20 @@
 }
 
 .content{
-    height: calc(100vh - 98px);
+    height:auto;
     margin: 16px;
     margin-left: 32px;
-    display: flex;
-    justify-content: center;
+    display: block;
+    // justify-content:;
     // align-items: start;
     font-size: 2rem;
     color: lightgray;
-    border-radius: 10px;
+    border-radius: 16px;
 }
 
 .mat-sidenav-container{
     height: calc(100vh - 65px);
+    
 }
 
 /* styles.css */

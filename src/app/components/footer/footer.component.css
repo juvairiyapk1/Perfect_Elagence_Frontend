@@ -1,0 +1,55 @@
+/* Footer Container */
+#footer {
+  background-color: rgb(152, 10, 10);
+  padding: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* Copyright Text */
+.copyright {
+  font-size: 0.8rem;
+  color: white;
+}
+
+/* Social Media Links */
+.social-links {
+  display: flex;
+}
+
+.social-links a {
+  margin: 0 5px;
+  font-size: 1.2rem;
+  color: #4450da;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  color: #666; /* Change color on hover */
+}
+
+/* Trust Logos (Optional) */
+.trust-logos {
+  display: flex;
+}
+
+.trust-logos img {
+  width: 50px; /* Adjust width as needed */
+  height: 50px; /* Adjust height as needed */
+  margin: 0 5px;
+}
+
+@media (max-width: 768px) {
+  /* Responsive adjustments for smaller screens */
+  .copyright,
+  .social-links {
+    text-align: center; /* Center content vertically */
+  }
+  .social-links,
+  .trust-logos {
+    justify-content: center; /* Center content horizontally */
+  }
+}/*# sourceMappingURL=footer.component.css.map */

@@ -12,12 +12,14 @@
     <mat-sidenav mode="over"  class="sidenav" #sidenav="matSidenav">
       <div class="profile">
         <div class="profile-header">
-          <img src="https://www.freepik.com/free-ai-image/medium-shot-man-working-as-real-estate-agent_94939789.htm#fromView=search&page=1&position=11&uuid=44451884-98b7-4fb4-8f8e-6094d867a6cf" alt="Profile Image" class="profile-image rounded">
+          @if(profileImg?.image){
+          <img [src]="profileImg.image" alt="Profile Image" class="profile-image rounded">
+          }
           <span class="profile-name" >{{user}}</span>
           <button mat-button color="warn">Upgrade Membership</button>
         </div>
         <div class="profile-details">
-          <button  mat-button class="profilebutton">
+          <button  mat-button class="profilebutton" routerLink="/user/profile">
             <mat-icon>person</mat-icon>
             <span>My Profile</span>
           </button>
@@ -61,7 +63,7 @@
       </div>
     </mat-sidenav>
     <mat-sidenav-content>
-      <div class="content mat-elevation-z4">
+      <div class="content mat-elevation-z1 h-auto">
         
         <router-outlet></router-outlet>
 

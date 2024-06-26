@@ -1,0 +1,12 @@
+mat-card {
+  margin: 2%;
+}
+
+button {
+  margin: 2px;
+}
+
+th {
+  background-color: rgb(9, 9, 9) !important;
+  color: white;
+}/*# sourceMappingURL=user-list.component.css.map */
