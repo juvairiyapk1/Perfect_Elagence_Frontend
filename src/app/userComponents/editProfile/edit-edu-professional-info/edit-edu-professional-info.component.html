@@ -1,0 +1,36 @@
+<form [formGroup]="profileUpdate" (ngSubmit)="submitForm()">
+
+<div class="pl-8 pr-8 pt-5">
+    <mat-label>Willing to relocate</mat-label><br>
+    <mat-radio-group formControlName="willingToRelocate">
+        <mat-radio-button [value]="true">Yes</mat-radio-button>
+        <mat-radio-button [value]="false">No</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <mat-form-field class="pl-8 pr-8" appearance="fill">
+    <mat-label>Marriage Plan</mat-label>
+    <mat-select formControlName="marriagePlans">
+        @for(choose of marriagePlans; track choose){
+        <mat-option [value]="choose">{{choose}}</mat-option>
+        }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="pl-8 pr-8 ">
+    <mat-label>Educational Institute</mat-label>
+    <input matInput formControlName="educationInstitute">
+  </mat-form-field>
+
+  <mat-form-field class="pl-8 pr-8" appearance="fill">
+    <mat-label>Known Languages</mat-label>
+    <mat-select formControlName="languagesKnown">
+        @for(choose of languages; track choose){
+        <mat-option [value]="choose">{{choose}}</mat-option>
+        }
+    </mat-select>
+  </mat-form-field>
+
+  <div class="flex justify-center space-x-4 ">
+    <button mat-raised-button color="primary" class="w-5" type="submit">Save</button>
+    <button mat-raised-button color="warn" class="w-5"  type="button" (click)="close()">Cancel</button>
+    </div>
+    </form>

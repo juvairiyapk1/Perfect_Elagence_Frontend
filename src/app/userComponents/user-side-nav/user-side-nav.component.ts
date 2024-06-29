@@ -1,3 +1,4 @@
+import { ProfileComponent } from './../profile/profile.component';
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout'
@@ -18,6 +19,7 @@ import { PROFILE_PROFILE } from '../../model/Interface';
 export class UserSideNavComponent implements AfterViewInit,OnInit{
 
   @ViewChild(MatSidenav)sidenav!:MatSidenav;
+  @ViewChild(ProfileComponent) profileComponent!: ProfileComponent;
   user!:string|null;
   profileImg!:PROFILE_PROFILE;
 
@@ -35,7 +37,8 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
   ngOnInit(): void {
     this.profileService.getProfile().subscribe((res)=>{
       this.profileImg=res;
-    })
+    });
+    
   }
   
 
@@ -52,6 +55,14 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
       this.cdRef.detectChanges();
 
     });
+
+    if(this.profileComponent){
+      this.profileComponent.imageUpdated.subscribe(()=>{
+        this.profileService.getProfile().subscribe(res=>{
+          this.profileImg=res;
+        })
+      })
+    }
   }
 
   logout(): void {

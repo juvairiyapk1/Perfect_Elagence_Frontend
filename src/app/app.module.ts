@@ -30,6 +30,14 @@ import { EmailOtpVerificationComponent } from './components/email-otp-verificati
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { UserSideNavComponent } from './userComponents/user-side-nav/user-side-nav.component';
 import { ProfileComponent } from './userComponents/profile/profile.component';
+import { EditBasicInfoComponent } from './userComponents/editProfile/edit-basic-info/edit-basic-info.component';
+import { EditEduProfessionalInfoComponent } from './userComponents/editProfile/edit-edu-professional-info/edit-edu-professional-info.component';
+import { EditPhysicaAttributesComponent } from './userComponents/editProfile/edit-physica-attributes/edit-physica-attributes.component';
+import { EditLocationContactComponent } from './userComponents/editProfile/edit-location-contact/edit-location-contact.component';
+import { EditFamilyDetComponent } from './userComponents/editProfile/edit-family-det/edit-family-det.component';
+import { EditBasicPreferenceComponent } from './userComponents/editPartnerPreferance/edit-basic-preference/edit-basic-preference.component';
+import { EditEduProfPrefComponent } from './userComponents/editPartnerPreferance/edit-edu-prof-pref/edit-edu-prof-pref.component';
+import { EditLocationPrefComponent } from './userComponents/editPartnerPreferance/edit-location-pref/edit-location-pref.component';
 
 
 
@@ -51,7 +59,15 @@ import { ProfileComponent } from './userComponents/profile/profile.component';
     EmailOtpVerificationComponent,
     ChangePasswordComponent,
     UserSideNavComponent,
-    ProfileComponent
+    ProfileComponent,
+    EditBasicInfoComponent,
+    EditEduProfessionalInfoComponent,
+    EditPhysicaAttributesComponent,
+    EditLocationContactComponent,
+    EditFamilyDetComponent,
+    EditBasicPreferenceComponent,
+    EditEduProfPrefComponent,
+    EditLocationPrefComponent
   ],
   imports: [
     BrowserModule,

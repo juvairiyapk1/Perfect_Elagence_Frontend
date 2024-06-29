@@ -91,9 +91,12 @@ export class RegisterServiceService {
   ];
 
   private financialStatus:string[]=[
-    "Ritch",
+    "Rich",
+    "Upper Middle-class",
     "Middle-class",
-    "Poor"
+    "Lower Middle-class",
+    "Poor",
+    "Do not want to tell at this time"
   ];
 
   private contactType:string[]=[

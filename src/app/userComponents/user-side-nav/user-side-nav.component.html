@@ -20,24 +20,24 @@
         </div>
         <div class="profile-details">
           <button  mat-button class="profilebutton" routerLink="/user/profile">
-            <mat-icon>person</mat-icon>
+            <mat-icon max-w-full h-auto >person</mat-icon>
             <span>My Profile</span>
           </button>
           <mat-accordion>
-            <mat-expansion-panel>
+            <mat-expansion-panel class="bg-white text-start">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   <mat-icon>settings</mat-icon>
-                  <span>Account Settings</span>
+                  <span class="ml-4 ">Account Settings</span>
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <mat-card>
+              <mat-card class="p-1">
                 <button mat-button>
                   <mat-icon>mail</mat-icon>
                   <span>sms/Email Alerts</span>
                 </button>
                 <button mat-button>
-                  <mat-icon>visibility_off</mat-icon>
+                  <mat-icon class="text-start">visibility_off</mat-icon>
                   <span>Hide Profile</span>
                 </button>
                 <button mat-button>

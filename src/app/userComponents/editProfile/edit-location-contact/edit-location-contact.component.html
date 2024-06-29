@@ -1,0 +1,40 @@
+<form [formGroup]="userUpdate" (ngSubmit)="submitForm()">
+    <mat-form-field class="pl-6 pr-6 pt-5">
+        <mat-label>Present Location</mat-label>
+        <input matInput formControlName="currentLocation">
+      </mat-form-field>
+      <mat-form-field class="pl-6 pr-6" appearance="fill">
+        <mat-label>Residential Status</mat-label>
+        <mat-select formControlName="residentialStatus">
+            @for(choose of residens; track choose){
+            <mat-option [value]="choose">{{choose}}</mat-option>
+            }
+        </mat-select>
+      </mat-form-field>
+      
+
+      <mat-form-field class="pl-6 pr-6 ">
+        <mat-label>Home Location</mat-label>
+        <input matInput formControlName="homeLocation">
+      </mat-form-field>
+      <!-- <mat-form-field class="pl-6 pr-6 ">
+        <mat-label>Mobile</mat-label>
+        <input matInput formControlName="p">
+      </mat-form-field> -->
+      <mat-form-field class="pl-6 pr-6 ">
+        <mat-label>Phone</mat-label>
+        <input matInput formControlName="phoneNumber">
+      </mat-form-field>
+      
+      <mat-form-field class="pl-6 pr-6 ">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
+      
+      
+
+    <div class="flex justify-center space-x-4 ">
+        <button mat-raised-button color="primary" class="w-5" type="submit">Save</button>
+        <button mat-raised-button color="warn" class="w-5" type="button" (click)="close()">Cancel</button>
+        </div>
+ </form>       

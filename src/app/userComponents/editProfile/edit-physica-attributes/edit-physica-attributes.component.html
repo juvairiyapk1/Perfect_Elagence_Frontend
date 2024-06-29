@@ -1,0 +1,40 @@
+<form [formGroup]="profileUpdate" (ngSubmit)="submitForm()">
+    
+    <mat-form-field class="pl-6 pr-6 pt-5">
+        <mat-label>Blood Group</mat-label>
+        <mat-select formControlName="bloodGroup">
+            @for(choose of bloodGroup; track choose){
+            <mat-option [value]="choose">{{choose}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field class="pl-6 pr-6">
+        <mat-label>Hair Color</mat-label>
+        <mat-select formControlName="hairColor">
+            @for(hairColor of hairColors; track hairColor){
+            <mat-option [value]="hairColor">{{hairColor}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>   
+    <mat-form-field class="pl-6 pr-6">
+        <mat-label>Hair Type</mat-label>
+        <mat-select formControlName="hairType">
+            @for(hairType of hairTypes; track hairType){
+            <mat-option [value]="hairType">{{hairType}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>  
+    <mat-form-field class="pl-6 pr-6">
+        <mat-label>Eye Color</mat-label>
+        <mat-select formControlName="eyeColor">
+            @for(eyeColor of eyeColors; track eyeColor){
+            <mat-option [value]="eyeColor">{{eyeColor}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>   
+    <div class="flex justify-center space-x-4 ">
+        <button mat-raised-button color="primary" class="w-5" type="submit" >Save</button>
+        <button mat-raised-button color="warn" class="w-5" type="button" (click)="close()">Cancel</button>
+        </div>
+</form>    

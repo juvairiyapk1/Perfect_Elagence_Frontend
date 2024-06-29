@@ -5,6 +5,7 @@ import { selectToken } from '../state/auth.selectors';
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { PROFILE_PROFILE, USER_PROFILE } from '../model/Interface';
 
+
 const BASE_URL = 'http://localhost:8080';
 
 @Injectable({
@@ -13,6 +14,7 @@ const BASE_URL = 'http://localhost:8080';
 export class ProfileService {
   token$:Observable<string|null>
   userId!:string|null;
+
 
   constructor(private store:Store,
     private http:HttpClient
@@ -111,5 +113,260 @@ export class ProfileService {
       })
     );
   }
+  physical:string[]=[
+    "Normal Person",
+    "Deaf/Demb",
+    "Blind",
+    "Physically challenged",
+    "Mentally challenged",
+    "With other disability"
+  ]
+
+  marriagePlans:string[]=[
+    "As soon as possible",
+    "1-2 years",
+    "3-4 years",
+    "4+years"
+  ];
+
+  bloodGroup:string[]=[
+    "A+",
+    "A-",
+    "AB+",
+    "AB-",
+    "B+",
+    "B-",
+    "O+",
+    "O-"
+  ]
+
+  hairColor:string[]=[
+    "Bold/Shaved",
+    "Black",
+    "Brown",
+    "Grey/White",
+    "Light Brown",
+    "Red",
+    "Changes Frequantly",
+    "other",
+    "Prefer not to say"
+  ]
+
+  hairType:string[]=[
+    "Stright",
+    "Wavy",
+    "Curly",
+    "Other",
+    "Prefer not to say"
+  ];
+
+  eyeColor:string[]=[
+    "Black",
+    "Blue",
+    "Brown",
+    "Green",
+    "Grey",
+    "Hazel",
+    "Other"
+  ];
+  residence:string[]=[
+    "Citizen",
+    "Permenent Resident",
+    "Work Permit",
+    "Student VISA",
+    "Temporary VISA",
+    "Other"
+  ];
+
+  familyType:string[]=[
+    "Nuclear Family",
+    "Joint Family"
+  ];
+
+  homeTypes:string[]=[
+    "Home",
+    "Rent House",
+    "Apartment/Flat",
+    "Rent Apartment/Flat",
+    "Farm",
+    "Town House",
+    "other"
+  ];
+
+  
+
+  livingSituation:string[]=[
+    "Live alone",
+    "Live with friends",
+    "Live with family",
+    "Live with kids",
+    "Other"
+  ]
+
+  getPhysical():string[]{
+    return this.physical;
+  }
+
+
+  getMarriagePlan():string[]{
+    return this.marriagePlans;
+  }
+
+  getBloodGroup():string[]{
+    return this.bloodGroup;
+  }
+
+
+  getHairColor():string[]{
+   return this.hairColor;
+  }
+
+  getHairType():string[]{
+    return this.hairType;
+  }
+  getEyeColor(){
+    return this.eyeColor;
+  }
+
+  getResidence():string[]{
+    return this.residence;
+  }
+
+  getFamilyType():string[]{
+    return this.familyType;
+  }
+
+  getHomeType():string[]{
+    return this.homeTypes;
+
+  }
+
+  getLivingSituation():string[]{
+    return this.livingSituation;
+  }
+
+  
+
+  basicInfo(request: any): Observable<any> {
+    return this.token$.pipe(
+      take(1),
+      switchMap(token => {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        });
+
+        if (typeof window !== 'undefined' && window.localStorage) {
+          this.userId = localStorage.getItem('userId');
+        }
+
+        console.log("userId: " + this.userId);
+        console.log("request: ", request);
+
+        if (this.userId) {
+          return this.http.put(`${BASE_URL}/user/editUser/${this.userId}`, request, { headers });
+        } else {
+          // Handle the case where userId is not found
+          return new Observable(observer => {
+            observer.error('User ID not found in local storage');
+          });
+        }
+      })
+    );
+  }
+
+  educationalAndProfessionalInformation(request:any):Observable<any>{
+    return this.token$.pipe(
+      take(1),
+      switchMap(token => {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        });
+
+        if (typeof window !== 'undefined' && window.localStorage) {
+          this.userId = localStorage.getItem('userId');
+        }
+        if (this.userId) {
+          return this.http.put(`${BASE_URL}/user/updateProfile/${this.userId}`, request, { headers });
+        } else {
+          // Handle the case where userId is not found
+          return new Observable(observer => {
+            observer.error('User ID not found in local storage');
+          });
+        }
+      })
+    );
+
+  }
+
+
+  physicalAttributesInfo(request:any):Observable<any>{
+      return this.token$.pipe(
+        take(1),
+        switchMap(token => {
+          const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`
+          });
+
+          if (typeof window !== 'undefined' && window.localStorage) {
+            this.userId = localStorage.getItem('userId');
+          }
+          if (this.userId) {
+            return this.http.put(`${BASE_URL}/user/updatePhysicalAttr/${this.userId}`, request, { headers });
+          } else {
+            // Handle the case where userId is not found
+            return new Observable(observer => {
+              observer.error('User ID not found in local storage');
+            });
+          }
+        })
+      );
+  }
+
+  locationAndContactInfo(request:any):Observable<any>{
+
+        return this.token$.pipe(
+          take(1),
+          switchMap(token => {
+            const headers = new HttpHeaders({
+              'Authorization': `Bearer ${token}`
+            });
+
+            if (typeof window !== 'undefined' && window.localStorage) {
+              this.userId = localStorage.getItem('userId');
+            }
+            if (this.userId) {
+              return this.http.put(`${BASE_URL}/user/updateLocationAndContact/${this.userId}`, request, { headers });
+            } else {
+              // Handle the case where userId is not found
+              return new Observable(observer => {
+                observer.error('User ID not found in local storage');
+              });
+            }
+          })
+        );
+      }
+      
+      familyInfo(request:any):Observable<any>{
+        return this.token$.pipe(
+          take(1),
+          switchMap(token => {
+            const headers = new HttpHeaders({
+              'Authorization': `Bearer ${token}`
+            });
+
+            if (typeof window !== 'undefined' && window.localStorage) {
+              this.userId = localStorage.getItem('userId');
+            }
+            if (this.userId) {
+              return this.http.put(`${BASE_URL}/user/updateFamilyInfo/${this.userId}`, request, { headers });
+            } else {
+              // Handle the case where userId is not found
+              return new Observable(observer => {
+                observer.error('User ID not found in local storage');
+              });
+            }
+          })
+        );
+      }
 
 }

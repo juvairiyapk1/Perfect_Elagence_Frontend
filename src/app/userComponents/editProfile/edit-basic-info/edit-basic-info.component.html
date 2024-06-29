@@ -1,0 +1,79 @@
+<form [formGroup]="userUpdate" (ngSubmit)="submitForm()">
+  <mat-form-field class="pl-6 pr-6 pt-5">
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name">
+  </mat-form-field>
+
+  <mat-form-field class="pl-6 pr-6">
+    <mat-label>Date of Birth</mat-label>
+    <input matInput [matDatepicker]="myDatePicker" formControlName="dob">
+    <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
+    <mat-datepicker #myDatePicker></mat-datepicker>
+  </mat-form-field>
+
+  <div class="pl-6 pr-6">
+    <mat-label>Gender</mat-label><br>
+    <mat-radio-group formControlName="gender">
+      <mat-radio-button value="Male">Male</mat-radio-button>
+      <mat-radio-button value="Female">Female</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <mat-form-field class="pl-6 pr-6" appearance="fill">
+    <mat-label>Profile For</mat-label>
+    <mat-select formControlName="createProfileFor">
+      <mat-option *ngFor="let choose of select" [value]="choose">{{choose}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="pl-6 pr-6">
+    <mat-label>Marital Status</mat-label><br>
+    <mat-radio-group formControlName="maritalStatus" class="mat-50">
+      <mat-radio-button value="Single">Single</mat-radio-button>
+      <mat-radio-button value="Married">Married</mat-radio-button>
+      <mat-radio-button value="Widow">Widow/Widower</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <mat-form-field class="pl-6 pr-6">
+    <mat-label>Education</mat-label>
+    <mat-select formControlName="education">
+      <mat-option *ngFor="let edu of education" [value]="edu">{{edu}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="pl-6 pr-6" appearance="fill">
+    <mat-label>Physical Status</mat-label>
+    <mat-select formControlName="physicaleStatus">
+      <mat-option *ngFor="let choose of physical" [value]="choose">{{choose}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="pl-6 pr-6">
+    <mat-label>Profession</mat-label>
+    <mat-select formControlName="profession">
+      <mat-option *ngFor="let profession of professions" [value]="profession">{{profession}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="pl-6 pr-6">
+    <mat-label>Complexion</mat-label>
+    <mat-select formControlName="skinTone">
+        @for(skinTone of skinTones; track skinTone){
+        <mat-option value="skinTone">{{skinTone}}</mat-option>
+        }
+    </mat-select>
+</mat-form-field>
+<mat-form-field class="pl-6 pr-6">
+  <mat-label>Body Type</mat-label>
+  <mat-select formControlName="bodyType">
+      @for(bodyType of bodyTypes; track bodyType){
+      <mat-option [value]="bodyType">{{bodyType}}</mat-option>
+      }
+  </mat-select>
+</mat-form-field> 
+
+  <div class="flex justify-center space-x-4">
+    <button mat-raised-button color="primary" class="w-5" type="submit">Save</button>
+    <button mat-raised-button color="warn" class="w-5" type="button" (click)="close()">Cancel</button>
+  </div>
+</form>

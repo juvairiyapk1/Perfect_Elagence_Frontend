@@ -1,0 +1,40 @@
+<form [formGroup]="userUpdate" (ngSubmit)="submitForm()">
+<mat-form-field class="pl-6 pr-6 pt-5" appearance="fill">
+    <mat-label>Family Type</mat-label>
+    <mat-select formControlName="familyType">
+        @for(choose of familyType; track choose){
+        <mat-option [value]="choose">{{choose}}</mat-option>
+        }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="pl-6 pr-6">
+    <mat-label>Finacial Status</mat-label>
+    <mat-select formControlName="financialStatus">
+     @for(finance of financialStatus; track finance){
+     <mat-option [value]="finance">{{finance}}</mat-option>
+     }
+     </mat-select>
+  </mat-form-field>
+  <mat-form-field class="pl-6 pr-6">
+    <mat-label>Home Type</mat-label>
+    <mat-select formControlName="homeType">
+     @for(choose of homeType; track choose){
+     <mat-option [value]="choose">{{choose}}</mat-option>
+     }
+     </mat-select>
+  </mat-form-field>
+  <mat-form-field class="pl-6 pr-6">
+    <mat-label>Living Situation</mat-label>
+    <mat-select formControlName="livingSituation">
+     @for(choose of livingSituation; track choose){
+     <mat-option [value]="choose">{{choose}}</mat-option>
+     }
+     </mat-select>
+  </mat-form-field>
+
+  <div class="flex justify-center space-x-4 ">
+    <button mat-raised-button color="primary" class="w-5">Save</button>
+    <button mat-raised-button color="warn" class="w-5">Cancel</button>
+    </div>
+</form>    
+

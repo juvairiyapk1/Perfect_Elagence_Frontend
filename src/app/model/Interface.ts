@@ -53,37 +53,41 @@ export interface PROFILE{
       relegion: string;
       education: string;
       profession: string;
+      image?:string;
     
 
 }
 
 export interface USER_PROFILE{
-    name:string;
-    dob:Date;
-    education:string;
-    homeLocation:string;
-    relegion:string;
+    name?:string;
+    dob?:Date;
+    education?:string;
+    homeLocation?:string;
+    relegion?:string;
     image?:string;
-    gender:string;
-    maritalStatus:string;
-    createProfileFor:string;
-    physicaleStatus:string;
-    profession:string;
-    height:string;
-    weight:string;
-    bodyType:string;
-    presentLocation:string;
-    Mobile:number;
-    email:string;
-    preferredContactType:string;
-    ContactPerson:string;
-    currentLocation:string;
-    motherTongue:string;
-    eatingHabits:string;
-    phoneNumber:number;
-    contactPersonAndRelationship:string;
-    convenientTimeToCall:string;
-    primaryNumber:string;
+    gender?:string;
+    maritalStatus?:string;
+    createProfileFor?:string;
+    physicaleStatus?:string;
+    profession?:string;
+    height?:string;
+    weight?:string;
+    skinTone?:string;
+    bodyType?:string;
+    presentLocation?:string;
+    Mobile?:number;
+    email?:string;
+    preferredContactType?:string;
+    ContactPerson?:string;
+    currentLocation?:string;
+    motherTongue?:string;
+    eatingHabits?:string;
+    phoneNumber?:number;
+    contactPersonAndRelationship?:string;
+    convenientTimeToCall?:string;
+    primaryNumber?:string;
+    residentialStatus?:string;
+
 }
 
 export interface PROFILE_PROFILE{
@@ -95,13 +99,10 @@ export interface PROFILE_PROFILE{
     familyType?:string;
     homeType?:string;
     livingSituation?:string;
-    fatherDetails?:string;
-    motherDetails?:string;
-    NoOfElderBro?:string;
-    NoOfElderSis?:string;
-    NoOfYoungerSis?:string;
-    NoOfYoungerBro?:string;
-    NoOfMarriedSis?:string;
+    marriagePlans?:string;
+    hairColor?:string;
+    hairType?:string;
+    financialStatus?:string;
     image?:string;
 }
 

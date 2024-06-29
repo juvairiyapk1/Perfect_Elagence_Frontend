@@ -2,12 +2,13 @@
     @for (profile of profiles; track profile) {
     <mat-card class="profile-card" >
       <mat-card-header>
-        <div mat-card-avatar class="profile-avatar"></div>
+        <div mat-card-avatar class="profile-avatar" [style.background-image]="'url(' + profile.image + ')'" [style.background-size]="'cover'" [style.background-position]="'center'"></div>
         <mat-card-title class="card_title">{{profile.name}}</mat-card-title>
-        <mat-card-subtitle class="card_subtitle">{{profile.dob}},{{profile.homeLocation}},{{profile.relegion}}</mat-card-subtitle>
+        <mat-card-subtitle class="card_subtitle">{{profile.dob}}</mat-card-subtitle>
+        <mat-card-subtitle class="card_subtitle">{{profile.homeLocation}},{{profile.relegion}}</mat-card-subtitle>
       </mat-card-header>
       
-      <img mat-card-image [src]="" alt="Photo of {{profile.name}}">
+      
       
       <mat-card-content class="card_content">
         <p>Education: {{profile.education}}</p>

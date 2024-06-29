@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 import { PROFILE, PROFILE_PROFILE, USER_PROFILE } from '../../model/Interface';
 import { ProfileService } from '../../service/profile.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { error } from 'console';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { EditBasicInfoComponent } from '../editProfile/edit-basic-info/edit-basic-info.component';
+import { EditEduProfessionalInfoComponent } from '../editProfile/edit-edu-professional-info/edit-edu-professional-info.component';
+import { EditPhysicaAttributesComponent } from '../editProfile/edit-physica-attributes/edit-physica-attributes.component';
+import { EditLocationContactComponent } from '../editProfile/edit-location-contact/edit-location-contact.component';
+import { EditFamilyDetComponent } from '../editProfile/edit-family-det/edit-family-det.component';
 
 @Component({
   selector: 'app-profile',
@@ -11,6 +17,7 @@ import { error } from 'console';
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent  implements OnInit{
+  @Output() imageUpdated = new EventEmitter<string>();
 
   profile!:USER_PROFILE;
   profileData:PROFILE_PROFILE={};
@@ -19,28 +26,33 @@ export class ProfileComponent  implements OnInit{
   uploadedFileUrl: string | null = null;
   userId!:number;
   constructor(private service:ProfileService,
-    private http:HttpClient
-  ){
-   
-  }
+              private http:HttpClient,
+              private dialog:MatDialog
+              ){}
 
 
   ngOnInit(): void {
-    this.service.getUser().subscribe((res)=>{
-        this.profile=res
-    },
-    error => {
-      console.error('Error fetching profiles:', error);
-    }
-  );
-  this.service.getProfile().subscribe((res)=>{
-    this.profileData =res
-  },
-  error => {
-    console.error('Error fetching profiles:', error);
+    this.loadProfileData();
   }
-);
 
+
+
+  loadProfileData(){
+      this.service.getUser().subscribe((res)=>{
+        this.profile=res
+      },
+      error => {
+      console.error('Error fetching profiles:', error);
+      }
+      );
+      this.service.getProfile().subscribe((res)=>{
+      this.profileData =res
+      },
+      error => {
+      console.error('Error fetching profiles:', error);
+      }
+      );
+    
   }
 
 
@@ -65,11 +77,12 @@ export class ProfileComponent  implements OnInit{
       this.service.uploadImage(this.userId, this.fileToUpload).subscribe(
         data => {
           if (data.status === 'progress') {
-            console.log(data + " data");
+            
             this.uploadProgress = data.message;
           } else {
             this.uploadedFileUrl = data.secure_url; // Adjust based on the response structure
             this.uploadProgress = null;
+            this.imageUpdated.emit(data.secure_url);
             this.service.getProfile().subscribe(res=>{
               this.profileData=res;
             });
@@ -83,6 +96,58 @@ export class ProfileComponent  implements OnInit{
     } else {
       console.error('No file selected.');
     }
+  }
+
+  openEditBasicInfoPopup(){
+    const dialogRef=this.dialog.open(EditBasicInfoComponent,{
+       width:'45%'
+    });
+    
+    dialogRef.componentInstance.profileUpdated.subscribe((updatedProfile:USER_PROFILE)=>{
+      this.profile=updatedProfile;
+      this.loadProfileData();
+    });
+  }
+
+  openEditEduProfPopup(){
+     const dialoRef= this.dialog.open(EditEduProfessionalInfoComponent,{
+      width:'45%'
+    });
+    
+    dialoRef.componentInstance.profileUpdated.subscribe((updatedProfile)=>{
+      this.profileData=updatedProfile;
+      this.loadProfileData();
+    })
+  }
+
+  openPhysicalAttributesPopup(){
+    const dialogRef = this.dialog.open(EditPhysicaAttributesComponent,{
+      width:'45%'
+    });
+   dialogRef.componentInstance.profileUpdated.subscribe((updatedProfile)=>{
+    this.profileData=updatedProfile;
+    this.loadProfileData();
+   })
+  }
+
+  openLocationAndContactPopup(){
+     const dialogRef = this.dialog.open(EditLocationContactComponent,{
+      width:'45%'
+    });
+    dialogRef.componentInstance.updatedProfile.subscribe((updatedProfile)=>{
+      this.profileData=updatedProfile;
+      this.loadProfileData();
+     })
+  }
+
+  openHomeDetailPopup(){
+    const dialogRef = this.dialog.open(EditFamilyDetComponent,{
+      width:'45%'
+    });
+    dialogRef.componentInstance.updatedProfile.subscribe((updatedProfile)=>{
+      this.profileData=updatedProfile;
+      this.loadProfileData();
+     })
   }
 
   
