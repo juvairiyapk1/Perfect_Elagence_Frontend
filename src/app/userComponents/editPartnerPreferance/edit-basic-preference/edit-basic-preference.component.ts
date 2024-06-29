@@ -12,7 +12,7 @@ export class EditBasicPreferenceComponent {
   skinTones:string[]=[];
   physical:string[]=[];
   languages:string[]=[];
-  relegions :string[]=[];
+  relegions:string[]=[];
   motherTongue:string[]=[];
 
   constructor(private registerService:RegisterServiceService,
