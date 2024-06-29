@@ -1,1 +1,78 @@
-<p>edit-basic-preference works!</p>
+
+
+ <mat-form-field class="pl-6 pr-6 pt-5">
+    <mat-label>Age</mat-label>
+    <input matInput >
+  </mat-form-field>
+
+  <div class="pl-6 pr-6">
+    <mat-label>Marital Status</mat-label><br>
+    <mat-radio-group formControlName="maritalStatus" class="mat-50">
+      <mat-radio-button value="Single">Single</mat-radio-button>
+      <mat-radio-button value="Married">Married</mat-radio-button>
+      <mat-radio-button value="Widow">Widow/Widower</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <mat-form-field class="pl-6 pr-6 ">
+    <mat-label>Height</mat-label>
+    <input matInput formControlName="height">
+  </mat-form-field>
+
+  <mat-form-field class="pl-6 pr-6">
+    <mat-label>Complexion</mat-label>
+    <mat-select formControlName="skinTone">
+        @for(skinTone of skinTones; track skinTone){
+        <mat-option value="skinTone">{{skinTone}}</mat-option>
+        }
+    </mat-select>
+</mat-form-field>
+
+<mat-form-field class="pl-6 pr-6" appearance="fill">
+    <mat-label>Physical Status</mat-label>
+    <mat-select formControlName="physicaleStatus">
+      @for(choose of physical;track choose){
+        <mat-option [value]="choose">{{choose}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="pl-8 pr-8" appearance="fill">
+    <mat-label>Known Languages</mat-label>
+    <mat-select formControlName="languagesKnown">
+        @for(choose of languages; track choose){
+        <mat-option [value]="choose">{{choose}}</mat-option>
+        }
+    </mat-select>
+  </mat-form-field>
+
+  <div class="pl-6 pr-6">
+    <mat-label>Drinking Habit</mat-label><br>
+    <mat-radio-group formControlName="drinkingHabits">
+      <mat-radio-button [value]="true">Yes</mat-radio-button>
+      <mat-radio-button [value]="false">No</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <mat-form-field class="pl-8 pr-8" appearance="fill">
+    <mat-label>Religion</mat-label>
+    <mat-select formControlName="religion">
+        @for(choose of relegions; track choose){
+        <mat-option [value]="choose">{{choose}}</mat-option>
+        }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="pl-6 pr-6 ">
+    <mat-label>Appearance</mat-label>
+    <input matInput formControlName="appearance">
+  </mat-form-field>
+
+  <mat-form-field class="pl-8 pr-8" appearance="fill">
+    <mat-label>Mother Tongue</mat-label>
+    <mat-select formControlName="motherTongue">
+        @for(choose of motherTongue; track choose){
+        <mat-option [value]="choose">{{choose}}</mat-option>
+        }
+    </mat-select>
+  </mat-form-field>
+

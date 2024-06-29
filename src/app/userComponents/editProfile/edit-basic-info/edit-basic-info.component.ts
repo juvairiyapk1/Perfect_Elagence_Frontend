@@ -41,7 +41,7 @@ export class EditBasicInfoComponent implements OnInit{
 
 
   userUpdate!:FormGroup
-  profile!:USER_PROFILE;
+  profile:USER_PROFILE={};
 
 
   ngOnInit(): void {

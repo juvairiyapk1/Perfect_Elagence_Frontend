@@ -12,7 +12,7 @@
     <mat-sidenav mode="over"  class="sidenav" #sidenav="matSidenav">
       <div class="profile">
         <div class="profile-header">
-          @if(profileImg?.image){
+          @if(profileImg.image){
           <img [src]="profileImg.image" alt="Profile Image" class="profile-image rounded">
           }
           <span class="profile-name" >{{user}}</span>

@@ -22,7 +22,9 @@
   <mat-form-field class="pl-6 pr-6" appearance="fill">
     <mat-label>Profile For</mat-label>
     <mat-select formControlName="createProfileFor">
-      <mat-option *ngFor="let choose of select" [value]="choose">{{choose}}</mat-option>
+      @for (choose of select; track choose) {
+        <mat-option [value]="choose">{{choose}}</mat-option>
+      }
     </mat-select>
   </mat-form-field>
 
@@ -38,14 +40,19 @@
   <mat-form-field class="pl-6 pr-6">
     <mat-label>Education</mat-label>
     <mat-select formControlName="education">
-      <mat-option *ngFor="let edu of education" [value]="edu">{{edu}}</mat-option>
+      @for (edu of education; track edu) {
+        <mat-option [value]="edu">{{edu}}</mat-option>
+      }
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="pl-6 pr-6" appearance="fill">
     <mat-label>Physical Status</mat-label>
     <mat-select formControlName="physicaleStatus">
-      <mat-option *ngFor="let choose of physical" [value]="choose">{{choose}}</mat-option>
+      @for (choose of physical; track choose) {
+        <mat-option [value]="choose">{{choose}}</mat-option>
+
+      }
     </mat-select>
   </mat-form-field>
 

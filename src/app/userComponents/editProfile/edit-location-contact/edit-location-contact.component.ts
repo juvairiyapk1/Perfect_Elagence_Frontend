@@ -28,7 +28,7 @@ constructor(private profileService:ProfileService,
 
 
 userUpdate!:FormGroup
-profile!:USER_PROFILE;
+profile:USER_PROFILE={};
 
 ngOnInit(): void {
   this.userUpdate=this.builder.group({

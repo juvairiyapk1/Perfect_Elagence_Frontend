@@ -19,9 +19,9 @@ import { PROFILE_PROFILE } from '../../model/Interface';
 export class UserSideNavComponent implements AfterViewInit,OnInit{
 
   @ViewChild(MatSidenav)sidenav!:MatSidenav;
-  @ViewChild(ProfileComponent) profileComponent!: ProfileComponent;
-  user!:string|null;
-  profileImg!:PROFILE_PROFILE;
+  // @ViewChild(ProfileComponent) profileComponent!: ProfileComponent;
+  user:string|null="";
+  profileImg:PROFILE_PROFILE={};
 
   constructor(private observer:BreakpointObserver,
     private cdRef: ChangeDetectorRef,
@@ -56,13 +56,13 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
 
     });
 
-    if(this.profileComponent){
-      this.profileComponent.imageUpdated.subscribe(()=>{
-        this.profileService.getProfile().subscribe(res=>{
-          this.profileImg=res;
-        })
-      })
-    }
+    // if(this.profileComponent){
+    //   this.profileComponent.imageUpdated.subscribe(()=>{
+    //     this.profileService.getProfile().subscribe(res=>{
+    //       this.profileImg=res;
+    //     })
+    //   })
+    // }
   }
 
   logout(): void {

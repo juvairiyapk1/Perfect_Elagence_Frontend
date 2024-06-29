@@ -106,4 +106,21 @@ export interface PROFILE_PROFILE{
     image?:string;
 }
 
+export interface PARTNER_PROFILE{
+     age?:string;
+     height?:string;
+     physicalStatus?:string;
+     drinkingHabits?:string;
+     appearance?:string;
+     education?:string;
+     maritalStatus?:string;
+     complexion?:string;
+     languagesSpoken?:string;
+     religion?:string;
+     motherTongue?:string;
+     profession?:string;
+     country?:string;
+     city?:string;
+}
+
 

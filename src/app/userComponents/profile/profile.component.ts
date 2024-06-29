@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter} from '@angular/core';
-import { PROFILE, PROFILE_PROFILE, USER_PROFILE } from '../../model/Interface';
+import { PARTNER_PROFILE, PROFILE, PROFILE_PROFILE, USER_PROFILE } from '../../model/Interface';
 import { ProfileService } from '../../service/profile.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -10,6 +10,8 @@ import { EditEduProfessionalInfoComponent } from '../editProfile/edit-edu-profes
 import { EditPhysicaAttributesComponent } from '../editProfile/edit-physica-attributes/edit-physica-attributes.component';
 import { EditLocationContactComponent } from '../editProfile/edit-location-contact/edit-location-contact.component';
 import { EditFamilyDetComponent } from '../editProfile/edit-family-det/edit-family-det.component';
+import { EditBasicPreferenceComponent } from '../editPartnerPreferance/edit-basic-preference/edit-basic-preference.component';
+import { EditEduProfPrefComponent } from '../editPartnerPreferance/edit-edu-prof-pref/edit-edu-prof-pref.component';
 
 @Component({
   selector: 'app-profile',
@@ -17,14 +19,16 @@ import { EditFamilyDetComponent } from '../editProfile/edit-family-det/edit-fami
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent  implements OnInit{
-  @Output() imageUpdated = new EventEmitter<string>();
+  // @Output() imageUpdated = new EventEmitter<string>();
 
-  profile!:USER_PROFILE;
+  profile:USER_PROFILE={};
   profileData:PROFILE_PROFILE={};
   fileToUpload: File | null = null;
   uploadProgress: number | null = null;
   uploadedFileUrl: string | null = null;
   userId!:number;
+  partner:PARTNER_PROFILE={};
+  
   constructor(private service:ProfileService,
               private http:HttpClient,
               private dialog:MatDialog
@@ -82,7 +86,7 @@ export class ProfileComponent  implements OnInit{
           } else {
             this.uploadedFileUrl = data.secure_url; // Adjust based on the response structure
             this.uploadProgress = null;
-            this.imageUpdated.emit(data.secure_url);
+            // this.imageUpdated.emit(data.secure_url);
             this.service.getProfile().subscribe(res=>{
               this.profileData=res;
             });
@@ -150,5 +154,15 @@ export class ProfileComponent  implements OnInit{
      })
   }
 
-  
+  openEditPartnerBasicInfoPopup(){
+     this.dialog.open(EditBasicPreferenceComponent,{
+      width:'45%'
+    });
+  }
+
+  openEditPartnerEduAndProfInfo(){
+    const dialogRef = this.dialog.open(EditEduProfPrefComponent,{
+      width:'45%'
+    });
+  }
 }
