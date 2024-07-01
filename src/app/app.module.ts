@@ -37,7 +37,6 @@ import { EditLocationContactComponent } from './userComponents/editProfile/edit-
 import { EditFamilyDetComponent } from './userComponents/editProfile/edit-family-det/edit-family-det.component';
 import { EditBasicPreferenceComponent } from './userComponents/editPartnerPreferance/edit-basic-preference/edit-basic-preference.component';
 import { EditEduProfPrefComponent } from './userComponents/editPartnerPreferance/edit-edu-prof-pref/edit-edu-prof-pref.component';
-import { EditLocationPrefComponent } from './userComponents/editPartnerPreferance/edit-location-pref/edit-location-pref.component';
 
 
 
@@ -66,9 +65,8 @@ import { EditLocationPrefComponent } from './userComponents/editPartnerPreferanc
     EditLocationContactComponent,
     EditFamilyDetComponent,
     EditBasicPreferenceComponent,
-    EditEduProfPrefComponent,
-    EditLocationPrefComponent
-  ],
+    EditEduProfPrefComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,

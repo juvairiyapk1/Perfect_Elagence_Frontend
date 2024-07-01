@@ -56,6 +56,13 @@ export class ProfileComponent  implements OnInit{
       console.error('Error fetching profiles:', error);
       }
       );
+      this.service.getPartnerePref().subscribe(res=>{
+        this.partner=res;
+      },
+      error=>{
+        console.error('error fetching partner',error);
+      }
+    )
     
   }
 
@@ -155,14 +162,23 @@ export class ProfileComponent  implements OnInit{
   }
 
   openEditPartnerBasicInfoPopup(){
-     this.dialog.open(EditBasicPreferenceComponent,{
+     const dialogRef=this.dialog.open(EditBasicPreferenceComponent,{
       width:'45%'
     });
+
+    dialogRef.componentInstance.partnerUpdated.subscribe((updatedPartner)=>{
+      this.partner=updatedPartner;
+      this.loadProfileData()
+    })
   }
 
   openEditPartnerEduAndProfInfo(){
     const dialogRef = this.dialog.open(EditEduProfPrefComponent,{
       width:'45%'
     });
+    dialogRef.componentInstance.partnerUpdated.subscribe((updatedPartner)=>{
+      this.partner =updatedPartner;
+      this.loadProfileData();
+    })
   }
 }

@@ -88,6 +88,7 @@ export class EditBasicInfoComponent implements OnInit{
         skinTone:this.userUpdate.value.skinTone,
  
       };
+      console.log(userData.bodyType+"body type")
       this.profileService.basicInfo(userData).subscribe(
         (res)=>{
          this.toast.success("updated successfully");

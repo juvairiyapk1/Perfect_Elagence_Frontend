@@ -1,8 +1,8 @@
 
-
+<form [formGroup]="partenerUpdate" (ngSubmit)="submitForm()">
  <mat-form-field class="pl-6 pr-6 pt-5">
     <mat-label>Age</mat-label>
-    <input matInput >
+    <input matInput formControlName="age">
   </mat-form-field>
 
   <div class="pl-6 pr-6">
@@ -21,16 +21,16 @@
 
   <mat-form-field class="pl-6 pr-6">
     <mat-label>Complexion</mat-label>
-    <mat-select formControlName="skinTone">
+    <mat-select formControlName="complexion">
         @for(skinTone of skinTones; track skinTone){
-        <mat-option value="skinTone">{{skinTone}}</mat-option>
+        <mat-option [value]="skinTone">{{skinTone}}</mat-option>
         }
     </mat-select>
 </mat-form-field>
 
 <mat-form-field class="pl-6 pr-6" appearance="fill">
     <mat-label>Physical Status</mat-label>
-    <mat-select formControlName="physicaleStatus">
+    <mat-select formControlName="physicalStatus">
       @for(choose of physical;track choose){
         <mat-option [value]="choose">{{choose}}</mat-option>
       }
@@ -38,7 +38,7 @@
   </mat-form-field>
   <mat-form-field class="pl-8 pr-8" appearance="fill">
     <mat-label>Known Languages</mat-label>
-    <mat-select formControlName="languagesKnown">
+    <mat-select formControlName="languagesSpoken">
         @for(choose of languages; track choose){
         <mat-option [value]="choose">{{choose}}</mat-option>
         }
@@ -76,3 +76,8 @@
     </mat-select>
   </mat-form-field>
 
+  <div class="flex justify-center space-x-4">
+    <button mat-raised-button color="primary" class="w-5" type="submit">Save</button>
+    <button mat-raised-button color="warn" class="w-5" type="button" (click)="close()">Cancel</button>
+  </div>
+</form>

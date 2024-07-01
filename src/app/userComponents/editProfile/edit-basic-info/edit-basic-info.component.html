@@ -59,14 +59,16 @@
   <mat-form-field class="pl-6 pr-6">
     <mat-label>Profession</mat-label>
     <mat-select formControlName="profession">
-      <mat-option *ngFor="let profession of professions" [value]="profession">{{profession}}</mat-option>
+      @for (profession of professions; track profession) {
+      <mat-option [value]="profession">{{profession}}</mat-option>
+      }
     </mat-select>
   </mat-form-field>
   <mat-form-field class="pl-6 pr-6">
     <mat-label>Complexion</mat-label>
     <mat-select formControlName="skinTone">
         @for(skinTone of skinTones; track skinTone){
-        <mat-option value="skinTone">{{skinTone}}</mat-option>
+        <mat-option [value]="skinTone">{{skinTone}}</mat-option>
         }
     </mat-select>
 </mat-form-field>

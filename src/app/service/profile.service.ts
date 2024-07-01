@@ -1,3 +1,4 @@
+import { selectAuthState } from './../state/auth.selectors';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, catchError, map, switchMap, take, throwError } from 'rxjs';
@@ -248,6 +249,7 @@ export class ProfileService {
   
 
   basicInfo(request: any): Observable<any> {
+    console.log(request+"hhhhhhhhhhhhhhhhhhhh")
     return this.token$.pipe(
       take(1),
       switchMap(token => {
@@ -369,4 +371,80 @@ export class ProfileService {
         );
       }
 
+
+      getPartnerePref(){
+        return this.token$.pipe(
+          take(1),
+          switchMap(token => {
+          
+            const headers = new HttpHeaders({
+              'Authorization': `Bearer ${token}`
+            });
+            console.log(headers);
+            if(typeof window !== 'undefined' && window.localStorage){
+              this.userId=localStorage.getItem('userId');
+            }
+    
+            if (!this.userId) {
+              throw new Error("User ID is not available");
+            }
+    
+            
+            return this.http.get<USER_PROFILE>(`${BASE_URL}/user/getPartnerProfile/${this.userId}`, { headers });
+          })
+        );
+      }
+
+      parnerBasicInfo(request:any):Observable<any>{
+        return this.token$.pipe(
+          take(1),
+          switchMap(token => {
+            const headers = new HttpHeaders({
+              'Authorization': `Bearer ${token}`
+            });
+
+            if (typeof window !== 'undefined' && window.localStorage) {
+              this.userId = localStorage.getItem('userId');
+            }
+            if (this.userId) {
+              return this.http.put(`${BASE_URL}/user/updatePartnerPref/${this.userId}`, request, { headers });
+            } else {
+              // Handle the case where userId is not found
+              return new Observable(observer => {
+                observer.error('User ID not found in local storage');
+              });
+            }
+          })
+        );
+      }
+
+
+      partnerEducationInfo(request:any):Observable<any>{
+        return this.token$.pipe(
+          take(1),
+          switchMap(token => {
+            const headers = new HttpHeaders({
+              'Authorization': `Bearer ${token}`
+            });
+
+            if (typeof window !== 'undefined' && window.localStorage) {
+              this.userId = localStorage.getItem('userId');
+            }
+            if (this.userId) {
+              return this.http.put(`${BASE_URL}/user/updatePartnerPrefEdu/${this.userId}`, request, { headers });
+            } else {
+              // Handle the case where userId is not found
+              return new Observable(observer => {
+                observer.error('User ID not found in local storage');
+              });
+            }
+          })
+        );
+      }
+
+      onFilterChange(selectedOption:string){
+        this.http.get(`${BASE_URL}/user/filter?option=${selectedOption}`).subscribe(res=>{
+          
+        })
+      }
 }

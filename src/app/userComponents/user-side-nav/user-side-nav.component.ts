@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ProfileService } from '../../service/profile.service';
 import { PROFILE_PROFILE } from '../../model/Interface';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -28,7 +29,8 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
     private service:RegisterServiceService,
     private store:Store,
     private router:Router,
-    private profileService:ProfileService
+    private profileService:ProfileService,
+  
   ){
     if(typeof window !== 'undefined' && window.localStorage){
       this.user=localStorage.getItem('userName')
@@ -41,6 +43,15 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
     
   }
   
+  options:string[]=[
+    "filter",
+    "Date Of birth",
+    "Location",
+    "Profession",
+    "Education"
+  ]
+
+  selectedOption:string='';
 
   ngAfterViewInit(){
     this.observer.observe(['(max-width: 800px)']).subscribe((res)=>{
@@ -56,13 +67,7 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
 
     });
 
-    // if(this.profileComponent){
-    //   this.profileComponent.imageUpdated.subscribe(()=>{
-    //     this.profileService.getProfile().subscribe(res=>{
-    //       this.profileImg=res;
-    //     })
-    //   })
-    // }
+    
   }
 
   logout(): void {
@@ -74,4 +79,9 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
       console.error('Error logging out', error);
     });
   }
+
+  onFilterChange(){
+    this.profileService.onFilterChange(this.selectedOption)
+  }
+  
 }
