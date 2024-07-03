@@ -1,7 +1,26 @@
 
+<div class="flex justify-start items-start m-4 text-black pt-3 gap-96">
+  <select id="professionSelect" class="text-xs py-1 px-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-800"
+  (change)="onProfessionChange($event)">
+    <option value="" disabled selected hidden>Filter</option>
+    @for (item of professions; track item) {
+      <option [value]="item">{{item}}</option>
+    }
+  </select>
+  <mat-form-field class="text-xs py-1 px-2 rounded-lg ">
+    <input matInput (keyup)="filterChange($event)" placeholder="Search"  class="text-xs w-16"/>
+  </mat-form-field>  
+</div>
+@if (showNoProfilesMessage) {
+<div  class="m-4 text-red-800 text-sm flex justify-center ">
+  No profiles found.
+</div>
+}
+
+@if(!showNoProfilesMessage){
 <div class="card-container">
   
-    @for (profile of profiles; track profile) {
+    @for (profile of dataSource.filteredData; track profile) {
     <mat-card class="profile-card" >
       <mat-card-header>
         <div mat-card-avatar class="profile-avatar" [style.background-image]="'url(' + profile.image + ')'" [style.background-size]="'cover'" [style.background-position]="'center'"></div>
@@ -21,11 +40,23 @@
         <button mat-icon-button>
           <mat-icon>favorite</mat-icon>
         </button>
-        <button mat-icon-button>
+        <!-- <button mat-icon-button>
           <mat-icon>message</mat-icon>
-        </button>
+        </button> -->
       </mat-card-actions>
     </mat-card>
 }
   </div>
+} 
   
+
+  <div class="pagination-controls text-black flex justify-end items-center space-x-2">
+    <button class="text-xs py-1 px-2 rounded-lg bg-red-800 text-white" (click)="onPageChange(pageNo - 1)" [disabled]="pageNo === 0">Previous</button>
+    <span class="text-xs">Page {{ pageNo + 1 }}</span>
+    <button class="text-xs py-1 px-2 bg-red-800 rounded-lg text-white" (click)="onPageChange(pageNo + 1)" >Next</button>
+    
+    <label for="pageSize" class="text-xs">Page Size:</label>
+    <select id="pageSize" class="text-xs py-1 px-2"  (change)="onPageSizeChange($event)">
+      <option *ngFor="let size of [3, 5, 10]" [value]="size">{{ size }}</option>
+    </select>
+  </div>

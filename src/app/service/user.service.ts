@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, switchMap, take } from 'rxjs';
 import { PROFILE } from '../model/Interface';
@@ -24,7 +24,7 @@ export class UserService {
     this.token$=store.select(selectToken);
   }
 
-  getAllUsers(): Observable<PROFILE[]> {
+  getAllUsers(pageNo: number, pageSize: number,profession:string): Observable<PROFILE[]> {
     console.log("inside getAll users");
     return this.token$.pipe(
       take(1),
@@ -33,13 +33,32 @@ export class UserService {
         const headers = new HttpHeaders({
           'Authorization': `Bearer ${token}`
         });
+
+        let params = new HttpParams()
+          .set('pageNo', pageNo.toString())
+          .set('pageSize', pageSize.toString());
         
-        return this.http.get<PROFILE[]>(`${BASE_URL}user/OtherUsers`, { headers });
+        if (profession) {
+          params = params.set('profession', profession);
+        }
+        
+        return this.http.get<PROFILE[]>(`${BASE_URL}user/OtherUsersByProfession`, { headers,params});
       })
     );
   }
   
 
-  
+  professions:string[]=[
+    "Student",
+    "Bussiness",
+    "Agriculture",
+    "Government",
+    "Teacher",
+    "Doctor" ,
+  ];
+
+  getProfession(){
+    return this.professions;
+  }
   
 }

@@ -48,9 +48,7 @@ export class UserListComponent implements OnInit {
     this.dataSource.filter=value;
   }
 
-  editUser(){
-
-  }
+  
 
   blockUser(id: number): void {
     this.service.blockUser(id).subscribe(res => {
@@ -73,7 +71,6 @@ export class UserListComponent implements OnInit {
       if (userToUnblock) {
         userToUnblock.blocked = false;
       }
-      // this.loadUserList(); // Refresh the user list after blocking a user
     }, error => {
       console.error('Error blocking user', error);
     });

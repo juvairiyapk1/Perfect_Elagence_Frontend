@@ -2,7 +2,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, switchMap, take } from 'rxjs';
-import { USER_ADMIN } from '../model/Interface';
+import { PACKAGE, USER_ADMIN } from '../model/Interface';
 import { Store } from '@ngrx/store';
 import { selectToken } from '../state/auth.selectors';
 
@@ -62,4 +62,34 @@ export class AdminServiceService {
   }
   
 
+  getPackage():Observable<PACKAGE[]>{
+    return this.token$.pipe(
+      take(1),
+      switchMap((token) =>{
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+
+        });
+        return this.http.get<PACKAGE[]>(BASE_URL+'admin/getPackages',{headers})
+      })
+    );
+
+  }
+
+  add(request:PACKAGE):Observable<any>{
+    return this.token$.pipe(
+      take(1),
+      switchMap(token=>{
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+
+        });
+
+        return this.http.post<PACKAGE>(BASE_URL+'admin/package',request,{headers})
+
+      })
+    )
+  }
+
+  
 }

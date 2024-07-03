@@ -11,6 +11,9 @@ import { authGuard } from './gurd/auth.guard';
 import { SideNavComponent } from './adminComponent/side-nav/side-nav.component';
 import { UserSideNavComponent } from './userComponents/user-side-nav/user-side-nav.component';
 import { ProfileComponent } from './userComponents/profile/profile.component';
+import { PackagesComponent } from './userComponents/packages/packages.component';
+import { PackageListComponent } from './adminComponent/package-list/package-list.component';
+
 
 
 const routes: Routes = [
@@ -20,10 +23,11 @@ const routes: Routes = [
  { path: 'otp_verify', component: OtpVerificationComponent, },
  { path: 'admin',
    component:SideNavComponent,
-    canActivate:[authGuard],
+   
   children:[
     { path: 'dashboard', component: AdminDashboardComponent },
-    {path:'user_list',component:UserListComponent}
+    {path:'user_list',component:UserListComponent},
+    {path:'package_list',component:PackageListComponent}
   ]},
 
  
@@ -32,6 +36,7 @@ const routes: Routes = [
   children:[
   { path: 'home', component: HomeComponent },
   {path:'profile',component:ProfileComponent},
+  {path:'package',component:PackagesComponent}
  ]},
 
  {path:'**',component:NotFoundComponent}

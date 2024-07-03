@@ -1,19 +1,26 @@
 
+
 <div class=" rounded-lg shadow-lg m-4 p-2">
   <div class="flex flex-wrap justify-between items-center border-b p-2 m-4 shadow">
       <h1 class="text-xl font-semibold text-black">My Profile</h1>
   </div>
   <div class="flex flex-wrap items-center justify-between bg-card p-4 rounded-lg shadow m-4">
+   
     <div class="flex items-center mb-4 sm:mb-0">
-      
-      <input type="file" class="hidden" id="fileInput" (change)="handleFileInput($event)" name="multipartFile"/>
+      @if (imageUrl) {
+        <img  [src]="imageUrl" alt="Selected Image" class="w-16 h-16 object-cover rounded-lg mr-4">
+
+      }
+      <input type="file" accept="Profile/*"   class="hidden" id="fileInput" (change)="handleFileInput($event)" name="multipartFile"/>
       <label for="fileInput" class="cursor-pointer text-muted-foreground text-sm">Select Photo</label>
     </div>
-    <button class="bg-gradient-to-r from-green-400 to-green-600 text-white py-1 px-2 rounded text-sm" type="submit" (click)="uploadFileToActivity()" >Upload Photo</button>
+    <button class="bg-gradient-to-r from-green-400 to-green-600 text-white py-1 px-2 rounded text-sm" type="submit" (click)="uploadFileToActivity()" (click)="removeImage()">Upload Photo</button>
+    
   </div>
 
-  
-
+  <div *ngIf="isLoading" class="flex items-center justify-center">
+    <mat-spinner></mat-spinner>
+  </div>
 
   <div class="flex flex-wrap bg-card p-4 rounded-lg shadow-lg m-4">
       <div class="object-cover ">

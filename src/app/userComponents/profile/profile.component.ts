@@ -19,8 +19,7 @@ import { EditEduProfPrefComponent } from '../editPartnerPreferance/edit-edu-prof
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent  implements OnInit{
-  // @Output() imageUpdated = new EventEmitter<string>();
-
+   
   profile:USER_PROFILE={};
   profileData:PROFILE_PROFILE={};
   fileToUpload: File | null = null;
@@ -28,6 +27,9 @@ export class ProfileComponent  implements OnInit{
   uploadedFileUrl: string | null = null;
   userId!:number;
   partner:PARTNER_PROFILE={};
+
+  imageUrl: string | ArrayBuffer | null = '';
+  isLoading: boolean = false;
   
   constructor(private service:ProfileService,
               private http:HttpClient,
@@ -72,14 +74,24 @@ export class ProfileComponent  implements OnInit{
   handleFileInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
+
       this.fileToUpload = input.files.item(0);
       console.log('File selected:', this.fileToUpload);
+
+      const reader = new FileReader();
+      reader.onload = (e)=>{
+        this.imageUrl = e.target?.result as string;
+      };
+      if(this.fileToUpload)
+      reader.readAsDataURL(this.fileToUpload)
     }
+
   }
 
   uploadFileToActivity() {
     if (this.fileToUpload) {
-      console.log('Uploading file:', this.fileToUpload.name);
+      this.isLoading = true;
+      console.log('Load:', this.isLoading);
   
       if (typeof window !== 'undefined' && window.localStorage) {
         this.userId = parseInt(localStorage.getItem('userId')!);
@@ -93,15 +105,17 @@ export class ProfileComponent  implements OnInit{
           } else {
             this.uploadedFileUrl = data.secure_url; // Adjust based on the response structure
             this.uploadProgress = null;
-            // this.imageUpdated.emit(data.secure_url);
             this.service.getProfile().subscribe(res=>{
               this.profileData=res;
+              this.isLoading = false;
+              this.service.notifyProfileUpdated();
             });
           }
         },
         error => {
           console.error(error);
           this.uploadProgress = null;
+          this.isLoading = false
         }
       );
     } else {
@@ -181,4 +195,10 @@ export class ProfileComponent  implements OnInit{
       this.loadProfileData();
     })
   }
+
+  removeImage(): void {
+    this.fileToUpload = null;
+    this.imageUrl = '';
+  }
+  
 }

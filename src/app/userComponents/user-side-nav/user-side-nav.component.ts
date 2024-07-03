@@ -6,10 +6,11 @@ import { RegisterServiceService } from '../../service/register-service.service';
 import { Store } from '@ngrx/store';
 import { clearToken } from '../../state/auth.actions';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ProfileService } from '../../service/profile.service';
 import { PROFILE_PROFILE } from '../../model/Interface';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from '../../service/user.service';
 
 
 @Component({
@@ -20,9 +21,13 @@ import { HttpClient } from '@angular/common/http';
 export class UserSideNavComponent implements AfterViewInit,OnInit{
 
   @ViewChild(MatSidenav)sidenav!:MatSidenav;
-  // @ViewChild(ProfileComponent) profileComponent!: ProfileComponent;
+
+  private profileUpdateSubscription!: Subscription;
+
+
   user:string|null="";
   profileImg:PROFILE_PROFILE={};
+  professions:string[]=[];
 
   constructor(private observer:BreakpointObserver,
     private cdRef: ChangeDetectorRef,
@@ -36,22 +41,28 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
       this.user=localStorage.getItem('userName')
      }
   }
+
   ngOnInit(): void {
-    this.profileService.getProfile().subscribe((res)=>{
-      this.profileImg=res;
-    });
-    
+     this.fetchProfile(); 
+     this.profileUpdateSubscription = this.profileService.profileUpdated$.subscribe(()=>{
+      this.fetchProfile()
+     });
   }
   
-  options:string[]=[
-    "filter",
-    "Date Of birth",
-    "Location",
-    "Profession",
-    "Education"
-  ]
+  fetchProfile(): void {
+    this.profileService.getProfile().subscribe(
+      (res: PROFILE_PROFILE) => {
+        this.profileImg = res;
+      },
+      error => {
+        console.error('Error fetching profile:', error);
+        // Handle error as needed
+      }
+    );
+  }
+  
 
-  selectedOption:string='';
+  
 
   ngAfterViewInit(){
     this.observer.observe(['(max-width: 800px)']).subscribe((res)=>{
@@ -80,8 +91,7 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
     });
   }
 
-  onFilterChange(){
-    this.profileService.onFilterChange(this.selectedOption)
-  }
+  
+  
   
 }

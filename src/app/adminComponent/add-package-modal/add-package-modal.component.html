@@ -1,0 +1,23 @@
+<form [formGroup]="packageData" (ngSubmit)="formSubmit()">
+<div class="border bg-white rounded shadow-lg">
+    <mat-form-field class="pl-6 pr-6 pt-5">
+        <mat-label>Package name</mat-label>
+        <input matInput formControlName="packageName">
+    </mat-form-field>
+
+    <mat-form-field class="pl-6 pr-6 pt-5">
+        <mat-label>Duration</mat-label>
+        <input matInput formControlName="duration">
+    </mat-form-field> 
+
+    <mat-form-field class="pl-6 pr-6 pt-5">
+        <mat-label>Price</mat-label>
+        <input matInput formControlName="price">
+    </mat-form-field>
+    <div class="flex justify-center space-x-4 ">
+        <button mat-raised-button color="primary" class="w-5" type="submit">Save</button>
+        <button mat-raised-button color="warn" class="w-5" type="button" (click)="close()">Cancel</button>
+        </div>
+
+</div>
+</form>

@@ -1,7 +1,7 @@
 import { selectAuthState } from './../state/auth.selectors';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, catchError, map, switchMap, take, throwError } from 'rxjs';
+import { Observable, Subject, catchError, map, switchMap, take, throwError } from 'rxjs';
 import { selectToken } from '../state/auth.selectors';
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { PROFILE_PROFILE, USER_PROFILE } from '../model/Interface';
@@ -15,6 +15,8 @@ const BASE_URL = 'http://localhost:8080';
 export class ProfileService {
   token$:Observable<string|null>
   userId!:string|null;
+
+  private profileUpdatedSource = new Subject<void>();
 
 
   constructor(private store:Store,
@@ -45,6 +47,12 @@ export class ProfileService {
         return this.http.get<USER_PROFILE>(`${BASE_URL}/user/profile/${this.userId}`, { headers });
       })
     );
+  }
+
+  profileUpdated$ = this.profileUpdatedSource.asObservable();
+
+  notifyProfileUpdated() {
+    this.profileUpdatedSource.next();
   }
 
 
@@ -442,9 +450,6 @@ export class ProfileService {
         );
       }
 
-      onFilterChange(selectedOption:string){
-        this.http.get(`${BASE_URL}/user/filter?option=${selectedOption}`).subscribe(res=>{
-          
-        })
-      }
+      
+      
 }

@@ -20,6 +20,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 
@@ -47,7 +48,9 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
         MatSlideToggleModule,
         MatDividerModule,
         MatExpansionModule,
-        ScrollingModule
+        ScrollingModule,
+        MatProgressSpinnerModule,
+        
     ]
 })
 export class MaterialModule{}

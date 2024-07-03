@@ -16,7 +16,7 @@
           <img [src]="profileImg.image" alt="Profile Image" class="profile-image rounded object-cover">
           }
           <span class="profile-name" >{{user}}</span>
-          <button mat-button color="warn">Upgrade Membership</button>
+          <button mat-button color="warn" routerLink="user/package">Upgrade Membership</button>
         </div>
         <div class="profile-details">
           <button  mat-button class="profilebutton" routerLink="/user/profile">
@@ -63,15 +63,6 @@
       </div>
     </mat-sidenav>
     <mat-sidenav-content>
-      <div class="flex justify-end rounded-lg p-4">
-        <div class="w-28 h-12">
-          <select id="filter" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" [(ngModel)]="selectedOption" (change)="onFilterChange()">
-            @for (option of options; track option) {
-            <option [value]="option">{{ option }}</option>
-            }
-          </select>
-        </div>
-      </div>
       
       <div class="content mat-elevation-z1 h-auto">
         

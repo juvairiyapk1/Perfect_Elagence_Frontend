@@ -123,4 +123,10 @@ export interface PARTNER_PROFILE{
      city?:string;
 }
 
+export interface PACKAGE{
+    packageName:string;
+    duration:string;
+    price:number;
+}
+
 

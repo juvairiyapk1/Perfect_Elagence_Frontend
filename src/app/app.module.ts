@@ -37,6 +37,9 @@ import { EditLocationContactComponent } from './userComponents/editProfile/edit-
 import { EditFamilyDetComponent } from './userComponents/editProfile/edit-family-det/edit-family-det.component';
 import { EditBasicPreferenceComponent } from './userComponents/editPartnerPreferance/edit-basic-preference/edit-basic-preference.component';
 import { EditEduProfPrefComponent } from './userComponents/editPartnerPreferance/edit-edu-prof-pref/edit-edu-prof-pref.component';
+import { PackagesComponent } from './userComponents/packages/packages.component';
+import { PackageListComponent } from './adminComponent/package-list/package-list.component';
+import { AddPackageModalComponent } from './adminComponent/add-package-modal/add-package-modal.component'
 
 
 
@@ -65,7 +68,11 @@ import { EditEduProfPrefComponent } from './userComponents/editPartnerPreferance
     EditLocationContactComponent,
     EditFamilyDetComponent,
     EditBasicPreferenceComponent,
-    EditEduProfPrefComponent
+    EditEduProfPrefComponent,
+    PackagesComponent,
+    PackageListComponent,
+    AddPackageModalComponent,
+    
    ],
   imports: [
     BrowserModule,
