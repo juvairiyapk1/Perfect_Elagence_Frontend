@@ -21,8 +21,9 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
-
+import {LayoutModule} from '@angular/cdk/layout'; 
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -50,6 +51,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
         MatExpansionModule,
         ScrollingModule,
         MatProgressSpinnerModule,
+        LayoutModule,
+        MatGridListModule,
+        MatMenuModule,
         
     ]
 })

@@ -42,7 +42,7 @@ export class UserService {
           params = params.set('profession', profession);
         }
         
-        return this.http.get<PROFILE[]>(`${BASE_URL}user/OtherUsersByProfession`, { headers,params});
+        return this.http.get<PROFILE[]>(`${BASE_URL}user/OtherUsersByProfession`, {headers, params});
       })
     );
   }

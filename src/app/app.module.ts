@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material-module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {  HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import {  provideToastr } from 'ngx-toastr';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { StoreModule } from '@ngrx/store';
@@ -22,7 +22,6 @@ import { OtpVerificationComponent } from './components/otp-verification/otp-veri
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserListComponent } from './adminComponent/UserList/user-list/user-list.component';
 import { HomeComponent } from './userComponents/home/home.component';
-import { AdminDashboardComponent } from './adminComponent/admin-dashboard/admin-dashboard.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SideNavComponent } from './adminComponent/side-nav/side-nav.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
@@ -39,8 +38,19 @@ import { EditBasicPreferenceComponent } from './userComponents/editPartnerPrefer
 import { EditEduProfPrefComponent } from './userComponents/editPartnerPreferance/edit-edu-prof-pref/edit-edu-prof-pref.component';
 import { PackagesComponent } from './userComponents/packages/packages.component';
 import { PackageListComponent } from './adminComponent/package-list/package-list.component';
-import { AddPackageModalComponent } from './adminComponent/add-package-modal/add-package-modal.component'
-
+import { AddPackageModalComponent } from './adminComponent/add-package-modal/add-package-modal.component';
+import { PaymentComponent } from './components/stripe/payment/payment.component'
+import { NgxStripeModule } from 'ngx-stripe';
+import { CancelComponent } from './components/stripe/cancel/cancel.component';
+import { SucessComponent } from './components/stripe/sucess/sucess.component';
+import { env } from './model/enviornment';
+import { DashComponent } from './adminComponent/dash/dash.component';
+import { CardComponent } from './adminComponent/card/card.component';
+import { AnnualSubscriptionChartComponent } from './adminComponent/annual-subscription-chart/annual-subscription-chart.component';
+import { BaseChartDirective, provideCharts, withDefaultRegisterables, } from 'ng2-charts';
+import { BarController, Colors, Legend } from 'chart.js';
+import { AuthInterceptor } from './auth.interceptor';
+import { SubscribersListComponent } from './adminComponent/subscribers-list/subscribers-list.component';
 
 
 @NgModule({
@@ -54,7 +64,6 @@ import { AddPackageModalComponent } from './adminComponent/add-package-modal/add
     NavbarComponent,
     UserListComponent,
     HomeComponent,
-    AdminDashboardComponent,
     FooterComponent,
     SideNavComponent,
     VerifyEmailComponent,
@@ -72,6 +81,15 @@ import { AddPackageModalComponent } from './adminComponent/add-package-modal/add
     PackagesComponent,
     PackageListComponent,
     AddPackageModalComponent,
+    PaymentComponent,
+    CancelComponent,
+    SucessComponent,
+    DashComponent,
+    CardComponent,
+    AnnualSubscriptionChartComponent,
+    SubscribersListComponent,
+    
+    
     
    ],
   imports: [
@@ -87,14 +105,21 @@ import { AddPackageModalComponent } from './adminComponent/add-package-modal/add
     StoreModule.forRoot({auth: authReducer}, {}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),  
+    NgxStripeModule.forRoot(env.stripe), 
+    BaseChartDirective,
+    
+  
+
   ],
   
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
     provideToastr(),
-    provideNativeDateAdapter()
-  
+    provideNativeDateAdapter(),
+    provideCharts(withDefaultRegisterables()),
+    provideCharts({ registerables: [BarController, Legend, Colors] }),
+    // provideHttpClient(withInterceptors([AuthInterceptor]))  
   ],
   bootstrap: [AppComponent]
 })

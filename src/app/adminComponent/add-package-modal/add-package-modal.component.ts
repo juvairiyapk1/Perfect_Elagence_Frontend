@@ -40,7 +40,8 @@ export class AddPackageModalComponent implements OnInit {
     const packageList:PACKAGE={
       packageName:this.packageData.value.packageName,
       duration:this.packageData.value.duration,
-      price:this.packageData.value.price
+      price:this.packageData.value.price,
+      priceId:this.packageData.value.priceId
     } 
     this.service.add(packageList).subscribe(res=>{
       this.toast.success("Package added successfully");
