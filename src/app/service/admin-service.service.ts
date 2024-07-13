@@ -2,7 +2,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, switchMap, take } from 'rxjs';
-import { PACKAGE, SUBCRIPTION, USER_ADMIN } from '../model/Interface';
+import { PACKAGE, SUBCRIPTION, SUBSCRIBR, USER_ADMIN } from '../model/Interface';
 import { Store } from '@ngrx/store';
 import { selectToken } from '../state/auth.selectors';
 
@@ -93,6 +93,20 @@ export class AdminServiceService {
 
   loadSubcriptions(){
     return this.http.get<SUBCRIPTION[]>("")
+  }
+
+  getSubscriber():Observable<SUBSCRIBR[]>{
+
+    return this.token$.pipe(
+      take(1),
+      switchMap((token) => {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+
+        });
+        return this.http.get<SUBSCRIBR[]>(BASE_URL + 'admin/subscribers', { headers })
+      })
+    );
   }
 
 

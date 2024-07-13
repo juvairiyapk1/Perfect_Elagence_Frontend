@@ -20,7 +20,7 @@ export class PackageListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   
-  displayedColumns: string[] = ['id', 'packageName', 'duration', 'price'];
+  displayedColumns: string[] = [ 'packageName', 'duration', 'price'];
 
   constructor(
     private dialog: MatDialog,

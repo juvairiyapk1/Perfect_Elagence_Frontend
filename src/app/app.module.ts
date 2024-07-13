@@ -3,7 +3,7 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material-module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -51,6 +51,7 @@ import { BaseChartDirective, provideCharts, withDefaultRegisterables, } from 'ng
 import { BarController, Colors, Legend } from 'chart.js';
 import { AuthInterceptor } from './auth.interceptor';
 import { SubscribersListComponent } from './adminComponent/subscribers-list/subscribers-list.component';
+import { UserProfileModalComponent } from './userComponents/user-profile-modal/user-profile-modal.component';
 
 
 @NgModule({
@@ -88,6 +89,7 @@ import { SubscribersListComponent } from './adminComponent/subscribers-list/subs
     CardComponent,
     AnnualSubscriptionChartComponent,
     SubscribersListComponent,
+    UserProfileModalComponent,
     
     
     
@@ -119,6 +121,7 @@ import { SubscribersListComponent } from './adminComponent/subscribers-list/subs
     provideNativeDateAdapter(),
     provideCharts(withDefaultRegisterables()),
     provideCharts({ registerables: [BarController, Legend, Colors] }),
+    DatePipe
     // provideHttpClient(withInterceptors([AuthInterceptor]))  
   ],
   bootstrap: [AppComponent]

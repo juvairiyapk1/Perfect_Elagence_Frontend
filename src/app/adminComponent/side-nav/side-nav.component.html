@@ -1,9 +1,6 @@
 <mat-drawer-container>
     <mat-drawer #drawer opened="true" mode="side">
-        <mat-toolbar color="primary">
-            <mat-icon>account_circle</mat-icon>
-            <span>Admin</span>
-          </mat-toolbar>
+        
        <mat-nav-list>
         <mat-list-item>
             <button mat-button routerLink="/admin/dashboard"><mat-icon>dashboard</mat-icon>Dashboard</button>
@@ -17,9 +14,7 @@
         <mat-list-item>
             <button mat-button routerLink="/admin/subscribers"><mat-icon>people_outline</mat-icon>Subscribers</button>
         </mat-list-item>
-        <!-- <mat-list-item>
-            <button mat-button><mat-icon>payment</mat-icon>Payment</button>
-        </mat-list-item> -->
+       
         <mat-list-item>
             <button mat-button (click)="logout()"><mat-icon>logout</mat-icon>LOGOUT</button>
         </mat-list-item>

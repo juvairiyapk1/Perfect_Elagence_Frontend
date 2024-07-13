@@ -104,6 +104,7 @@ export interface PROFILE_PROFILE {
     hairType?: string;
     financialStatus?: string;
     image?: string;
+
 }
 
 export interface PARTNER_PROFILE {
@@ -145,6 +146,17 @@ export interface SUBCRIPTION {
     year: number,
     subcribedUser: number,
     colorCode: string
+}
+
+export interface SUBSCRIBR{
+    
+    user:string 
+    subscriptionStartDate:Date;
+    subscriptionEndDate:Date;
+    status:string;
+
+     
+
 }
 
 

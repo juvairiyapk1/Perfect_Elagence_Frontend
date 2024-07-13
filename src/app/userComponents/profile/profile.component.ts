@@ -27,6 +27,7 @@ export class ProfileComponent  implements OnInit{
   uploadedFileUrl: string | null = null;
   userId!:number;
   partner:PARTNER_PROFILE={};
+  isSubscribed=false;
 
   imageUrl: string | ArrayBuffer | null = '';
   isLoading: boolean = false;
@@ -45,7 +46,9 @@ export class ProfileComponent  implements OnInit{
 
   loadProfileData(){
       this.service.getUser().subscribe((res)=>{
-        this.profile=res
+        this.profile=res 
+        console.log(this.profile)
+         
       },
       error => {
       console.error('Error fetching profiles:', error);

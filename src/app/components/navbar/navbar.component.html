@@ -14,7 +14,7 @@
       <button mat-riased-button class="bg-white text-red-800 h-8 px-4 rounded" (click)="openLoginPopUp()">Login</button>
       }
       
-      @else if(isLoggedIn){
+      @else if(isLoggedIn && !isAdmin){
         <a routerLink="user/home" class="text-white hover:text-gray-300 py-2 md:py-0">Home</a>
 
         <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Chat</a>

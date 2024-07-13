@@ -16,6 +16,11 @@
           <img [src]="profileImg.image" alt="Profile Image" class="profile-image rounded object-cover">
           }
           <span class="profile-name" >{{user}}</span>
+          <!-- @if(isSubscribed){
+          <span><mat-icon 
+            class="ml-1 text-blue-400 text-sm"
+          >verified</mat-icon></span>
+          } -->
           <button mat-button color="warn" routerLink="/user/package">Upgrade Membership</button>
         </div>
         <div class="profile-details">

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PROFILE, PROFILE_PROFILE } from '../../model/Interface';
 import { UserService } from '../../service/user.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { UserProfileModalComponent } from '../user-profile-modal/user-profile-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +15,7 @@ export class HomeComponent implements OnInit{
   ProfileImage!:PROFILE_PROFILE;
   pageNo: number = 0;
   pageSize: number = 10;
+  isSubscribed:boolean=false;
   
   dataSource!: MatTableDataSource<PROFILE>;
 
@@ -23,7 +26,9 @@ export class HomeComponent implements OnInit{
 
 
 
-  constructor(private service:UserService){
+  constructor(private service:UserService,
+    private dialog:MatDialog
+  ){
     this.professions = ['All professions',...service.getProfession()];
 
   }
@@ -48,9 +53,9 @@ export class HomeComponent implements OnInit{
     this.service.getAllUsers(this.pageNo, this.pageSize,profession).subscribe(
       data => {
         this.profiles = data;
+        
         this.dataSource.data = this.profiles;
         this.showNoProfilesMessage = this.profiles.length === 0;
- 
       },
       error => {
         console.error('Error fetching profiles:', error);
@@ -82,5 +87,14 @@ export class HomeComponent implements OnInit{
     const value=(data.target as HTMLInputElement).value.trim().toLowerCase();
     this.dataSource.filter=value;
   }
+
+  userProfilePopUp(){
+    this.dialog.open(UserProfileModalComponent,{
+      width:'45%'
+    });
+  }
+    
+
+  
 
 }

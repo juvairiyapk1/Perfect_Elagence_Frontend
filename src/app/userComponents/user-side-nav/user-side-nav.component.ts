@@ -28,6 +28,7 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
   user:string|null="";
   profileImg:PROFILE_PROFILE={};
   professions:string[]=[];
+  // isSubscribed:boolean=false;
 
   constructor(private observer:BreakpointObserver,
     private cdRef: ChangeDetectorRef,
@@ -53,6 +54,9 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
     this.profileService.getProfile().subscribe(
       (res: PROFILE_PROFILE) => {
         this.profileImg = res;
+        // if(res.subscriptionId!= null){
+        //   this.isSubscribed=true;
+        // }
       },
       error => {
         console.error('Error fetching profile:', error);
@@ -60,6 +64,7 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
       }
     );
   }
+  
   
 
   
