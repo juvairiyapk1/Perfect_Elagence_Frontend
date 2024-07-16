@@ -87,6 +87,7 @@ export interface USER_PROFILE {
     convenientTimeToCall?: string;
     primaryNumber?: string;
     residentialStatus?: string;
+    isSubscribed?:boolean;
 
 }
 
@@ -153,10 +154,17 @@ export interface SUBSCRIBR{
     user:string 
     subscriptionStartDate:Date;
     subscriptionEndDate:Date;
+    amount:number;
     status:string;
 
      
 
 }
+
+export interface MonthlyUserSubscriptionDTO {
+    months: string[];
+    users: number[];
+    subscriptions: number[];
+  }
 
 

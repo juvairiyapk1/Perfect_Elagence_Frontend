@@ -15,7 +15,8 @@ export class HomeComponent implements OnInit{
   ProfileImage!:PROFILE_PROFILE;
   pageNo: number = 0;
   pageSize: number = 10;
-  isSubscribed:boolean=false;
+  isSubscribed!:string|null;
+
   
   dataSource!: MatTableDataSource<PROFILE>;
 
@@ -30,6 +31,11 @@ export class HomeComponent implements OnInit{
     private dialog:MatDialog
   ){
     this.professions = ['All professions',...service.getProfession()];
+
+    if(typeof window !== 'undefined' && window.localStorage){
+     this.isSubscribed =localStorage.getItem('isSubscribed')
+    }
+
 
   }
 

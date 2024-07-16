@@ -15,12 +15,14 @@
           @if(profileImg.image){
           <img [src]="profileImg.image" alt="Profile Image" class="profile-image rounded object-cover">
           }
-          <span class="profile-name" >{{user}}</span>
-          <!-- @if(isSubscribed){
+          <div class="flex items-center">
+          <span class="text-sm font-bold" >{{user}}</span>
+          @if(isSubscribed=='true'){
           <span><mat-icon 
-            class="ml-1 text-blue-400 text-sm"
+            class=" text-green-600 text-sm pt-1"
           >verified</mat-icon></span>
-          } -->
+          }
+        </div>
           <button mat-button color="warn" routerLink="/user/package">Upgrade Membership</button>
         </div>
         <div class="profile-details">

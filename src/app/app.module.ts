@@ -44,14 +44,15 @@ import { NgxStripeModule } from 'ngx-stripe';
 import { CancelComponent } from './components/stripe/cancel/cancel.component';
 import { SucessComponent } from './components/stripe/sucess/sucess.component';
 import { env } from './model/enviornment';
-import { DashComponent } from './adminComponent/dash/dash.component';
-import { CardComponent } from './adminComponent/card/card.component';
-import { AnnualSubscriptionChartComponent } from './adminComponent/annual-subscription-chart/annual-subscription-chart.component';
+import { DashComponent } from './adminComponent/Dashboard/dash/dash.component';
+import { CardComponent } from './adminComponent/Dashboard/card/card.component';
 import { BaseChartDirective, provideCharts, withDefaultRegisterables, } from 'ng2-charts';
 import { BarController, Colors, Legend } from 'chart.js';
 import { AuthInterceptor } from './auth.interceptor';
 import { SubscribersListComponent } from './adminComponent/subscribers-list/subscribers-list.component';
 import { UserProfileModalComponent } from './userComponents/user-profile-modal/user-profile-modal.component';
+import { UserSubscriptionChartComponent } from './adminComponent/Dashboard/user-subscription-chart/user-subscription-chart.component';
+import { SubscriptionRevenueChartComponent } from './adminComponent/Dashboard/subscription-revenue-chart/subscription-revenue-chart.component';
 
 
 @NgModule({
@@ -87,9 +88,10 @@ import { UserProfileModalComponent } from './userComponents/user-profile-modal/u
     SucessComponent,
     DashComponent,
     CardComponent,
-    AnnualSubscriptionChartComponent,
     SubscribersListComponent,
     UserProfileModalComponent,
+    UserSubscriptionChartComponent,
+    SubscriptionRevenueChartComponent,
     
     
     

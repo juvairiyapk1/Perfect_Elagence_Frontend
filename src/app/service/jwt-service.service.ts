@@ -36,6 +36,10 @@ export class JwtServiceService {
         if(token){
           const decodedToken=this.decodeToken(token);
           if(decodedToken && decodedToken.role){
+            const isSubscribed=decodedToken.isSubscribed
+            if (typeof localStorage !== 'undefined') {
+            localStorage.setItem("isSubscribed",isSubscribed)
+            }
             return decodedToken.role;
           }
         }

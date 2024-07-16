@@ -34,11 +34,9 @@ export class LoginComponent implements OnInit{
   private toast:ToastrService,
   private dialog:MatDialog,
   private jwtService:JwtServiceService,
-  
-
   ){}
 
-  userLogin!:FormGroup 
+  userLogin!:FormGroup ;
   
   ngOnInit(): void {
     this.inputdata=this.data;

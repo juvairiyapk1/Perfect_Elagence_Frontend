@@ -8,7 +8,7 @@ import { clearToken } from '../../state/auth.actions';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ProfileService } from '../../service/profile.service';
-import { PROFILE_PROFILE } from '../../model/Interface';
+import { PROFILE_PROFILE, USER_PROFILE } from '../../model/Interface';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../service/user.service';
 
@@ -28,7 +28,7 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
   user:string|null="";
   profileImg:PROFILE_PROFILE={};
   professions:string[]=[];
-  // isSubscribed:boolean=false;
+  isSubscribed!:string|null;
 
   constructor(private observer:BreakpointObserver,
     private cdRef: ChangeDetectorRef,
@@ -39,7 +39,9 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
   
   ){
     if(typeof window !== 'undefined' && window.localStorage){
-      this.user=localStorage.getItem('userName')
+      this.user=localStorage.getItem('userName');
+      this.isSubscribed=localStorage.getItem('isSubscribed');
+      console.log(this.isSubscribed+"sub")
      }
   }
 
@@ -54,9 +56,7 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
     this.profileService.getProfile().subscribe(
       (res: PROFILE_PROFILE) => {
         this.profileImg = res;
-        // if(res.subscriptionId!= null){
-        //   this.isSubscribed=true;
-        // }
+        
       },
       error => {
         console.error('Error fetching profile:', error);
@@ -64,6 +64,7 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
       }
     );
   }
+
   
   
 

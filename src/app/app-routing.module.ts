@@ -13,7 +13,7 @@ import { PackagesComponent } from './userComponents/packages/packages.component'
 import { PackageListComponent } from './adminComponent/package-list/package-list.component';
 import { CancelComponent } from './components/stripe/cancel/cancel.component';
 import { SucessComponent } from './components/stripe/sucess/sucess.component';
-import { DashComponent } from './adminComponent/dash/dash.component';
+import { DashComponent } from './adminComponent/Dashboard/dash/dash.component';
 import { SubscribersListComponent } from './adminComponent/subscribers-list/subscribers-list.component';
 import { authGuard } from './gurd/auth.guard';
 

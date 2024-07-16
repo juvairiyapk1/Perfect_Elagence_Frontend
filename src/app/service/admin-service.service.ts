@@ -2,7 +2,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, switchMap, take } from 'rxjs';
-import { PACKAGE, SUBCRIPTION, SUBSCRIBR, USER_ADMIN } from '../model/Interface';
+import { MonthlyUserSubscriptionDTO, PACKAGE, SUBCRIPTION, SUBSCRIBR, USER_ADMIN } from '../model/Interface';
 import { Store } from '@ngrx/store';
 import { selectToken } from '../state/auth.selectors';
 
@@ -91,11 +91,11 @@ export class AdminServiceService {
     )
   }
 
-  loadSubcriptions(){
+  loadSubcriptions() {
     return this.http.get<SUBCRIPTION[]>("")
   }
 
-  getSubscriber():Observable<SUBSCRIBR[]>{
+  getSubscriber(): Observable<SUBSCRIBR[]> {
 
     return this.token$.pipe(
       take(1),
@@ -108,6 +108,56 @@ export class AdminServiceService {
       })
     );
   }
+
+  getUserCounts(): Observable<any> {
+    return this.token$.pipe(
+      take(1),
+      switchMap((token) => {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+
+        });
+        return this.http.get(`${BASE_URL}admin/count`, { headers });
+      })
+    );
+  }
+
+
+
+
+
+  getMonthlyUserAndSubscriptionData(): Observable<MonthlyUserSubscriptionDTO> {
+    return this.token$.pipe(
+      take(1),
+      switchMap((token) => {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+
+        });
+        return this.http.get<MonthlyUserSubscriptionDTO>(`${BASE_URL}admin/user-subscription`, { headers });
+
+      })
+    );
+  }
+
+  getMonthlyRevenue(): Observable<any> {
+    return this.token$.pipe(
+      take(1),
+      switchMap((token) => {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+
+        });
+
+        return this.http.get(`${BASE_URL}admin/monthly`,{headers});
+      })
+    );
+  }
+
+
+ 
+
+
 
 
 }
