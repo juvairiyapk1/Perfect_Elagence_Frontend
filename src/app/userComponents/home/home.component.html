@@ -21,7 +21,7 @@
 <div class="card-container" >
   
     @for (profile of dataSource.filteredData; track profile) {
-    <mat-card class="profile-card" (click)="isSubscribed==='true' ? userProfilePopUp() : null">
+    <mat-card class="profile-card" (click)="isSubscribed==='true' ? userProfilePopUp(profile.id) : null">
       <mat-card-header>
         <div mat-card-avatar class="profile-avatar" [style.background-image]="'url(' + profile.image + ')'" [style.background-size]="'cover'" [style.background-position]="'center'"></div>
         <mat-card-title class="card_title">{{profile.name}}</mat-card-title>

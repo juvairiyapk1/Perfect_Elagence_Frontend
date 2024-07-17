@@ -5,7 +5,7 @@ import { BreakpointObserver } from '@angular/cdk/layout'
 import { RegisterServiceService } from '../../service/register-service.service';
 import { Store } from '@ngrx/store';
 import { clearToken } from '../../state/auth.actions';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ProfileService } from '../../service/profile.service';
 import { PROFILE_PROFILE, USER_PROFILE } from '../../model/Interface';
@@ -36,6 +36,7 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
     private store:Store,
     private router:Router,
     private profileService:ProfileService,
+    private route:ActivatedRoute
   
   ){
     if(typeof window !== 'undefined' && window.localStorage){
@@ -50,6 +51,15 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
      this.profileUpdateSubscription = this.profileService.profileUpdated$.subscribe(()=>{
       this.fetchProfile()
      });
+
+     console.log('UserSideNavComponent initialized');
+  this.route.queryParams.subscribe(params => {
+    console.log('Query params:', params);
+    if (params['redirectTo'] === 'success') {
+      console.log('Redirecting to success');
+      this.router.navigate(['success'], { relativeTo: this.route });
+    }
+  });
   }
   
   fetchProfile(): void {

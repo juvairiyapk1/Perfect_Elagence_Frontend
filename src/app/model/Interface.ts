@@ -47,6 +47,7 @@ export interface USER_ADMIN {
 }
 
 export interface PROFILE {
+    id:number;
     name: string;
     dob: Date;
     homeLocation: string;
@@ -167,4 +168,47 @@ export interface MonthlyUserSubscriptionDTO {
     subscriptions: number[];
   }
 
+  export interface PROFILEBYUSER{
+
+    name?: string;
+    dob?: Date;
+    education?: string;
+    homeLocation?: string;
+    relegion?: string;
+    image?: string;
+    gender?: string;
+    physicaleStatus?: string;
+    profession?: string;
+    height?: string;
+    weight?: string;
+    skinTone?: string;
+    bodyType?: string;
+    presentLocation?: string;
+    email?: string;
+    preferredContactType?: string;
+    ContactPerson?: string;
+    currentLocation?: string;
+    motherTongue?: string;
+    eatingHabits?: string;
+    phoneNumber?: number;
+    contactPersonAndRelationship?: string;
+    convenientTimeToCall?: string;
+    primaryNumber?: string;
+    secondryNumber?:string;
+    residentialStatus?: string;
+    willingToRelocate?: string;
+    languagesKnown?: string;
+    educationInstitute?: string;
+    eyeColor?: string;
+    bloodGroup?: string;
+    familyType?: string;
+    homeType?: string;
+    livingSituation?: string;
+    marriagePlans?: string;
+    hairColor?: string;
+    hairType?: string;
+    financialStatus?: string;
+    maritalStatus?: string;
+
+  }
 

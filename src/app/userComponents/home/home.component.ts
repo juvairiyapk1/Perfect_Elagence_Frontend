@@ -94,9 +94,12 @@ export class HomeComponent implements OnInit{
     this.dataSource.filter=value;
   }
 
-  userProfilePopUp(){
+  userProfilePopUp(userId:number){
+     console.log(userId+"userzzz")
     this.dialog.open(UserProfileModalComponent,{
-      width:'45%'
+      width:'80%',
+      height:'90%',
+      data: { userId: userId }
     });
   }
     

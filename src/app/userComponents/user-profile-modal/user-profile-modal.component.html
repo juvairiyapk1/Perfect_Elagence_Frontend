@@ -1,9 +1,69 @@
-<div>
-    <div>
-        <img src="" alt="">
-    </div>
-    <div>
-        
-    </div>
-
+<div class="flex justify-between items-center w-full">
+  <h2 class="text-xl font-semibold">User Profile</h2>
+  <mat-icon class="cursor-pointer" (click)="closeDialog()">close</mat-icon>
 </div>
+
+<mat-dialog-content>
+  <div class="bg-card rounded-lg shadow-lg overflow-hidden p-2">
+    <div class="flex flex-col md:flex-row">
+      <div class="w-full  mb-4 md:mb-0 md:pr-4">
+        <div class="w-full h-[350px] md:h-[600px]"> <!-- Full width, adjust height as needed --> <!-- Adjust height as needed -->
+          <img [src]="profile.image" alt="Profile Picture" class="w-full h-full object-cover" />
+        </div>
+      </div>
+      <div class="w-full md:w-2/3">
+        <h2 class="text-2xl font-semibold mb-4">{{profile.name | uppercase}}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-black">
+          <div>
+            <p><strong>Height:</strong> {{profile.height}} cm</p>
+            <p><strong>Weight:</strong> {{profile.weight}} kg</p>
+            <p><strong>Marital Status:</strong> {{profile.maritalStatus}}</p>
+            <p><strong>Education:</strong> {{profile.education}}</p>
+            <p><strong>Home Location:</strong> {{profile.homeLocation}}</p>
+            <p><strong>Date of Birth:</strong> {{profile.dob | date}}</p>
+            <p><strong>Gender:</strong> {{profile.gender}}</p>
+            <p><strong>Religion:</strong> {{profile.relegion}}</p>
+            <p><strong>Profession:</strong> {{profile.profession}}</p>
+            <p><strong>Physical Status:</strong> {{profile.physicaleStatus}}</p>
+            <p><strong>Body Type:</strong> {{profile.bodyType}}</p>
+            <p><strong>Skin Tone:</strong> {{profile.skinTone}}</p>
+            <p><strong>Present Location:</strong> {{profile.presentLocation}}</p>
+            <p><strong>Current Location:</strong> {{profile.currentLocation}}</p>
+            <p><strong>Living Situation:</strong> {{profile.livingSituation}}</p>
+            <p><strong>Marriage Plans:</strong> {{profile.marriagePlans}}</p>
+            
+          </div>
+          <div>
+            <p><strong>Mother Tongue:</strong> {{profile.motherTongue}}</p>
+            <p><strong>Eating Habits:</strong> {{profile.eatingHabits}}</p>
+            <p><strong>Financial Status:</strong> {{profile.financialStatus}}</p>
+            <p><strong>Residential Status:</strong> {{profile.residentialStatus}}</p>
+            <p><strong>Willing to Relocate:</strong> {{profile.willingToRelocate}}</p>
+            <p><strong>Languages Known:</strong> {{profile.languagesKnown}}</p>
+            <p><strong>Education Institute:</strong> {{profile.educationInstitute}}</p>
+            <p><strong>Eye Color:</strong> {{profile.eyeColor}}</p>
+            <p><strong>Blood Group:</strong> {{profile.bloodGroup}}</p>
+            <p><strong>Family Type:</strong> {{profile.familyType}}</p>
+            <p><strong>Home Type:</strong> {{profile.homeType}}</p>
+            <p><strong>Hair Color:</strong> {{profile.hairColor}}</p>
+            <p><strong>Hair Type:</strong> {{profile.hairType}}</p>
+          </div>
+        </div>
+        <div class="mt-6">
+          <h3 class="text-lg font-semibold mb-2">Contact Information:</h3>
+          <p><strong>Email:</strong> {{profile.email}}</p>
+          <p><strong>Mobile:</strong> {{profile.phoneNumber}}</p>
+          <p><strong>Phone Number:</strong> {{profile.secondryNumber}}</p>
+          <p><strong>Primary Number:</strong> {{profile.primaryNumber}}</p>
+          <p><strong>Preferred Contact Type:</strong> {{profile.preferredContactType}}</p>
+          <p><strong>Contact Person:</strong> {{profile.ContactPerson}}</p>
+          <p><strong>Contact Person and Relationship:</strong> {{profile.contactPersonAndRelationship}}</p>
+          <p><strong>Convenient Time to Call:</strong> {{profile.convenientTimeToCall}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<!-- <mat-dialog-actions>
+  <button mat-button (click)="closeDialog()">Close</button>
+</mat-dialog-actions> -->

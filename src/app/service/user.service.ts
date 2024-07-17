@@ -1,9 +1,12 @@
+import { UserSideNavComponent } from './../userComponents/user-side-nav/user-side-nav.component';
+import { PROFILEBYUSER } from './../model/Interface';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, switchMap, take } from 'rxjs';
 import { PROFILE } from '../model/Interface';
 import { Store } from '@ngrx/store';
 import { selectToken } from '../state/auth.selectors';
+import { env } from '../model/enviornment';
 
 
 const BASE_URL = 'http://localhost:8080/';
@@ -59,6 +62,19 @@ export class UserService {
 
   getProfession(){
     return this.professions;
+  }
+
+  getUserById(userId: number): Observable<PROFILEBYUSER> {
+    return this.token$.pipe(
+      take(1),
+      switchMap(token => {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        });
+        const params = new HttpParams().set('userId', userId.toString());
+        return this.http.get<PROFILEBYUSER>(`${BASE_URL}user/profileByUser`,{ headers,params});
+      })
+    );
   }
   
 }

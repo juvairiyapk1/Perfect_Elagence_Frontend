@@ -43,7 +43,7 @@ const routes: Routes = [
   {path:'profile',component:ProfileComponent},
   {path:'package',component:PackagesComponent},
   {path:'cancel',component:CancelComponent},
-  {path:'success',component:SucessComponent},
+  {path:'success',component:SucessComponent,pathMatch:'full'},
   
  ]},
  

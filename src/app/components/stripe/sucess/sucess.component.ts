@@ -12,6 +12,10 @@ export class SucessComponent implements OnInit {
   userId:string|null='';
 
   ngOnInit(): void {
+
+    this.route.queryParams.subscribe(params => {
+      const token = params['token'];});
+
     if(typeof window !== 'undefined' && window.localStorage){
       this.userId = localStorage.getItem('userId');
       console.log('Retrieved user ID:', this.userId); // Check the console output
