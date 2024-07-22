@@ -55,7 +55,7 @@ export interface PROFILE {
     education: string;
     profession: string;
     image?: string;
-
+    matchScore?: number | 'N/A';
 
 }
 
@@ -210,5 +210,14 @@ export interface MonthlyUserSubscriptionDTO {
     financialStatus?: string;
     maritalStatus?: string;
 
+  }
+
+
+ export interface MatchResponse {
+    matches: PartnerDto[];
+    subscribed: boolean;
+  }
+  export interface PartnerDto {
+    matchScore: number;
   }
 

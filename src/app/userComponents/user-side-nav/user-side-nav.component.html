@@ -44,10 +44,13 @@
                   <span>sms/Email Alerts</span>
                 </button>
                 <button mat-button>
-                  <mat-icon class="text-start">visibility_off</mat-icon>
-                  <span>Hide Profile</span>
+                  <mat-slide-toggle 
+                    [checked]="isProfileHidden"
+                    (change)="toggleProfileVisibility($event)">
+                    {{isProfileHidden ? 'Unhide Profile' : 'Hide Profile'}}
+                  </mat-slide-toggle>
                 </button>
-                <button mat-button>
+                <button mat-button (click)="openEmailVerifyPopUp()">
                   <mat-icon>lock</mat-icon>
                   <span>Edit Password</span>
                 </button>

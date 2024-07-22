@@ -25,4 +25,10 @@ export class OtpService {
   changePassword(request:{email:string; password:string;repeatPassword:string}):Observable<any>{
     return this.http.post(BASE_URL+'otp/changePassword',request)
   }
+
+   editPassword(request:{email:string;currentPassword:string,newPassword:string,repeatPassword:string}):Observable<any>{
+    return this.http.post(BASE_URL+'otp/editPassword',request);
+  }
+
+  
 }

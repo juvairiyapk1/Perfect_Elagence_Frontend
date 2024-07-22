@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { OtpService } from '../../service/otp.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
+import { EditPasswordComponent } from '../edit-password/edit-password.component';
 
 @Component({
   selector: 'app-email-otp-verification',
@@ -14,6 +15,7 @@ import { ChangePasswordComponent } from '../change-password/change-password.comp
 export class EmailOtpVerificationComponent implements OnInit {
   otpForm!: FormGroup;
   email!: string;
+  userId!:string|null;
 
   constructor(private builder: FormBuilder,
               private toast: ToastrService,
@@ -39,8 +41,16 @@ export class EmailOtpVerificationComponent implements OnInit {
         console.log(otpData.email+"My email");
       this.service.verifyOtp(otpData).subscribe(
         (res) => {
+          if (typeof window !== 'undefined' && window.localStorage) {
+            this.userId = localStorage.getItem('userId');
+           }
+          if(this.userId ==null){
           this.toast.success('OTP verified');
-          this.openChangePasswordPopUp();
+          this.openChangePasswordPopUp();}
+          else{
+            this.toast.success('OTP verified');
+            this.openEditPasswordPopUp();
+          }
         },
         (error) => {
           this.toast.error('OTP verification failed');
@@ -59,5 +69,14 @@ export class EmailOtpVerificationComponent implements OnInit {
       data: { email: this.email }
     });
     this.close()
+  }
+
+
+  openEditPasswordPopUp(){
+    this.dialog.open(EditPasswordComponent,{
+      width: '40%',
+      data:{email:this.email}
+    })
+    this.close();
   }
 }

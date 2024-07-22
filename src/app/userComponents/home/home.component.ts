@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { PROFILE, PROFILE_PROFILE } from '../../model/Interface';
+import {  PROFILE, PROFILE_PROFILE } from '../../model/Interface';
 import { UserService } from '../../service/user.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserProfileModalComponent } from '../user-profile-modal/user-profile-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,8 @@ export class HomeComponent implements OnInit{
   pageNo: number = 0;
   pageSize: number = 10;
   isSubscribed!:string|null;
+  matchScores:number[]=[];  
+  
 
   
   dataSource!: MatTableDataSource<PROFILE>;
@@ -40,28 +43,29 @@ export class HomeComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.pageSize = Number(localStorage.getItem('preferredPageSize')) || 10;
     this.loadProfiles();
     this.dataSource = new MatTableDataSource<PROFILE>(this.profiles);
-     
     this.dataSource.filterPredicate = (data: PROFILE, filter: string) => {
       const searchTerm = filter.trim().toLowerCase();
-      return data.name.toLowerCase().includes(searchTerm) || 
-             data.education.toLowerCase().includes(searchTerm) ||
-             data.profession.toLowerCase().includes(searchTerm) ||
-             data.homeLocation.toLowerCase().includes(searchTerm);
+      return data.name.toLowerCase().includes(searchTerm) ||
+        data.education.toLowerCase().includes(searchTerm) ||
+        data.profession.toLowerCase().includes(searchTerm) ||
+        data.homeLocation.toLowerCase().includes(searchTerm);
     };
-
   }
 
+  
   loadProfiles():void{
     const profession = this.selectedProfession === 'All Professions' ? '' : this.selectedProfession;
 
     this.service.getAllUsers(this.pageNo, this.pageSize,profession).subscribe(
       data => {
         this.profiles = data;
-        
         this.dataSource.data = this.profiles;
+        this.loadMatchCount();
         this.showNoProfilesMessage = this.profiles.length === 0;
+        
       },
       error => {
         console.error('Error fetching profiles:', error);
@@ -75,6 +79,7 @@ export class HomeComponent implements OnInit{
   }
 
   onPageSizeChange(event: Event): void {
+    localStorage.setItem('preferredPageSize', this.pageSize.toString());
     const newPageSize = (event.target as HTMLInputElement).value;
     this.pageSize = parseInt(newPageSize, 10);
     this.loadProfiles();
@@ -102,7 +107,20 @@ export class HomeComponent implements OnInit{
       data: { userId: userId }
     });
   }
-    
+
+  
+
+  loadMatchCount() {
+    this.service.findMatchCount().subscribe(res => {
+      this.matchScores = res.matches.map((match: any) => match.matchScore);
+      
+      // Combine profiles with match scores
+      this.dataSource.data = this.profiles.map((profile, index) => ({
+        ...profile,
+        matchScore: this.matchScores[index] || 'N/A'  // Use 'N/A' if no match score available
+      }));
+    });
+  }
 
   
 

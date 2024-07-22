@@ -31,7 +31,7 @@ export class Register1Component implements OnInit {
               private registerService:RegisterServiceService,
               private router:Router,
               private store:Store<any>,
-              private toast:ToastrService               ){}
+              private toast:ToastrService ){}
   
 
   select:string[]=[];

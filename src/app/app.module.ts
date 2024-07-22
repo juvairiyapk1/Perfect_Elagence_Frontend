@@ -53,6 +53,7 @@ import { SubscribersListComponent } from './adminComponent/subscribers-list/subs
 import { UserProfileModalComponent } from './userComponents/user-profile-modal/user-profile-modal.component';
 import { UserSubscriptionChartComponent } from './adminComponent/Dashboard/user-subscription-chart/user-subscription-chart.component';
 import { SubscriptionRevenueChartComponent } from './adminComponent/Dashboard/subscription-revenue-chart/subscription-revenue-chart.component';
+import { EditPasswordComponent } from './components/edit-password/edit-password.component';
 
 
 @NgModule({
@@ -92,6 +93,7 @@ import { SubscriptionRevenueChartComponent } from './adminComponent/Dashboard/su
     UserProfileModalComponent,
     UserSubscriptionChartComponent,
     SubscriptionRevenueChartComponent,
+    EditPasswordComponent,
     
     
     

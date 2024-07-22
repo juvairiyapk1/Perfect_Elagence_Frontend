@@ -1,5 +1,5 @@
 import { UserSideNavComponent } from './../userComponents/user-side-nav/user-side-nav.component';
-import { PROFILEBYUSER } from './../model/Interface';
+import { MatchResponse, PROFILEBYUSER } from './../model/Interface';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, switchMap, take } from 'rxjs';
@@ -7,6 +7,7 @@ import { PROFILE } from '../model/Interface';
 import { Store } from '@ngrx/store';
 import { selectToken } from '../state/auth.selectors';
 import { env } from '../model/enviornment';
+import { ToastrService } from 'ngx-toastr';
 
 
 const BASE_URL = 'http://localhost:8080/';
@@ -19,13 +20,16 @@ const BASE_URL = 'http://localhost:8080/';
 export class UserService {
 
   token$:Observable<string|null>;
+  userId!:string|null;
+
 
 
   constructor(private http:HttpClient,
-    private store:Store
-  ) { 
-    this.token$=store.select(selectToken);
-  }
+              private store:Store,
+             ) { 
+             this.token$=store.select(selectToken);
+             this.userId = localStorage.getItem('userId');
+             }
 
   getAllUsers(pageNo: number, pageSize: number,profession:string): Observable<PROFILE[]> {
     console.log("inside getAll users");
@@ -76,5 +80,53 @@ export class UserService {
       })
     );
   }
+
+  findMatchCount(): Observable<any> {
+    return this.token$.pipe(
+      take(1),
+      switchMap(token => {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        });
+        if (typeof window !== 'undefined' && window.localStorage) {
+         this.userId = localStorage.getItem('userId');
+        }
+        const urlWithParams = `${BASE_URL}user/findMatch?userId=${this.userId}`;
+        return this.http.get<any>(urlWithParams,{ headers });
+      })
+    );
+  }
+
+
+  
+  updateProfileVisibility(isProfileHidden: boolean): Observable<any> {
+    const endpoint = BASE_URL + 'user/toggleProfileVisibility';
+    const requestBody = { userId: this.userId, hidden: isProfileHidden };
+
+    return this.store.select(selectToken).pipe(
+      take(1),
+      switchMap(token => {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        });
+        return this.http.post(endpoint, requestBody, { headers: headers });
+      })
+    );
+  }
+
+  getProfileVisibility(): Observable<boolean> {
+    const userId = localStorage.getItem('userId');
+    return this.store.select(selectToken).pipe(
+      take(1),
+      switchMap(token => {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        });
+        return this.http.get<boolean>(`${BASE_URL}user/profileVisibility/${userId}`, { headers });
+      })
+    );
+  }
+
+
   
 }
