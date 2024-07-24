@@ -1,14 +1,15 @@
-<form [formGroup]="otpForm" (ngSubmit)="verify()">
-    <h2 class="text-center text-red-800">OTP Verification</h2>
-    <mat-icon class="close-icon " (click)="close()">close</mat-icon>
-    <div mat-dialog-content>
-      <mat-form-field>
-        <mat-label>Enter your OTP</mat-label>
-        <input matInput formControlName="otpInput">
-      </mat-form-field>
-    </div>
-    <div mat-dialog-actions class="centered-actions">
-      <button mat-raised-button color="primary">Verify</button>
-    </div>
-  </form>
-  
+<form [formGroup]="otpForm" (ngSubmit)="verify()" class="relative">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-center text-red-800 flex-grow">OTP Verification</h2>
+    <mat-icon class="close-icon absolute top-1 right-0 cursor-pointer" (click)="close()">close</mat-icon>
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Enter your OTP</mat-label>
+      <input matInput formControlName="otpInput">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions class="centered-actions">
+    <button mat-raised-button color="primary">Verify</button>
+  </div>
+</form>

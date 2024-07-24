@@ -221,3 +221,9 @@ export interface MonthlyUserSubscriptionDTO {
     matchScore: number;
   }
 
+  export interface Location {
+    name: string;
+    address: string[];
+    contact: string;
+  }
+

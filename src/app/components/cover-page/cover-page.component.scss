@@ -1,9 +1,9 @@
-
 #container {
     width: 100%;
     height: 80vh;
-    background-image: url(../../../assets/images/Pasted\ image.png);
+    background-image: url(../../../assets/images/lovely-couple-love-standing-forest.jpg);
     background-size: cover;
+    background-position: center;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
@@ -26,22 +26,19 @@
   
   .overlay-text {
     text-align: center;
-    font-size: calc(1.5rem + 1vw);
+    font-size: calc(1rem + 1vw);
     margin-bottom: 10px;
     font-family: "Rajdhani", sans-serif;
     font-weight: 500;
     font-style: normal;
-    position:relative;
-    right: 28%;
-    bottom: 10%;
-    padding: 4px;
-
+    position: relative;
+    right: 25%;
+    bottom: 30%;
   }
   
   .register-btn {
     color: white;
     padding: 10px 20px;
-    // border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1.5rem;
@@ -49,13 +46,11 @@
     justify-content: center;
     align-items: center;
     margin: 0 10% 10px auto;
-    border-color:rgb(152, 10, 10);
+    border-color: rgb(152, 10, 10);
     border-width: 1.5px;
-    
-    &:hover{
-        background-color: rgb(152, 10,10);
-        
-    }
+  }
+  .register-btn:hover {
+    background-color: rgb(152, 10, 10);
   }
   
   .text-text {
@@ -74,12 +69,9 @@
     position: relative;
     margin-top: 70px;
     margin-left: 100px;
-    
-    // margin: 20px auto;
   }
   
   .beside {
-    
     margin-left: calc(500px + 3vw);
     align-items: center;
     position: relative;
@@ -90,41 +82,40 @@
   .text-beside {
     font-size: 1.2rem;
     font-weight: 600;
-    
   }
   
   @media (max-width: 768px) {
     .overlay-text {
       font-size: 1.5rem;
     }
-  
     .chat,
     .secure {
       width: 50%;
     }
-  
     .beside,
     .beside1 {
       margin-left: 20px;
     }
   }
-  .secure{
-    background-image: url(../../../assets/images/flat-background-safer-internet-day_23-2151121216.avif);
+  .secure {
+    background-image: url(https://img.freepik.com/free-vector/flat-background-safer-internet-day_23-2151121216.jpg?t=st=1716963815~exp=1716967415~hmac=691aeb7de9860e784973a4023affa602aa4d398babeeb90eb64781066945de2a&w=1380);
     background-size: cover;
     width: 30%;
     height: 200px;
     position: relative;
     margin-top: 50px;
     float: right;
-    right: 50px; 
+    right: 50px;
     margin: 20px auto;
-
   }
-
-  .beside1{
+  
+  .beside1 {
     align-items: center;
     display: flex;
     margin-top: 100px;
     margin-left: 100px;
-    // margin: 20px auto;
+  }/*# sourceMappingURL=cover-page.component.css.map */
+
+  .maincontant{
+    margin-bottom: 10%;
   }

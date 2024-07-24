@@ -16,6 +16,8 @@ import { SucessComponent } from './components/stripe/sucess/sucess.component';
 import { DashComponent } from './adminComponent/Dashboard/dash/dash.component';
 import { SubscribersListComponent } from './adminComponent/subscribers-list/subscribers-list.component';
 import { authGuard } from './gurd/auth.guard';
+import { AboutUsComponent } from './components/about-us/about-us.component';
+import { ContacUsComponent } from './components/contac-us/contac-us.component';
 
 
 
@@ -42,11 +44,11 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   {path:'profile',component:ProfileComponent},
   {path:'package',component:PackagesComponent},
-  {path:'cancel',component:CancelComponent},
-  {path:'success',component:SucessComponent,pathMatch:'full'},
-  
+  { path: 'success', component: SucessComponent },
+  { path: 'cancel', component: CancelComponent },  
  ]},
- 
+ {path:'about-us',component:AboutUsComponent},
+ {path:'contact-us',component:ContacUsComponent},
  {path:'**',component:NotFoundComponent}
 ];
 

@@ -1,0 +1,16 @@
+<!-- contact.component.html -->
+<div class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div *ngFor="let location of locations" class="bg-white shadow-md rounded-lg p-6">
+        <h2 class="text-lg font-semibold text-red-600 border-b border-red-800 pb-2 mb-4">
+          {{ location.name }}
+        </h2>
+        <div class="space-y-2">
+          <p *ngFor="let line of location.address" class="text-sm text-gray-600">
+            {{ line }}
+          </p>
+          <p class="text-sm text-gray-700 font-medium mt-2">{{ location.contact }}</p>
+        </div>
+      </div>
+    </div>
+  </div>

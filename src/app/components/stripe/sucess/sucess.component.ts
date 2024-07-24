@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { setToken } from '../../../state/auth.actions';
 
 @Component({
   selector: 'app-sucess',
@@ -8,17 +10,33 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SucessComponent implements OnInit {
 
-  constructor(private route:ActivatedRoute){}
+  constructor(private route:ActivatedRoute,
+              private store:Store
+  ){}
   userId:string|null='';
+  token: string | null = null;
 
   ngOnInit(): void {
-
     this.route.queryParams.subscribe(params => {
-      const token = params['token'];});
+      this.token = params['token'];
+      if (this.token) {
+        this.store.dispatch(setToken({ token: this.token }));
+        
+        localStorage.setItem('token', this.token);
+      } else {
+        console.error('No token provided in URL');
+      }
+    });
 
-    if(typeof window !== 'undefined' && window.localStorage){
+    if (typeof window !== 'undefined' && window.localStorage) {
       this.userId = localStorage.getItem('userId');
-      console.log('Retrieved user ID:', this.userId); // Check the console output
+      if (this.userId) {
+        console.log('Retrieved user ID:', this.userId);
+      } else {
+        console.error('No user ID found in localStorage');
+      }
+    } else {
+      console.error('localStorage is not available');
     }
   }
   

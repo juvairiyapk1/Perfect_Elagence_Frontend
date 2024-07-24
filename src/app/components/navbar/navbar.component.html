@@ -8,8 +8,8 @@
       [ngClass]="{'flex': isMenuVisible, 'hidden': !isMenuVisible, 'md:flex': true}">      
        @if(!isLoggedIn){
       <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Home</a>
-      <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">About us</a>
-      <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Contact us</a> 
+      <a routerLink="/about-us" class="text-white hover:text-gray-300 py-2 md:py-0">About us</a>
+      <a routerLink="/contact-us" class="text-white hover:text-gray-300 py-2 md:py-0">Contact us</a> 
       
       <button mat-riased-button class="bg-white text-red-800 h-8 px-4 rounded" (click)="openLoginPopUp()">Login</button>
       }
