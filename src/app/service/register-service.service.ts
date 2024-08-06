@@ -15,10 +15,10 @@ const BASE_URL = ['http://localhost:8080/auth/'];
   providedIn: 'root'
 })
 export class RegisterServiceService {
-  private countryUrl='https://restcountries.com/v3.1/all';
-  
+  private countryUrl = 'https://restcountries.com/v3.1/all';
 
-  
+
+
 
   private religions: string[] = [
     'Christianity',
@@ -30,7 +30,7 @@ export class RegisterServiceService {
     'Ohter'
   ];
 
-  private select:string[]=[
+  private select: string[] = [
     "Son",
     "Doughter",
     "Sister",
@@ -39,41 +39,41 @@ export class RegisterServiceService {
     "Relative",
     "Myself"];
 
-   private skinTones:string[]=[
-      "Very fair",
-      "Fair",
-      "Wheatish",
-      "Wheatish brown",
-      "Dark",
-      "Prefer not say"];
-    
- private bodyTypes:string[]=[
-      "Average",
-      "Athletic",
-      "Slim",
-      "Heavy"];
+  private skinTones: string[] = [
+    "Very fair",
+    "Fair",
+    "Wheatish",
+    "Wheatish brown",
+    "Dark",
+    "Prefer not say"];
 
-  private education:string[]=[
-        "Doctorate",
-        "Masters",
-        "Bachelors",
-        "Diploma",
-        "Trade School/TTC/ITI",
-        "High Secondry School",
-        " Less thanHigh School",
-        "Other"
-      ]; 
-        
-   private profession:string[]=[
-          "Student",
-          "Bussiness",
-          "Agriculture",
-          "Government",
-          "Teacher",
-          "Doctor" ,
-          "Other"
-          ];
-  private languages:string[]=[
+  private bodyTypes: string[] = [
+    "Average",
+    "Athletic",
+    "Slim",
+    "Heavy"];
+
+  private education: string[] = [
+    "Doctorate",
+    "Masters",
+    "Bachelors",
+    "Diploma",
+    "Trade School/TTC/ITI",
+    "High Secondry School",
+    " Less thanHigh School",
+    "Other"
+  ];
+
+  private profession: string[] = [
+    "Student",
+    "Bussiness",
+    "Agriculture",
+    "Government",
+    "Teacher",
+    "Doctor",
+    "Other"
+  ];
+  private languages: string[] = [
     "Malayalam",
     "English",
     "Hindi",
@@ -84,13 +84,13 @@ export class RegisterServiceService {
     "other"
   ];
 
-  private eatHabits:string[]=[
+  private eatHabits: string[] = [
     "vegetarian",
     "Non-vegetarian",
     "Other"
   ];
 
-  private financialStatus:string[]=[
+  private financialStatus: string[] = [
     "Rich",
     "Upper Middle-class",
     "Middle-class",
@@ -99,12 +99,12 @@ export class RegisterServiceService {
     "Do not want to tell at this time"
   ];
 
-  private contactType:string[]=[
+  private contactType: string[] = [
     "Primary",
     "Secondary"
   ];
 
-  private times:string[]=[
+  private times: string[] = [
     "Morning",
     "Afternoon",
     "Evening",
@@ -112,7 +112,7 @@ export class RegisterServiceService {
   ]
 
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getCountries(): Observable<any> {
     return this.http.get<any>(this.countryUrl);
@@ -122,67 +122,67 @@ export class RegisterServiceService {
     return this.religions.sort((a, b) => a.localeCompare(b));
   }
 
-  getSelectFor():string[]{
+  getSelectFor(): string[] {
     return this.select;
   }
 
-  getSkinTone():string[]{
+  getSkinTone(): string[] {
     return this.skinTones;
   }
 
-  getBodyType():string[]{
+  getBodyType(): string[] {
     return this.bodyTypes;
   }
 
-  getEducation():string[]{
+  getEducation(): string[] {
     return this.education;
   }
 
-  getProfession(){
+  getProfession() {
     return this.profession;
   }
 
-  getLanguages(){
+  getLanguages() {
     return this.languages;
   }
 
-  getHabits(){
+  getHabits() {
     return this.eatHabits;
   }
 
-  getFinancialStatus(){
+  getFinancialStatus() {
     return this.financialStatus;
   }
 
-  getContactType(){
+  getContactType() {
     return this.contactType;
   }
 
-  getTime(){
+  getTime() {
     return this.times;
   }
 
-  
-  register(request:USER): Observable<any> {
+
+  register(request: USER): Observable<any> {
     console.log(request);
     return this.http.post(BASE_URL + 'register', request);
   }
-  
 
-  login(request:LOGIN): Observable<any> {
-    console.log(request)  
-    return this.http.post(BASE_URL + 'login',request);
+
+  login(request: LOGIN): Observable<any> {
+    console.log(request)
+    return this.http.post(BASE_URL + 'login', request);
   }
 
 
-  logout():Observable<void>{
-    return this.http.post<void>(BASE_URL + 'logout',{})
+  logout(): Observable<void> {
+    return this.http.post<void>(BASE_URL + 'logout', {})
   }
 
 
-  private createAuthorizationHeader(){
+  private createAuthorizationHeader() {
     const jwtToken = localStorage.getItem('jwt');
-    if(jwtToken){
+    if (jwtToken) {
       return new HttpHeaders().set(
         "Authorization", "Bearer " + jwtToken
       )
@@ -193,6 +193,6 @@ export class RegisterServiceService {
   }
 
 
- 
-  
+
+
 }

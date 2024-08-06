@@ -1,20 +1,21 @@
 import { inject } from '@angular/core';
-import { CanActivateFn } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable, map } from 'rxjs';
-import { selectToken } from '../state/auth.selectors';
+import { CanActivateFn, Router } from '@angular/router';
 
 export const authGuard: CanActivateFn = (route, state) => {
 
-const store=inject(Store);
-return store.select(selectToken).pipe(
-  map(token =>{
-    if(token){
-      return true;
-    }else{
-      return false;
-    }
-  })
-);
+  const router=inject(Router)
+
+  if(typeof localStorage !== 'undefined'){
+   const token= localStorage.getItem('jwtToken');
   
+  if(token != null){
+    return true;
+  }else{
+    router.navigateByUrl("/coverPage")
+    return false;
+  }
+}else{
+  return false;
+}
+
 };

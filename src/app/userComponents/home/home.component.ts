@@ -5,6 +5,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { UserProfileModalComponent } from '../user-profile-modal/user-profile-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
+import { ProfileService } from '../../service/profile.service';
+import { Router } from '@angular/router';
+import { ChatComponent } from '../chat/chat.component';
 
 @Component({
   selector: 'app-home',
@@ -16,8 +19,10 @@ export class HomeComponent implements OnInit{
   ProfileImage!:PROFILE_PROFILE;
   pageNo: number = 0;
   pageSize: number = 10;
-  isSubscribed!:string|null;
+  isSubscribed:boolean|undefined;
   matchScores:number[]=[];  
+  showchat=false;
+  currentUserId: string|null; 
   
 
   
@@ -28,23 +33,31 @@ export class HomeComponent implements OnInit{
 
   showNoProfilesMessage: boolean = false;
 
+  token:string|null;
 
 
   constructor(private service:UserService,
-    private dialog:MatDialog
+    private dialog:MatDialog,
+    private profileService:ProfileService,
+    private router:Router
   ){
     this.professions = ['All professions',...service.getProfession()];
 
     if(typeof window !== 'undefined' && window.localStorage){
-     this.isSubscribed =localStorage.getItem('isSubscribed')
+       this.token =localStorage.getItem('jwtToken');
+       this.currentUserId =localStorage.getItem('userId');
+    }else{
+      this.token = null;
+      this.currentUserId =null;
     }
 
-
+  
   }
 
   ngOnInit(): void {
     this.pageSize = Number(localStorage.getItem('preferredPageSize')) || 10;
     this.loadProfiles();
+    this.loadSubscription();
     this.dataSource = new MatTableDataSource<PROFILE>(this.profiles);
     this.dataSource.filterPredicate = (data: PROFILE, filter: string) => {
       const searchTerm = filter.trim().toLowerCase();
@@ -72,6 +85,23 @@ export class HomeComponent implements OnInit{
       }
     );
   }
+
+  loadSubscription(): void {
+    this.profileService.getProfile().subscribe(
+      res => {
+        if (res && typeof res.subscribed === 'boolean') {
+          this.isSubscribed = res.subscribed;
+          console.log(this.isSubscribed); // Should log true or false
+        } else {
+          console.error('Unexpected response structure:', res);
+        }
+      },
+      error => {
+        console.error('Error fetching profile subscription status:', error);
+      }
+    );
+  }
+  
 
   onPageChange(newPage: number): void {
     this.pageNo = newPage;
@@ -122,6 +152,25 @@ export class HomeComponent implements OnInit{
     });
   }
 
+  
+  closeChat(){
+    this.showchat=true;
+  }
+
+  
+
+  // initiateChat(recipientId: number) {
+  //     this.router.navigate(['/user/chat'], { queryParams: { recipientId } });
+    
+  // }
+  
+  initiateChat(recipientId: number, profileName: string, profileImage: any) {
+    console.log(`Initiating chat with recipientId: ${recipientId}, profileName: ${profileName}, profileImage: ${profileImage}`);
+    this.router.navigate(['/user/chat'], {
+      queryParams: { recipientId },
+      state: { profileName, profileImage }
+    });
+  }
   
 
 }

@@ -1,241 +1,248 @@
-<div class="header">
- <h1>Register Now For Free!</h1>
- <p>Find your special someone from lakhs of varified profiles</p>
-</div>
+<div class="container mx-auto px-4 py-8">
+  <div class="text-center mb-8">
+    <h1 class="text-3xl font-bold text-red-800 mb-2">Register Now For Free!</h1>
+    <p class="text-lg text-gray-600">Find your special someone from lakhs of verified profiles</p>
+  </div>
 
-<form [formGroup]="userRegister" (ngSubmit)="handleSubmit()">
-    <mat-horizontal-stepper [linear]="isLinear" #stepper>
-     <mat-step [stepControl]="getAccountSetup()">
-      <div formGroupName="accountSetUp">
-       <ng-template matStepLabel>Account set up</ng-template>
-        <p>To set up account</p>
-        <mat-form-field class="mat-50" appearance="fill">
-         <mat-label>Create Profile For</mat-label>
-         <mat-select formControlName="createProfileFor">
-             @for(choose of select; track choose){
-             <mat-option [value]="choose">{{choose}}</mat-option>
-             }
-         </mat-select>
-        </mat-form-field>
-        <mat-form-field  appearence="fill" class="mat-50">
-         <mat-label>Bride/Groom Name</mat-label>
-         <input matInput formControlName="name">
-        </mat-form-field>
-        <mat-form-field  appearence="fill" class="mat-50">
-         <mat-label>Phone Number</mat-label>
-         <input matInput formControlName="phoneNumber">
-        </mat-form-field>
-         <mat-label>Gender</mat-label >
-           <mat-radio-group formControlName="gender" class="mat-50">
-             <mat-radio-button value="Male">Male</mat-radio-button>
-              <mat-radio-button value="Female">Female</mat-radio-button>
-           </mat-radio-group>
-         <div>
-           <button mat-raised-button matStepperNext color="primary" >Next</button>
-         </div>
-       </div>  
-     </mat-step>
-     <mat-step [stepControl]="getBasicInfo()">
-       <div formGroupName="basicInformation">
-       <ng-template matStepLabel>Basic Information</ng-template>
-       <p>You have completed 20%</p>
-       <mat-form-field>
-         <mat-label>Date Of Birth</mat-label>
-         <input matInput [matDatepicker]="myDatePicker"  formControlName="DOB">
-         <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
-         <mat-datepicker #myDatePicker></mat-datepicker>
-       </mat-form-field>
-       <mat-form-field>
-         <mat-label>Religion</mat-label>
-         <mat-select formControlName="relegion">
-             @for(religion of religions; track religion){
-             <mat-option [value]="religion">{{religion}}</mat-option>
-             }
-         </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-         <mat-label>Nationality</mat-label>
-         <mat-select formControlName="nationality">
-             @for(country of countries; track country){
-             <mat-option [value]="country.name.common">{{country.name.common}}</mat-option>
-             }
-         </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-         <mat-label>Email Id</mat-label>
-         <input matInput  placeholder="abc@gmail.com" formControlName="email">
-        </mat-form-field>
-        <mat-form-field>
-         <mat-label>Password</mat-label>
-         <input matInput  placeholder="Password" formControlName="password" type="password">
-       </mat-form-field>
+  <form [formGroup]="userRegister" (ngSubmit)="handleSubmit()" class="max-w-4xl mx-auto">
+    <mat-horizontal-stepper [linear]="isLinear" #stepper class="bg-white shadow-lg rounded-lg">
+      
+      <!-- Step 1: Account Setup -->
+      <mat-step [stepControl]="getAccountSetup()">
+        <div formGroupName="accountSetUp" class="p-6">
+          <ng-template matStepLabel>Account set up</ng-template>
+          <p class="text-lg mb-4">To set up account</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Create Profile For</mat-label>
+              <mat-select formControlName="createProfileFor">
+                @for(choose of select; track choose){
+                <mat-option [value]="choose">{{choose}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Bride/Groom Name</mat-label>
+              <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Phone Number</mat-label>
+              <input matInput formControlName="phoneNumber">
+            </mat-form-field>
+            <div class="w-full">
+              <mat-label class="block mb-2">Gender</mat-label>
+              <mat-radio-group formControlName="gender" class="flex space-x-4">
+                <mat-radio-button value="Male">Male</mat-radio-button>
+                <mat-radio-button value="Female">Female</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+          <div class="mt-6 flex justify-end">
+            <button mat-raised-button matStepperNext color="primary" class="px-6 py-2">Next</button>
+          </div>
+        </div>
+      </mat-step>
 
-       <div>
-         <button mat-raised-button matStepperPrevious color="primary">Back</button>
-         <button mat-raised-button matStepperNext color="primary">Next</button>
-       </div>
-     </div> 
-     </mat-step>
-     <mat-step [stepControl]="getPersonalDetails()">
-       <div formGroupName="personalDetails">
-       <ng-template matStepLabel>Personal Details</ng-template> 
-       <p>Greate !! to have completed 45%</p> 
-       <mat-form-field>
-         <mat-label>Height</mat-label>
-         <input matInput formControlName="height">
-        </mat-form-field>
-        <mat-form-field>
-         <mat-label>Weight</mat-label>
-         <input matInput formControlName="weight">
-        </mat-form-field>
-        <mat-form-field>
-         <mat-label>Skin Tone</mat-label>
-         <mat-select formControlName="skinTone">
-             @for(skinTone of skinTones; track skinTone){
-             <mat-option value="skinTone">{{skinTone}}</mat-option>
-             }
-         </mat-select>
-        </mat-form-field>
-        <mat-label>Marital Status</mat-label>
-        <mat-radio-group formControlName="maritalStatus" class="mat-50">
-          <mat-radio-button value="Single">Single</mat-radio-button>
-          <mat-radio-button value="Married">Married</mat-radio-button>
-          <mat-radio-button value="Widow">Widow/Widower</mat-radio-button>
-        </mat-radio-group>
-        <mat-form-field>
-         <mat-label>Body Type</mat-label>
-         <mat-select formControlName="bodyType">
-             @for(bodyType of bodyTypes; track bodyType){
-             <mat-option [value]="bodyType">{{bodyType}}</mat-option>
-             }
-         </mat-select>
-        </mat-form-field>
-        <mat-label>Physically challenged?</mat-label>
-           <mat-radio-group formControlName="physicaleStatus">
-           <mat-radio-button value="Yes">Yes</mat-radio-button>
-           <mat-radio-button value="No">No</mat-radio-button>
-        </mat-radio-group> 
-       <div>        
-         <button mat-raised-button  matStepperPrevious color="primary">Back</button>
-         <button mat-raised-button  matStepperNext color="primary">Next</button>
-       </div>
-     </div>
-     </mat-step>
-     <mat-step [stepControl]="getEducationAndLocation()">
-       <div formGroupName="educationAndLocation">
-       <ng-template matStepLabel>Education & Location</ng-template>
-       <p>Greate !! to have completed 75%</p>  
-        <mat-form-field>
-         <mat-label>Education</mat-label>
-         <mat-select formControlName="education">
-             @for(edu of education; track edu){
-             <mat-option [value]="edu">{{edu}}</mat-option>
-             }
-         </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Profession</mat-label>
-          <mat-select formControlName="profession">
-              @for(profession of professions; track profession){
-              <mat-option [value]="profession">{{profession}}</mat-option>
-              }
-          </mat-select>
-         </mat-form-field>
-        <mat-form-field >
-         <mat-label>Home Location</mat-label>
-         <!-- <input matInput> -->
-         <textarea matInput formControlName="homeLocation"></textarea>
-        </mat-form-field>
-        <mat-form-field >
-         <mat-label>current Location</mat-label>
-         <!-- <input matInput> -->
-         <textarea matInput formControlName="currentLocation"></textarea>
-        </mat-form-field>
-        
-       <div>
-         <button mat-raised-button  matStepperPrevious color="primary">Back</button>
-         <button mat-raised-button matStepperNext color="primary">Next</button>
-       </div>
-     </div> 
-     </mat-step>
-     <mat-step [stepControl]="getSelfDescription()">
-       <div formGroupName="selfDescription">
-       <ng-template matStepLabel>Self Description</ng-template>  
-       <p>Greate !! to have completed 90%</p>
-       <mat-form-field>
-         <mat-label>Mother Tongue</mat-label>
-         <mat-select formControlName="motherTongue">
-          @for(language of languages; track language){
-          <mat-option [value]="language">{{language}}</mat-option>
-          }
-         </mat-select>
-         </mat-form-field>
+      <!-- Step 2: Basic Information -->
+      <mat-step [stepControl]="getBasicInfo()">
+        <div formGroupName="basicInformation" class="p-6">
+          <ng-template matStepLabel>Basic Information</ng-template>
+          <p class="text-lg mb-4">You have completed 20%</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Date Of Birth</mat-label>
+              <input matInput [matDatepicker]="myDatePicker" formControlName="DOB">
+              <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
+              <mat-datepicker #myDatePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Religion</mat-label>
+              <mat-select formControlName="relegion">
+                @for(religion of religions; track religion){
+                <mat-option [value]="religion">{{religion}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Nationality</mat-label>
+              <mat-select formControlName="nationality">
+                @for(country of countries; track country){
+                <mat-option [value]="country.name.common">{{country.name.common}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Email Id</mat-label>
+              <input matInput placeholder="abc@gmail.com" formControlName="email">
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Password</mat-label>
+              <input matInput placeholder="Password" formControlName="password" type="password">
+            </mat-form-field>
+          </div>
+          <div class="mt-6 flex justify-end space-x-4">
+            <button mat-raised-button matStepperPrevious color="primary" class="px-6 py-2">Back</button>
+            <button mat-raised-button matStepperNext color="primary" class="px-6 py-2">Next</button>
+          </div>
+        </div>
+      </mat-step>
 
-         <mat-form-field>
-         <mat-label>Eating Habits</mat-label>
-         <mat-select formControlName="eatingHabits">
-          @for(eatHabit of eatHabits; track eatHabit){
-          <mat-option [value]="eatHabit">{{eatHabit}}</mat-option>
-          }
-          </mat-select>
-         </mat-form-field>
-         
-         <mat-form-field>
-           <mat-label>Finacial Status</mat-label>
-           <mat-select formControlName="financialStatus">
-            @for(finance of financialStatus; track finance){
-            <mat-option [value]="finance">{{finance}}</mat-option>
-            }
-            </mat-select>
-         </mat-form-field>
+      <!-- Step 3: Personal Details -->
+      <mat-step [stepControl]="getPersonalDetails()">
+        <div formGroupName="personalDetails" class="p-6">
+          <ng-template matStepLabel>Personal Details</ng-template>
+          <p class="text-lg mb-4">Great!! You have completed 45%</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Height</mat-label>
+              <input matInput formControlName="height">
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Weight</mat-label>
+              <input matInput formControlName="weight">
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Skin Tone</mat-label>
+              <mat-select formControlName="skinTone">
+                @for(skinTone of skinTones; track skinTone){
+                <mat-option [value]="skinTone">{{skinTone}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <div class="w-full">
+              <mat-label class="block mb-2">Marital Status</mat-label>
+              <mat-radio-group formControlName="maritalStatus" class="flex flex-col space-y-2">
+                <mat-radio-button value="Single">Single</mat-radio-button>
+                <mat-radio-button value="Married">Married</mat-radio-button>
+                <mat-radio-button value="Widow">Widow/Widower</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Body Type</mat-label>
+              <mat-select formControlName="bodyType">
+                @for(bodyType of bodyTypes; track bodyType){
+                <mat-option [value]="bodyType">{{bodyType}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <div class="w-full">
+              <mat-label class="block mb-2">Physically challenged?</mat-label>
+              <mat-radio-group formControlName="physicaleStatus" class="flex space-x-4">
+                <mat-radio-button value="Yes">Yes</mat-radio-button>
+                <mat-radio-button value="No">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+          <div class="mt-6 flex justify-end space-x-4">
+            <button mat-raised-button matStepperPrevious color="primary" class="px-6 py-2">Back</button>
+            <button mat-raised-button matStepperNext color="primary" class="px-6 py-2">Next</button>
+          </div>
+        </div>
+      </mat-step>
 
-         <mat-form-field>
-           <mat-label>PrimaryNumber</mat-label>
-           <input matInput formControlName="primaryNumber" >
-         </mat-form-field>
+      <!-- Step 4: Education & Location -->
+      <mat-step [stepControl]="getEducationAndLocation()">
+        <div formGroupName="educationAndLocation" class="p-6">
+          <ng-template matStepLabel>Education & Location</ng-template>
+          <p class="text-lg mb-4">Great!! You have completed 75%</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Education</mat-label>
+              <mat-select formControlName="education">
+                @for(edu of education; track edu){
+                <mat-option [value]="edu">{{edu}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Profession</mat-label>
+              <mat-select formControlName="profession">
+                @for(profession of professions; track profession){
+                <mat-option [value]="profession">{{profession}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Home Location</mat-label>
+              <textarea matInput formControlName="homeLocation"></textarea>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Current Location</mat-label>
+              <textarea matInput formControlName="currentLocation"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="mt-6 flex justify-end space-x-4">
+            <button mat-raised-button matStepperPrevious color="primary" class="px-6 py-2">Back</button>
+            <button mat-raised-button matStepperNext color="primary" class="px-6 py-2">Next</button>
+          </div>
+        </div>
+      </mat-step>
 
-         <mat-form-field>
-           <mat-label>SecondryNumber</mat-label>
-           <input matInput formControlName="secondryNumber"  >
-         </mat-form-field>
-
-         <mat-form-field>
-           <mat-label>Preferred Contact Type</mat-label>
-           <mat-select formControlName="preferredContactType">
-            @for(contact of contactType; track contact){
-            <mat-option [value]="contact">{{contact}}</mat-option>
-            }
-            </mat-select>
-         </mat-form-field>
-         
-         <mat-form-field>
-           <mat-label>Contact Person & Relationship</mat-label>
-           <input matInput formControlName="contactPersonAndRelationship">
-         </mat-form-field>
-         
-         <mat-form-field>
-           <mat-label>Convenient Time To Call</mat-label>
-           <mat-select formControlName="convenientTimeToCall">
-            @for(time of times; track time){
-            <mat-option [value]="time">{{time}}</mat-option>
-            }
-            </mat-select>
-         </mat-form-field>
-       
-       <div>
-         <button mat-raised-button color="primary" matStepperPrevious>Back</button>
-         <button mat-raised-button color="accent" type="submit" matStepperNext>Submit</button>
-       </div>
-     </div>
-     </mat-step>
-     <!-- <mat-step optional>
-     <ng-template matStepLabel>Add Photo</ng-template>   
-     <div>
-       <p>Add Photo</p>
-       <button mat-raised-button color="primary">
-        Skip
-       </button>
-     </div> 
-     </mat-step> -->
+      <!-- Step 5: Self Description -->
+      <mat-step [stepControl]="getSelfDescription()">
+        <div formGroupName="selfDescription" class="p-6">
+          <ng-template matStepLabel>Self Description</ng-template>
+          <p class="text-lg mb-4">Great!! You have completed 90%</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Mother Tongue</mat-label>
+              <mat-select formControlName="motherTongue">
+                @for(language of languages; track language){
+                <mat-option [value]="language">{{language}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Eating Habits</mat-label>
+              <mat-select formControlName="eatingHabits">
+                @for(eatHabit of eatHabits; track eatHabit){
+                <mat-option [value]="eatHabit">{{eatHabit}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Financial Status</mat-label>
+              <mat-select formControlName="financialStatus">
+                @for(finance of financialStatus; track finance){
+                <mat-option [value]="finance">{{finance}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Primary Number</mat-label>
+              <input matInput formControlName="primaryNumber">
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Secondary Number</mat-label>
+              <input matInput formControlName="secondryNumber">
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Preferred Contact Type</mat-label>
+              <mat-select formControlName="preferredContactType">
+                @for(contact of contactType; track contact){
+                <mat-option [value]="contact">{{contact}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Contact Person & Relationship</mat-label>
+              <input matInput formControlName="contactPersonAndRelationship">
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Convenient Time To Call</mat-label>
+              <mat-select formControlName="convenientTimeToCall">
+                @for(time of times; track time){
+                <mat-option [value]="time">{{time}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="mt-6 flex justify-end space-x-4">
+            <button mat-raised-button matStepperPrevious color="primary" class="px-6 py-2">Back</button>
+            <button mat-raised-button color="accent" type="submit" class="px-6 py-2">Submit</button>
+          </div>
+        </div>
+      </mat-step>
     </mat-horizontal-stepper>
-   </form>  
+  </form>
+</div>

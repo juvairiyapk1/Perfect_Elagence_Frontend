@@ -1,88 +1,93 @@
-<form [formGroup]="userUpdate" (ngSubmit)="submitForm()">
-  <mat-form-field class="pl-6 pr-6 pt-5">
-    <mat-label>Name</mat-label>
-    <input matInput formControlName="name">
-  </mat-form-field>
+<div class="w-full">
+    <form [formGroup]="userUpdate" (ngSubmit)="submitForm()" class="max-w-2xl mx-auto p-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <mat-form-field class="w-full">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
 
-  <mat-form-field class="pl-6 pr-6">
-    <mat-label>Date of Birth</mat-label>
-    <input matInput [matDatepicker]="myDatePicker" formControlName="dob">
-    <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
-    <mat-datepicker #myDatePicker></mat-datepicker>
-  </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput [matDatepicker]="myDatePicker" formControlName="dob">
+          <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #myDatePicker></mat-datepicker>
+        </mat-form-field>
 
-  <div class="pl-6 pr-6">
-    <mat-label>Gender</mat-label><br>
-    <mat-radio-group formControlName="gender">
-      <mat-radio-button value="Male">Male</mat-radio-button>
-      <mat-radio-button value="Female">Female</mat-radio-button>
-    </mat-radio-group>
-  </div>
+        <div class="w-full">
+          <mat-label class="block mb-2">Gender</mat-label>
+          <mat-radio-group formControlName="gender" class="flex space-x-4">
+            <mat-radio-button value="Male">Male</mat-radio-button>
+            <mat-radio-button value="Female">Female</mat-radio-button>
+          </mat-radio-group>
+        </div>
 
-  <mat-form-field class="pl-6 pr-6" appearance="fill">
-    <mat-label>Profile For</mat-label>
-    <mat-select formControlName="createProfileFor">
-      @for (choose of select; track choose) {
-        <mat-option [value]="choose">{{choose}}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>Profile For</mat-label>
+          <mat-select formControlName="createProfileFor">
+            @for (choose of select; track choose) {
+            <mat-option [value]="choose">{{choose}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
 
-  <div class="pl-6 pr-6">
-    <mat-label>Marital Status</mat-label><br>
-    <mat-radio-group formControlName="maritalStatus" class="mat-50">
-      <mat-radio-button value="Single">Single</mat-radio-button>
-      <mat-radio-button value="Married">Married</mat-radio-button>
-      <mat-radio-button value="Widow">Widow/Widower</mat-radio-button>
-    </mat-radio-group>
-  </div>
+        <div class="w-full col-span-full">
+          <mat-label class="block mb-2">Marital Status</mat-label>
+          <mat-radio-group formControlName="maritalStatus" class="flex flex-wrap gap-4">
+            <mat-radio-button value="Single">Single</mat-radio-button>
+            <mat-radio-button value="Married">Married</mat-radio-button>
+            <mat-radio-button value="Widow">Widow/Widower</mat-radio-button>
+          </mat-radio-group>
+        </div>
 
-  <mat-form-field class="pl-6 pr-6">
-    <mat-label>Education</mat-label>
-    <mat-select formControlName="education">
-      @for (edu of education; track edu) {
-        <mat-option [value]="edu">{{edu}}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>Education</mat-label>
+          <mat-select formControlName="education">
+            @for (edu of education; track edu) {
+            <mat-option [value]="edu">{{edu}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
 
-  <mat-form-field class="pl-6 pr-6" appearance="fill">
-    <mat-label>Physical Status</mat-label>
-    <mat-select formControlName="physicaleStatus">
-      @for (choose of physical; track choose) {
-        <mat-option [value]="choose">{{choose}}</mat-option>
+        <mat-form-field class="w-full">
+          <mat-label>Physical Status</mat-label>
+          <mat-select formControlName="physicaleStatus">
+            @for (choose of physical; track choose) {
+            <mat-option [value]="choose">{{choose}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
 
-      }
-    </mat-select>
-  </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>Profession</mat-label>
+          <mat-select formControlName="profession">
+            @for (profession of professions; track profession) {
+            <mat-option [value]="profession">{{profession}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
 
-  <mat-form-field class="pl-6 pr-6">
-    <mat-label>Profession</mat-label>
-    <mat-select formControlName="profession">
-      @for (profession of professions; track profession) {
-      <mat-option [value]="profession">{{profession}}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="pl-6 pr-6">
-    <mat-label>Complexion</mat-label>
-    <mat-select formControlName="skinTone">
-        @for(skinTone of skinTones; track skinTone){
-        <mat-option [value]="skinTone">{{skinTone}}</mat-option>
-        }
-    </mat-select>
-</mat-form-field>
-<mat-form-field class="pl-6 pr-6">
-  <mat-label>Body Type</mat-label>
-  <mat-select formControlName="bodyType">
-      @for(bodyType of bodyTypes; track bodyType){
-      <mat-option [value]="bodyType">{{bodyType}}</mat-option>
-      }
-  </mat-select>
-</mat-form-field> 
+        <mat-form-field class="w-full">
+          <mat-label>Complexion</mat-label>
+          <mat-select formControlName="skinTone">
+            @for(skinTone of skinTones; track skinTone){
+            <mat-option [value]="skinTone">{{skinTone}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
 
-  <div class="flex justify-center space-x-4">
-    <button mat-raised-button color="primary" class="w-5" type="submit">Save</button>
-    <button mat-raised-button color="warn" class="w-5" type="button" (click)="close()">Cancel</button>
-  </div>
-</form>
+        <mat-form-field class="w-full">
+          <mat-label>Body Type</mat-label>
+          <mat-select formControlName="bodyType">
+            @for(bodyType of bodyTypes; track bodyType){
+            <mat-option [value]="bodyType">{{bodyType}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="flex justify-center space-x-4 mt-6">
+        <button mat-raised-button color="primary" class="w-24" type="submit">Save</button>
+        <button mat-raised-button color="warn" class="w-24" type="button" (click)="close()">Cancel</button>
+      </div>
+    </form>
+</div>    

@@ -18,38 +18,44 @@ import { SubscribersListComponent } from './adminComponent/subscribers-list/subs
 import { authGuard } from './gurd/auth.guard';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ContacUsComponent } from './components/contac-us/contac-us.component';
+import { ChatComponent } from './userComponents/chat/chat.component';
 
 
 
 const routes: Routes = [
- {path:'',redirectTo:'coverPage',pathMatch:'full'},
- { path: 'coverPage', component: CoverPageComponent },
- { path: 'register1', component: Register1Component },
- { path: 'otp_verify', component: OtpVerificationComponent, },
- { path: 'admin',
-   component:SideNavComponent,
-   canActivate:[authGuard],
-  children:[
-    { path: 'dashboard', component: DashComponent },
-    {path:'user_list',component:UserListComponent},
-    {path:'package_list',component:PackageListComponent},
-    {path:'subscribers',component:SubscribersListComponent}
-  ]},
+  { path: '', redirectTo: 'coverPage', pathMatch: 'full' },
+  { path: 'coverPage', component: CoverPageComponent },
+  { path: 'register1', component: Register1Component },
+  { path: 'otp_verify', component: OtpVerificationComponent, },
+  {
+    path: 'admin',
+    component: SideNavComponent,
+    canActivate: [authGuard],
+    children: [
+      { path: 'dashboard', component: DashComponent },
+      { path: 'user_list', component: UserListComponent },
+      { path: 'package_list', component: PackageListComponent },
+      { path: 'subscribers', component: SubscribersListComponent }
+    ]
+  },
 
- 
- {path:'user',
-  component:UserSideNavComponent,
-  canActivate:[authGuard],
-  children:[
-  { path: 'home', component: HomeComponent },
-  {path:'profile',component:ProfileComponent},
-  {path:'package',component:PackagesComponent},
-  { path: 'success', component: SucessComponent },
-  { path: 'cancel', component: CancelComponent },  
- ]},
- {path:'about-us',component:AboutUsComponent},
- {path:'contact-us',component:ContacUsComponent},
- {path:'**',component:NotFoundComponent}
+
+  {
+    path: 'user',
+    component: UserSideNavComponent,
+    canActivate: [authGuard],
+    children: [
+      { path: 'home', component: HomeComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'package', component: PackagesComponent },
+      { path: 'success', component: SucessComponent },
+      { path: 'cancel', component: CancelComponent },
+      { path: 'chat', component: ChatComponent }
+    ]
+  },
+  { path: 'about-us', component: AboutUsComponent },
+  { path: 'contact-us', component: ContacUsComponent },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter} from '@angular/core';
-import { PARTNER_PROFILE, PROFILE, PROFILE_PROFILE, USER_PROFILE } from '../../model/Interface';
+import { PARTNER_PROFILE, PROFILE, PROFILE_PROFILE, ProfileResponse, USER_PROFILE } from '../../model/Interface';
 import { ProfileService } from '../../service/profile.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -40,14 +40,17 @@ export class ProfileComponent  implements OnInit{
 
   ngOnInit(): void {
     this.loadProfileData();
+    const token = localStorage.getItem('jwtToken')
   }
 
 
 
   loadProfileData(){
+    console.log("inside profile")
+
       this.service.getUser().subscribe((res)=>{
         this.profile=res 
-        console.log(this.profile)
+        
          
       },
       error => {
@@ -55,7 +58,10 @@ export class ProfileComponent  implements OnInit{
       }
       );
       this.service.getProfile().subscribe((res)=>{
-      this.profileData =res
+        console.log(res)
+      this.profileData =res.profile;
+
+
       },
       error => {
       console.error('Error fetching profiles:', error);
@@ -109,7 +115,7 @@ export class ProfileComponent  implements OnInit{
             this.uploadedFileUrl = data.secure_url; // Adjust based on the response structure
             this.uploadProgress = null;
             this.service.getProfile().subscribe(res=>{
-              this.profileData=res;
+              this.profileData=res.profile;
               this.isLoading = false;
               this.service.notifyProfileUpdated();
             });
@@ -128,7 +134,7 @@ export class ProfileComponent  implements OnInit{
 
   openEditBasicInfoPopup(){
     const dialogRef=this.dialog.open(EditBasicInfoComponent,{
-       width:'45%'
+       width:'100%'
     });
     
     dialogRef.componentInstance.profileUpdated.subscribe((updatedProfile:USER_PROFILE)=>{

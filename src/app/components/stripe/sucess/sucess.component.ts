@@ -17,27 +17,7 @@ export class SucessComponent implements OnInit {
   token: string | null = null;
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.token = params['token'];
-      if (this.token) {
-        this.store.dispatch(setToken({ token: this.token }));
-        
-        localStorage.setItem('token', this.token);
-      } else {
-        console.error('No token provided in URL');
-      }
-    });
-
-    if (typeof window !== 'undefined' && window.localStorage) {
-      this.userId = localStorage.getItem('userId');
-      if (this.userId) {
-        console.log('Retrieved user ID:', this.userId);
-      } else {
-        console.error('No user ID found in localStorage');
-      }
-    } else {
-      console.error('localStorage is not available');
-    }
+    
   }
   
 

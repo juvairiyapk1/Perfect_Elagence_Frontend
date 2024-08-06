@@ -39,7 +39,7 @@ constructor(private profileService:ProfileService,
       languagesKnown:[''] 
     });
     this.profileService.getProfile().subscribe(res=>{
-      this.profile=res;
+      this.profile=res.profile;
       this.profileUpdate.patchValue({
         willingToRelocate:this.profile.willingToRelocate,
         marriagePlans:this.profile.marriagePlans,

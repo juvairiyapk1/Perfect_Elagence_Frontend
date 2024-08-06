@@ -56,6 +56,7 @@ import { SubscriptionRevenueChartComponent } from './adminComponent/Dashboard/su
 import { EditPasswordComponent } from './components/edit-password/edit-password.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ContacUsComponent } from './components/contac-us/contac-us.component';
+import { ChatComponent } from './userComponents/chat/chat.component';
 
 
 @NgModule({
@@ -98,6 +99,7 @@ import { ContacUsComponent } from './components/contac-us/contac-us.component';
     EditPasswordComponent,
     AboutUsComponent,
     ContacUsComponent,
+    ChatComponent,
     
     
     

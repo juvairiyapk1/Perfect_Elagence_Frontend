@@ -13,38 +13,51 @@ import { Observable, map } from 'rxjs';
 })
 export class JwtServiceService {
 
-  token$:Observable<string|null>;
+  token: string | null;
 
-  constructor(private store:Store<any>) {
-    this.token$=this.store.select(selectToken);
-     }
+  constructor(private store: Store<any>) {
+    if (typeof localStorage !== 'undefined') {
+      this.token = localStorage.getItem('jwtToken');
+    } else {
+      this.token = null;
+    }
+  }
 
-   decodeToken(token:string):any{
-    try{      
-      const decoded= jwtDecode(token);
+  decodeToken(token: string): any {
+    try {
+      const decoded = jwtDecode(token);
       return decoded;
-    }catch(error){
+    } catch (error) {
       console.error('Error decoding token', error);
       return null;
     }
-    
-   }
 
-   getRoles():Observable<string[]>{
-    return this.token$.pipe(
-      map(token =>{
-        if(token){
-          const decodedToken=this.decodeToken(token);
-          if(decodedToken && decodedToken.role){
-            const isSubscribed=decodedToken.isSubscribed
-            if (typeof localStorage !== 'undefined') {
-            localStorage.setItem("isSubscribed",isSubscribed)
-            }
-            return decodedToken.role;
+  }
+
+
+
+
+  getRoles(): Observable<string[]> {
+    return new Observable<string[]>(observer => {
+      if (typeof localStorage !== 'undefined') {
+        const token = localStorage.getItem('jwtToken');
+        if (token) {
+          const decodedToken = this.decodeToken(token);
+          if (decodedToken && decodedToken.role) {
+            const isSubscribed = decodedToken.isSubscribed;
+            localStorage.setItem("isSubscribed", isSubscribed.toString());
+            observer.next(decodedToken.role);
+          } else {
+            observer.next([]);
           }
+        } else {
+          observer.next([]);
         }
-        return [];
-      })
-    )
-   }
+      } else {
+        console.warn('localStorage is not available');
+        observer.next([]);
+      }
+      observer.complete();
+    });
+  }
 }

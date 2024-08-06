@@ -8,16 +8,17 @@
         }
     </button>
     }
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container ">
     <mat-sidenav mode="over"  class="sidenav" #sidenav="matSidenav">
       <div class="profile">
         <div class="profile-header">
+          
           @if(profileImg.image){
           <img [src]="profileImg.image" alt="Profile Image" class="profile-image rounded object-cover">
           }
           <div class="flex items-center">
           <span class="text-sm font-bold" >{{user}}</span>
-          @if(isSubscribed=='true'){
+          @if(isSubscribed){
           <span><mat-icon 
             class=" text-green-600 text-sm pt-1"
           >verified</mat-icon></span>

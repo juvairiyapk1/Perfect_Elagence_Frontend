@@ -1,5 +1,5 @@
 import { Roles } from './../../model/roles.enum';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -13,6 +13,7 @@ import { CustomValidators } from '../../Validators/noSpaceAllowed.validator';
 import { AuthService } from '../../state/auth.service';
 import { JwtServiceService } from '../../service/jwt-service.service';
 import { VerifyEmailComponent } from '../verify-email/verify-email.component';
+import { AuthStateService } from '../../service/auth-state.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ import { VerifyEmailComponent } from '../verify-email/verify-email.component';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit{
-  inputdata!:any;
+ @Input()inputdata:any;
 
 
 
@@ -30,10 +31,11 @@ export class LoginComponent implements OnInit{
   private builder:FormBuilder,
   private service:RegisterServiceService,
   private router:Router,
-  private store:Store<any>,
+  // private store:Store<any>,
   private toast:ToastrService,
   private dialog:MatDialog,
   private jwtService:JwtServiceService,
+  private authStateService:AuthStateService
   ){}
 
   userLogin!:FormGroup ;
@@ -60,34 +62,38 @@ export class LoginComponent implements OnInit{
       this.service.login(userData).subscribe(
         (response) => {
           if (response.token != null) {
-            localStorage.setItem('userName',response.name);
+            localStorage.setItem('userName', response.name);
             const jwtToken = response.token;
-            this.store.dispatch(AuthActions.setToken({ token: jwtToken}));
-             
+            localStorage.setItem('jwtToken', jwtToken);
+
+            console.log(jwtToken+"inside login");
+            
+            // Set the logged in state and username
+            this.authStateService.setLoggedIn(true);
+            this.authStateService.setUserName(response.name);
+  
             this.jwtService.getRoles().subscribe((roles) => {
-              
-              
-                
               const loggedIn = response.logged;
               const userId = response.id;
               if (typeof localStorage !== 'undefined') {
                 localStorage.setItem('isLoggedIn', loggedIn);
-                localStorage.setItem('userId',userId);
+                localStorage.setItem('userId', userId);
               }
-
+  
              
               this.closeLogin();
-
-              if (roles.includes(Roles.USER)) { 
+              if (roles.includes(Roles.USER)) {
                 this.router.navigateByUrl("/user/home");
+                
                 this.toast.success("Login successful");
-
-              } else if (roles.includes(Roles.ADMIN)) { 
+              } else if (roles.includes(Roles.ADMIN)) {
                 this.router.navigateByUrl("/admin/dashboard");
                 this.toast.success("Login successful");
-
-            
               }
+
+               // Set the admin status
+               this.authStateService.setIsAdmin(roles.includes(Roles.ADMIN));
+  
             });
           }
         },

@@ -48,7 +48,7 @@ export class EditFamilyDetComponent implements OnInit{
       motherDetails:['']
     });
     this.profileService.getProfile().subscribe((res)=>{
-      this.profile=res;
+      this.profile=res.profile;
       this.userUpdate.patchValue({
         familyType:this.profile.familyType,
         financialStatus:this.profile.financialStatus,

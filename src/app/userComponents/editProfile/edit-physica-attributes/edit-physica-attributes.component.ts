@@ -46,7 +46,7 @@ export class EditPhysicaAttributesComponent implements OnInit{
       eyeColor:['']
     });
     this.profileService.getProfile().subscribe(res=>{
-      this.profile=res;
+      this.profile=res.profile;
       this.profileUpdate.patchValue({
         bloodGroup:this.profile.bloodGroup,
         hairColor:this.profile.hairColor,

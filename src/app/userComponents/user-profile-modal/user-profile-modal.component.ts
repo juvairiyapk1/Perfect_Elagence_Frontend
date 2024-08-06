@@ -25,6 +25,7 @@ export class UserProfileModalComponent implements OnInit {
                 this.service.getUserById(this.data.userId).subscribe(
                   (profile: PROFILEBYUSER) => {
                     this.profile = profile;
+                    console.log(profile)
                   },
                   error => {
                     console.error('Error fetching user profile:', error);

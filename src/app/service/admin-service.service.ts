@@ -15,111 +15,88 @@ const BASE_URL = ['http://localhost:8080/'];
 })
 export class AdminServiceService {
 
-  token$: Observable<string | null>;
+  token: string | null;
 
 
   constructor(private http: HttpClient,
     private store: Store<any>) {
-    this.token$ = store.select(selectToken);
+    if (typeof localStorage !== 'undefined') {
+      this.token = localStorage.getItem('jwtToken');
+    } else {
+      this.token = null;
+    }
   }
 
+
+
   getUser(): Observable<USER_ADMIN[]> {
-    return this.token$.pipe(
-      take(1),
-      switchMap(token => {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-        });
-        return this.http.get<USER_ADMIN[]>(BASE_URL + 'admin/user-list', { headers });
-      })
-    );
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<USER_ADMIN[]>(BASE_URL + 'admin/user-list', { headers });
   }
+
+
 
 
 
   blockUser(id: number): Observable<any> {
-    return this.token$.pipe(
-      take(1),
-      switchMap(token => {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-        });
-        return this.http.post(BASE_URL + `admin/${id}/block`, {}, { headers });
-      })
-    );
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.post(BASE_URL + `admin/${id}/block`, {}, { headers });
   }
 
+
+
   unblockUser(id: number): Observable<any> {
-    return this.token$.pipe(
-      take(1),
-      switchMap(token => {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-        });
-        return this.http.post(BASE_URL + `admin/${id}/unblock`, {}, { headers });
-      })
-    );
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.post(BASE_URL + `admin/${id}/unblock`, {}, { headers });
   }
+
+
 
 
   getPackage(): Observable<PACKAGE[]> {
-    return this.token$.pipe(
-      take(1),
-      switchMap((token) => {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-
-        });
-        return this.http.get<PACKAGE[]>(BASE_URL + 'admin/getPackages', { headers })
-      })
-    );
-
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<PACKAGE[]>(BASE_URL + 'admin/getPackages', { headers });
   }
+
+
+
 
   add(request: PACKAGE): Observable<any> {
-    return this.token$.pipe(
-      take(1),
-      switchMap(token => {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-
-        });
-
-        return this.http.post<PACKAGE>(BASE_URL + 'admin/package', request, { headers })
-
-      })
-    )
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.post<PACKAGE>(BASE_URL + 'admin/package', request, { headers })
   }
 
-  loadSubcriptions() {
-    return this.http.get<SUBCRIPTION[]>("")
-  }
+
+
 
   getSubscriber(): Observable<SUBSCRIBR[]> {
 
-    return this.token$.pipe(
-      take(1),
-      switchMap((token) => {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
 
-        });
-        return this.http.get<SUBSCRIBR[]>(BASE_URL + 'admin/subscribers', { headers })
-      })
-    );
+    return this.http.get<SUBSCRIBR[]>(BASE_URL + 'admin/subscribers', { headers })
   }
 
-  getUserCounts(): Observable<any> {
-    return this.token$.pipe(
-      take(1),
-      switchMap((token) => {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
 
-        });
-        return this.http.get(`${BASE_URL}admin/count`, { headers });
-      })
-    );
+
+  getUserCounts(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    })
+    return this.http.get(`${BASE_URL}admin/count`, { headers });
   }
 
 
@@ -127,35 +104,25 @@ export class AdminServiceService {
 
 
   getMonthlyUserAndSubscriptionData(): Observable<MonthlyUserSubscriptionDTO> {
-    return this.token$.pipe(
-      take(1),
-      switchMap((token) => {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-
-        });
-        return this.http.get<MonthlyUserSubscriptionDTO>(`${BASE_URL}admin/user-subscription`, { headers });
-
-      })
-    );
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<MonthlyUserSubscriptionDTO>(`${BASE_URL}admin/user-subscription`, { headers });
   }
+
+
+
 
   getMonthlyRevenue(): Observable<any> {
-    return this.token$.pipe(
-      take(1),
-      switchMap((token) => {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-
-        });
-
-        return this.http.get(`${BASE_URL}admin/monthly`,{headers});
-      })
-    );
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get(`${BASE_URL}admin/monthly`, { headers });
   }
 
 
- 
+
+
 
 
 

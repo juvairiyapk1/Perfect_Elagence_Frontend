@@ -106,7 +106,12 @@ export interface PROFILE_PROFILE {
     hairType?: string;
     financialStatus?: string;
     image?: string;
+    
+}
 
+export interface ProfileResponse{
+    profile:PROFILE_PROFILE;
+    subscribed?: boolean;
 }
 
 export interface PARTNER_PROFILE {

@@ -11,7 +11,8 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root'
 })
 export class PaymentService {
-  token$:Observable<String|null>
+//   token$:Observable<String|null>
+token:string|null;
 
   private BASE_URL ='http://localhost:8080'
   userId!:string|null;
@@ -21,7 +22,13 @@ export class PaymentService {
               private store:Store  ,
               private toast:ToastrService
               ) { 
-                this.token$ = store.select(selectToken)
+                // this.token$ = store.select(selectToken)
+
+                if(typeof localStorage !== 'undefined'){
+                    this.token = localStorage.getItem('jwtToken');
+                }else{
+                    this.token = null;
+                }
               }
 
               // createSessionPayment(pkg: any): Observable<any> {
@@ -55,33 +62,53 @@ export class PaymentService {
 
 
               checkout(priceId: string): Observable<string> {
-                return this.token$.pipe(
-                    take(1),
-                    switchMap(token => {
-                        const headers = new HttpHeaders({
-                            'Authorization': `Bearer ${token}`
-                        });
-                        return this.http.post<{ url: string }>(
-                            `${this.BASE_URL}/user/create-checkout-session`,
-                            { priceId },
-                            { headers }
-                        ).pipe(
-                            catchError(error => {
-                                if (error.status === 400) {
-                                    // User is already subscribed
-                                    console.error('User is already subscribed.');
-                                    this.toast.error("User Subcribed");
-                                    // Optionally, emit an observable with a specific value or error
-                                    return throwError('User is already subscribed.');
-                                }
-                                return throwError(error);
-                            })
-                        );
-                    }),
-                    map(response => response.url)
-                );
-            }
+                const headers = new HttpHeaders({
+                  'Authorization': `Bearer ${this.token}`
+                });
             
+                return this.http.post<{ url: string }>(
+                  `${this.BASE_URL}/user/create-checkout-session`,
+                  { priceId },
+                  { headers }
+                ).pipe(
+                  catchError(error => {
+                    if (error.status === 400) {
+                      // User is already subscribed
+                      console.error('User is already subscribed.');
+                      this.toast.error("User already subscribed");
+                      return throwError('User is already subscribed.');
+                    }
+                    return throwError(error);
+                  }),
+                  map(response => response.url)
+                );
+              }
 
-              
+
+            // checkout(priceId: string): Observable<string> {
+            //     if (!this.token) {
+            //         return throwError('No token found in localStorage.');
+            //     }
+            //     const headers = new HttpHeaders({
+            //         'Authorization': `Bearer ${this.token}`
+            //     });
+            //     return this.http.post<{ url: string }>(
+            //         `${this.BASE_URL}/user/create-checkout-session`,
+            //         { priceId },
+            //         { headers }
+            //     ).pipe(
+            //         catchError(error => {
+            //             if (error.status === 400) {
+            //                 // User is already subscribed
+            //                 console.error('User is already subscribed.');
+            //                 this.toast.error("User Subscribed");
+            //                 // Optionally, emit an observable with a specific value or error
+            //                 return throwError('User is already subscribed.');
+            //             }
+            //             return throwError(error);
+            //         }),
+            //         map(response => response.url)
+            //     );
+            // }
+                       
 }

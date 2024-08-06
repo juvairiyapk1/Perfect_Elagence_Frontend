@@ -13,23 +13,28 @@ const BASE_URL = ['http://localhost:8080/'];
 })
 export class PackageService {
 
-  token$:Observable<string|null>;
+  token: string | null;
 
-   constructor(private http:HttpClient,
-              private store: Store<any>) {
-                this.token$=store.select(selectToken);
-               }
-  getPackage():Observable<PACKAGE[]>{
-    return this.token$.pipe(
-      take(1),
-      switchMap((token) =>{
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
 
-        });
-        return this.http.get<PACKAGE[]>(BASE_URL+'user/getPackages',{headers})
-      })
-    );
+  constructor(private http: HttpClient,
+    private store: Store<any>) {
+    if (typeof localStorage !== 'undefined') {
+      this.token = localStorage.getItem('jwtToken');
+    } else {
+      this.token = null;
+    }
+  }
+
+
+
+
+  getPackage(): Observable<PACKAGE[]> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<PACKAGE[]>(BASE_URL + 'user/getPackages', { headers })
 
   }
+
+
 }

@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable, Subject, catchError, map, switchMap, take, throwError } from 'rxjs';
 import { selectToken } from '../state/auth.selectors';
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpHeaders } from '@angular/common/http';
-import { PROFILE_PROFILE, USER_PROFILE } from '../model/Interface';
+import { PROFILE_PROFILE, ProfileResponse, USER_PROFILE } from '../model/Interface';
 
 
 const BASE_URL = 'http://localhost:8080';
@@ -13,40 +13,38 @@ const BASE_URL = 'http://localhost:8080';
   providedIn: 'root'
 })
 export class ProfileService {
-  token$:Observable<string|null>
-  userId!:string|null;
+  // token$:Observable<string|null>
+  userId: number;
+  token: string | null;
 
   private profileUpdatedSource = new Subject<void>();
 
 
-  constructor(private store:Store,
-    private http:HttpClient
-  ) { 
-    this.token$=store.select(selectToken);
+  constructor(private store: Store,
+    private http: HttpClient
+  ) {
+    if (typeof localStorage !== 'undefined') {
+       this.token = localStorage.getItem('jwtToken')
+      this.userId = Number(localStorage.getItem('userId'));
+    } else {
+      this.token = null;
+      this.userId = 0;
+    }
   }
 
+
+
+
   getUser(): Observable<USER_PROFILE> {
-    console.log("inside getAll users");
-    return this.token$.pipe(
-      take(1),
-      switchMap(token => {
-      
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-        });
-        console.log(headers);
-        if(typeof window !== 'undefined' && window.localStorage){
-          this.userId=localStorage.getItem('userId');
-        }
 
-        if (!this.userId) {
-          throw new Error("User ID is not available");
-        }
 
-        
-        return this.http.get<USER_PROFILE>(`${BASE_URL}/user/profile/${this.userId}`, { headers });
-      })
-    );
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    console.log(this.token + "getUser")
+
+    return this.http.get<USER_PROFILE>(`${BASE_URL}/user/profile/${this.userId}`, { headers });
   }
 
   profileUpdated$ = this.profileUpdatedSource.asObservable();
@@ -56,30 +54,25 @@ export class ProfileService {
   }
 
 
+
   uploadImage(userId: number, file: File): Observable<any> {
+
+
     const formData: FormData = new FormData();
     formData.append('multipartFile', file);
     formData.append('userId', userId.toString());
     console.log(file + " file");
     console.log(userId + " user");
 
-    return this.token$.pipe(
-      take(1),
-      switchMap(token => {
-        if (!token) {
-          return throwError('Token is not available');
-        }
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
 
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-        });
-
-        return this.http.post<any>(`${BASE_URL}/user/upload`, formData, {
-          headers: headers,
-          reportProgress: true,
-          observe: 'events'
-        });
-      }),
+    return this.http.post<any>(`${BASE_URL}/user/upload`, formData, {
+      headers: headers,
+      reportProgress: true,
+      observe: 'events'
+    }).pipe(
       map((event: HttpEvent<any>) => {
         switch (event.type) {
           case HttpEventType.UploadProgress:
@@ -99,30 +92,18 @@ export class ProfileService {
   }
 
 
-  getProfile(): Observable<PROFILE_PROFILE> {
-    console.log("inside getAll users");
-    return this.token$.pipe(
-      take(1),
-      switchMap(token => {
-      
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-        });
-        console.log(headers);
-        if(typeof window !== 'undefined' && window.localStorage){
-          this.userId=localStorage.getItem('userId');
-        }
 
-        if (!this.userId) {
-          throw new Error("User ID is not available");
-        }
 
-        
-        return this.http.get<USER_PROFILE>(`${BASE_URL}/user/getProfile/${this.userId}`, { headers });
-      })
-    );
+  getProfile(): Observable<ProfileResponse> {
+    
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<ProfileResponse>(`${BASE_URL}/user/getProfile/${this.userId}`, { headers })
+
   }
-  physical:string[]=[
+
+  physical: string[] = [
     "Normal Person",
     "Deaf/Demb",
     "Blind",
@@ -131,14 +112,14 @@ export class ProfileService {
     "With other disability"
   ]
 
-  marriagePlans:string[]=[
+  marriagePlans: string[] = [
     "As soon as possible",
     "1-2 years",
     "3-4 years",
     "4+years"
   ];
 
-  bloodGroup:string[]=[
+  bloodGroup: string[] = [
     "A+",
     "A-",
     "AB+",
@@ -149,7 +130,7 @@ export class ProfileService {
     "O-"
   ]
 
-  hairColor:string[]=[
+  hairColor: string[] = [
     "Bold/Shaved",
     "Black",
     "Brown",
@@ -161,7 +142,7 @@ export class ProfileService {
     "Prefer not to say"
   ]
 
-  hairType:string[]=[
+  hairType: string[] = [
     "Stright",
     "Wavy",
     "Curly",
@@ -169,7 +150,7 @@ export class ProfileService {
     "Prefer not to say"
   ];
 
-  eyeColor:string[]=[
+  eyeColor: string[] = [
     "Black",
     "Blue",
     "Brown",
@@ -178,7 +159,7 @@ export class ProfileService {
     "Hazel",
     "Other"
   ];
-  residence:string[]=[
+  residence: string[] = [
     "Citizen",
     "Permenent Resident",
     "Work Permit",
@@ -187,12 +168,12 @@ export class ProfileService {
     "Other"
   ];
 
-  familyType:string[]=[
+  familyType: string[] = [
     "Nuclear Family",
     "Joint Family"
   ];
 
-  homeTypes:string[]=[
+  homeTypes: string[] = [
     "Home",
     "Rent House",
     "Apartment/Flat",
@@ -202,9 +183,9 @@ export class ProfileService {
     "other"
   ];
 
-  
 
-  livingSituation:string[]=[
+
+  livingSituation: string[] = [
     "Live alone",
     "Live with friends",
     "Live with family",
@@ -212,244 +193,147 @@ export class ProfileService {
     "Other"
   ]
 
-  getPhysical():string[]{
+  getPhysical(): string[] {
     return this.physical;
   }
 
 
-  getMarriagePlan():string[]{
+  getMarriagePlan(): string[] {
     return this.marriagePlans;
   }
 
-  getBloodGroup():string[]{
+  getBloodGroup(): string[] {
     return this.bloodGroup;
   }
 
 
-  getHairColor():string[]{
-   return this.hairColor;
+  getHairColor(): string[] {
+    return this.hairColor;
   }
 
-  getHairType():string[]{
+  getHairType(): string[] {
     return this.hairType;
   }
-  getEyeColor(){
+  getEyeColor() {
     return this.eyeColor;
   }
 
-  getResidence():string[]{
+  getResidence(): string[] {
     return this.residence;
   }
 
-  getFamilyType():string[]{
+  getFamilyType(): string[] {
     return this.familyType;
   }
 
-  getHomeType():string[]{
+  getHomeType(): string[] {
     return this.homeTypes;
 
   }
 
-  getLivingSituation():string[]{
+  getLivingSituation(): string[] {
     return this.livingSituation;
   }
 
-  
+
+
+
 
   basicInfo(request: any): Observable<any> {
-    console.log(request+"hhhhhhhhhhhhhhhhhhhh")
-    return this.token$.pipe(
-      take(1),
-      switchMap(token => {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-        });
 
-        if (typeof window !== 'undefined' && window.localStorage) {
-          this.userId = localStorage.getItem('userId');
-        }
-
-        console.log("userId: " + this.userId);
-        console.log("request: ", request);
-
-        if (this.userId) {
-          return this.http.put(`${BASE_URL}/user/editUser/${this.userId}`, request, { headers });
-        } else {
-          // Handle the case where userId is not found
-          return new Observable(observer => {
-            observer.error('User ID not found in local storage');
-          });
-        }
-      })
-    );
-  }
-
-  educationalAndProfessionalInformation(request:any):Observable<any>{
-    return this.token$.pipe(
-      take(1),
-      switchMap(token => {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-        });
-
-        if (typeof window !== 'undefined' && window.localStorage) {
-          this.userId = localStorage.getItem('userId');
-        }
-        if (this.userId) {
-          return this.http.put(`${BASE_URL}/user/updateProfile/${this.userId}`, request, { headers });
-        } else {
-          // Handle the case where userId is not found
-          return new Observable(observer => {
-            observer.error('User ID not found in local storage');
-          });
-        }
-      })
-    );
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.put(`${BASE_URL}/user/editUser/${this.userId}`, request, { headers });
 
   }
 
 
-  physicalAttributesInfo(request:any):Observable<any>{
-      return this.token$.pipe(
-        take(1),
-        switchMap(token => {
-          const headers = new HttpHeaders({
-            'Authorization': `Bearer ${token}`
-          });
 
-          if (typeof window !== 'undefined' && window.localStorage) {
-            this.userId = localStorage.getItem('userId');
-          }
-          if (this.userId) {
-            return this.http.put(`${BASE_URL}/user/updatePhysicalAttr/${this.userId}`, request, { headers });
-          } else {
-            // Handle the case where userId is not found
-            return new Observable(observer => {
-              observer.error('User ID not found in local storage');
-            });
-          }
-        })
-      );
+  educationalAndProfessionalInformation(request: any): Observable<any> {
+
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.put(`${BASE_URL}/user/updateProfile/${this.userId}`, request, { headers });
+
   }
 
-  locationAndContactInfo(request:any):Observable<any>{
-
-        return this.token$.pipe(
-          take(1),
-          switchMap(token => {
-            const headers = new HttpHeaders({
-              'Authorization': `Bearer ${token}`
-            });
-
-            if (typeof window !== 'undefined' && window.localStorage) {
-              this.userId = localStorage.getItem('userId');
-            }
-            if (this.userId) {
-              return this.http.put(`${BASE_URL}/user/updateLocationAndContact/${this.userId}`, request, { headers });
-            } else {
-              // Handle the case where userId is not found
-              return new Observable(observer => {
-                observer.error('User ID not found in local storage');
-              });
-            }
-          })
-        );
-      }
-      
-      familyInfo(request:any):Observable<any>{
-        return this.token$.pipe(
-          take(1),
-          switchMap(token => {
-            const headers = new HttpHeaders({
-              'Authorization': `Bearer ${token}`
-            });
-
-            if (typeof window !== 'undefined' && window.localStorage) {
-              this.userId = localStorage.getItem('userId');
-            }
-            if (this.userId) {
-              return this.http.put(`${BASE_URL}/user/updateFamilyInfo/${this.userId}`, request, { headers });
-            } else {
-              // Handle the case where userId is not found
-              return new Observable(observer => {
-                observer.error('User ID not found in local storage');
-              });
-            }
-          })
-        );
-      }
 
 
-      getPartnerePref(){
-        return this.token$.pipe(
-          take(1),
-          switchMap(token => {
-          
-            const headers = new HttpHeaders({
-              'Authorization': `Bearer ${token}`
-            });
-            console.log(headers);
-            if(typeof window !== 'undefined' && window.localStorage){
-              this.userId=localStorage.getItem('userId');
-            }
+
+
+
+  physicalAttributesInfo(request: any): Observable<any> {
+
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.put(`${BASE_URL}/user/updatePhysicalAttr/${this.userId}`, request, { headers });
+
+  }
+
+
+
+  locationAndContactInfo(request: any): Observable<any> {
+
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.put(`${BASE_URL}/user/updateLocationAndContact/${this.userId}`, request, { headers });
+
+  }
+
+
+
+
+  familyInfo(request: any): Observable<any> {
+
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    return this.http.put(`${BASE_URL}/user/updateFamilyInfo/${this.userId}`, request, { headers });
+
+  }
+
+
+
+
+  getPartnerePref() {
+
     
-            if (!this.userId) {
-              throw new Error("User ID is not available");
-            }
-    
-            
-            return this.http.get<USER_PROFILE>(`${BASE_URL}/user/getPartnerProfile/${this.userId}`, { headers });
-          })
-        );
-      }
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<USER_PROFILE>(`${BASE_URL}/user/getPartnerProfile/${this.userId}`, { headers });
 
-      parnerBasicInfo(request:any):Observable<any>{
-        return this.token$.pipe(
-          take(1),
-          switchMap(token => {
-            const headers = new HttpHeaders({
-              'Authorization': `Bearer ${token}`
-            });
-
-            if (typeof window !== 'undefined' && window.localStorage) {
-              this.userId = localStorage.getItem('userId');
-            }
-            if (this.userId) {
-              return this.http.put(`${BASE_URL}/user/updatePartnerPref/${this.userId}`, request, { headers });
-            } else {
-              // Handle the case where userId is not found
-              return new Observable(observer => {
-                observer.error('User ID not found in local storage');
-              });
-            }
-          })
-        );
-      }
+  }
 
 
-      partnerEducationInfo(request:any):Observable<any>{
-        return this.token$.pipe(
-          take(1),
-          switchMap(token => {
-            const headers = new HttpHeaders({
-              'Authorization': `Bearer ${token}`
-            });
+  parnerBasicInfo(request: any): Observable<any> {
 
-            if (typeof window !== 'undefined' && window.localStorage) {
-              this.userId = localStorage.getItem('userId');
-            }
-            if (this.userId) {
-              return this.http.put(`${BASE_URL}/user/updatePartnerPrefEdu/${this.userId}`, request, { headers });
-            } else {
-              // Handle the case where userId is not found
-              return new Observable(observer => {
-                observer.error('User ID not found in local storage');
-              });
-            }
-          })
-        );
-      }
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
 
-      
-      
+    return this.http.put(`${BASE_URL}/user/updatePartnerPref/${this.userId}`, request, { headers });
+  }
+
+
+
+
+  partnerEducationInfo(request: any): Observable<any> {
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    return this.http.put(`${BASE_URL}/user/updatePartnerPrefEdu/${this.userId}`, request, { headers });
+  }
+
 }

@@ -8,11 +8,13 @@ import { clearToken } from '../../state/auth.actions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProfileService } from '../../service/profile.service';
-import { PROFILE_PROFILE, USER_PROFILE } from '../../model/Interface';
+import { PROFILE_PROFILE, ProfileResponse, USER_PROFILE } from '../../model/Interface';
 import { VerifyEmailComponent } from '../../components/verify-email/verify-email.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ToastrService } from 'ngx-toastr';
+import { privateDecrypt } from 'crypto';
+import { AuthStateService } from '../../service/auth-state.service';
 
 
 @Component({
@@ -30,8 +32,8 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
   user:string|null="";
   profileImg:PROFILE_PROFILE={};
   professions:string[]=[];
-  isSubscribed!:string|null;
   isProfileHidden: boolean = false;
+  isSubscribed:boolean|undefined =false;
 
   constructor(private observer:BreakpointObserver,
     private cdRef: ChangeDetectorRef,
@@ -42,14 +44,14 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
     private route:ActivatedRoute,
     private dialog:MatDialog,
     private userService:UserService,
-    private toast:ToastrService
-
+    private toast:ToastrService,
+    private authStateService:AuthStateService
   ){
     if(typeof window !== 'undefined' && window.localStorage){
       this.user=localStorage.getItem('userName');
-      this.isSubscribed=localStorage.getItem('isSubscribed');
-      console.log(this.isSubscribed+"sub")
      }
+
+
   }
 
   ngOnInit(): void {
@@ -72,9 +74,10 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
   
   fetchProfile(): void {
     this.profileService.getProfile().subscribe(
-      (res: PROFILE_PROFILE) => {
-        this.profileImg = res;
-        
+      (res: ProfileResponse) => {
+        this.profileImg = res.profile;
+        this.isSubscribed =res.subscribed;
+        console.log(this.profileImg)
       },
       error => {
         console.error('Error fetching profile:', error);
@@ -106,8 +109,16 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
 
   logout(): void {
     this.service.logout().subscribe(() => {
-      this.store.dispatch(clearToken());
+      // this.store.dispatch(clearToken());
+      localStorage.removeItem('jwtToken');
       localStorage.clear();
+
+
+      // this.authStateService.setLoggedIn(false);
+      // this.authStateService.setIsAdmin(false);
+      // this.authStateService.setUserName(null);
+      this.authStateService.resetUserState();
+
       this.router.navigateByUrl('coverPage');
     }, error => {
       console.error('Error logging out', error);

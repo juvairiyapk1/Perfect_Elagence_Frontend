@@ -1,43 +1,32 @@
-
- <nav >
-  <div class="container mx-auto flex justify-between items-center">
+<nav class="bg-red-800">
+  <div class="container mx-auto px-4 py-2 flex justify-between items-center">
     <a href="#" class="text-white text-2xl font-serif">Perfect Elegance</a>
-    <div 
-      id="menu"
-      class="absolute top-0 left-0 w-full h-full flex-col items-center justify-center bg-red-800 md:bg-transparent md:relative md:w-auto md:h-auto md:flex-row md:flex md:gap-8"
-      [ngClass]="{'flex': isMenuVisible, 'hidden': !isMenuVisible, 'md:flex': true}">      
-       @if(!isLoggedIn){
-      <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Home</a>
-      <a routerLink="/about-us" class="text-white hover:text-gray-300 py-2 md:py-0">About us</a>
-      <a routerLink="/contact-us" class="text-white hover:text-gray-300 py-2 md:py-0">Contact us</a> 
-      
-      <button mat-riased-button class="bg-white text-red-800 h-8 px-4 rounded" (click)="openLoginPopUp()">Login</button>
+    
+    <!-- Mobile menu button -->
+    <button class="md:hidden text-white" (click)="toggleMenu()">
+      <mat-icon>{{ isMenuVisible ? 'close' : 'menu' }}</mat-icon>
+    </button>
+
+    <!-- Menu items -->
+    <div
+      class="absolute top-full left-0 w-full md:relative md:w-auto md:flex md:items-center transition-all duration-300 ease-in-out"
+      [ngClass]="{'hidden': !isMenuVisible, 'block': isMenuVisible, 'md:flex': true}"
+    >
+      @if(isLoggedIn==false){
+        <a href="#" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4">Home</a>
+        <a routerLink="/about-us" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4">About us</a>
+        <a routerLink="/contact-us" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4">Contact us</a>
+        <button mat-raised-button class="bg-white text-red-800 h-8 px-4 rounded mt-2 md:mt-0 md:ml-4" (click)="openLoginPopUp()">Login</button>
       }
-      
-      @else if(isLoggedIn && !isAdmin){
-        <a routerLink="user/home" class="text-white hover:text-gray-300 py-2 md:py-0">Home</a>
-
-        <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Chat</a>
-        <a routerLink="user/package" class="text-white hover:text-gray-300 py-2 md:py-0">Packages</a>
-        <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Explore</a>
-        <a href="#" class="text-white hover:text-gray-300 py-2 md:py-0">Help</a>
-
-        <div class="user-profile">
-          <!-- <img alt="User Image" class="user-image"> -->
-          <!-- <ng-template > -->
-            <!-- <img [src]="" alt="Default User Image" class="user-image rounded"> -->
-            
-          <!-- </ng-template> -->
+      @else if(isLoggedIn==true && isAdmin== false){
+        <a routerLink="user/home" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4">Home</a>
+        <!-- <a routerLink="user/package" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4">Packages</a> -->
+        <a href="#" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4">Explore</a>
+        <a href="#" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4">Help</a>
+        <div class="user-profile text-white mt-2 md:mt-0 md:ml-4">
           <span>{{ user }}</span>
         </div>
-        
-        
       }
-       
-    </div>
-    <div class="text-2xl md:hidden">
-      <mat-icon (click)="toggleMenu()">menu</mat-icon>
-      <mat-icon></mat-icon>
     </div>
   </div>
 </nav>

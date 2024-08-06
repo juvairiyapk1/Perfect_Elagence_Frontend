@@ -20,15 +20,11 @@ export class PackagesComponent implements OnInit{
   stripePromise = loadStripe(env.stripe);
 
   packages: PACKAGE[] = [];
-  token$:Observable<string|null>;
 
   constructor(private service:PackageService,
               private http:HttpClient ,
-              private paymentService :PaymentService,
-              private store:Store ,
-              private stripeService:StripeService,              
+              private paymentService :PaymentService,             
               ){
-                this.token$ = store.select(selectToken)
 
               }
 

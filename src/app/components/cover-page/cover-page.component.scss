@@ -1,121 +1,138 @@
-#container {
-    width: 100%;
-    height: 80vh;
-    background-image: url(../../../assets/images/lovely-couple-love-standing-forest.jpg);
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    position: relative;
-  }
+// #container {
+//     width: 100%;
+//     height: 80vh;
+//     background-image: url(../../../assets/images/lovely-couple-love-standing-forest.jpg);
+//     background-size: cover;
+//     background-position: center;
+//     display: flex;
+//     justify-content: flex-end;
+//     align-items: flex-end;
+//     position: relative;
+//   }
   
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Transparent black overlay */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white; /* Assuming white text */
-  }
+//   .overlay {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     background-color: rgba(0, 0, 0, 0.5); /* Transparent black overlay */
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//     color: white; /* Assuming white text */
+//   }
   
-  .overlay-text {
-    text-align: center;
-    font-size: calc(1rem + 1vw);
-    margin-bottom: 10px;
-    font-family: "Rajdhani", sans-serif;
-    font-weight: 500;
-    font-style: normal;
-    position: relative;
-    right: 25%;
-    bottom: 30%;
-  }
+//   .overlay-text {
+//     text-align: center;
+//     font-size: calc(1rem + 1vw);
+//     margin-bottom: 10px;
+//     font-family: "Rajdhani", sans-serif;
+//     font-weight: 500;
+//     font-style: normal;
+//     position: relative;
+//     right: 25%;
+//     bottom: 30%;
+//   }
   
-  .register-btn {
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 10% 10px auto;
-    border-color: rgb(152, 10, 10);
-    border-width: 1.5px;
-  }
-  .register-btn:hover {
-    background-color: rgb(152, 10, 10);
-  }
+//   .register-btn {
+//     color: white;
+//     padding: 10px 20px;
+//     border-radius: 5px;
+//     cursor: pointer;
+//     font-size: 1.5rem;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     margin: 0 10% 10px auto;
+//     border-color: rgb(152, 10, 10);
+//     border-width: 1.5px;
+//   }
+//   .register-btn:hover {
+//     background-color: rgb(152, 10, 10);
+//   }
   
-  .text-text {
-    font-size: 2rem;
-    text-align: center;
-    color: inherit;
-    margin-top: 20px;
-  }
+//   .text-text {
+//     font-size: 2rem;
+//     text-align: center;
+//     color: inherit;
+//     margin-top: 20px;
+//   }
   
-  .chat {
-    background-image: url(../../../assets/images/2782017.jpg);
-    width: 30%;
-    height: 200px;
-    background-position: left center;
-    background-size: cover;
-    position: relative;
-    margin-top: 70px;
-    margin-left: 100px;
-  }
+//   .chat {
+//     background-image: url(../../../assets/images/2782017.jpg);
+//     width: 30%;
+//     height: 470px;
+//     background-position:  center;
+//     background-size: cover;
+//     position: relative;
+//     margin-top: 70px;
+//     margin-left: 100px;
+//   }
   
-  .beside {
-    margin-left: calc(500px + 3vw);
-    align-items: center;
-    position: relative;
-    bottom: 70px;
-    display: flex;
-  }
+//   .beside {
+//     margin-left: calc(500px + 3vw);
+//     align-items: center;
+//     position: relative;
+//     bottom: 70px;
+//     display: flex;
+//     background-position: center;
+//   }
   
-  .text-beside {
-    font-size: 1.2rem;
-    font-weight: 600;
-  }
+//   .text-beside {
+//     font-size: 1.5rem;
+//     font-weight: 800;
+//     position: relative;
+//     left: 70px;
+//     bottom: 150px;
+//     padding: 10px;
+    
+//   }
   
-  @media (max-width: 768px) {
-    .overlay-text {
-      font-size: 1.5rem;
-    }
-    .chat,
-    .secure {
-      width: 50%;
-    }
-    .beside,
-    .beside1 {
-      margin-left: 20px;
-    }
-  }
-  .secure {
-    background-image: url(https://img.freepik.com/free-vector/flat-background-safer-internet-day_23-2151121216.jpg?t=st=1716963815~exp=1716967415~hmac=691aeb7de9860e784973a4023affa602aa4d398babeeb90eb64781066945de2a&w=1380);
-    background-size: cover;
-    width: 30%;
-    height: 200px;
-    position: relative;
-    margin-top: 50px;
-    float: right;
-    right: 50px;
-    margin: 20px auto;
-  }
+//   @media (max-width: 768px) {
+//     .overlay-text {
+//       font-size: 1.5rem;
+//     }
+//     .chat,
+//     .secure {
+//       width: 50%;
+//     }
+//     .beside,
+//     .beside1 {
+//       margin-left: 20px;
+//     }
+//   }
+//   .secure {
+//     background-image: url(https://img.freepik.com/free-vector/flat-background-safer-internet-day_23-2151121216.jpg?t=st=1716963815~exp=1716967415~hmac=691aeb7de9860e784973a4023affa602aa4d398babeeb90eb64781066945de2a&w=1380);
+//     background-size: cover;
+//     width: 30%;
+//     height: 400px;
+//     position: relative;
+//     margin-top: 100px;
+//     bottom: 100px;
+//     float: right;
+//     right: 50px;
+//     margin: 20px auto;
+//   }
   
-  .beside1 {
-    align-items: center;
-    display: flex;
-    margin-top: 100px;
-    margin-left: 100px;
-  }/*# sourceMappingURL=cover-page.component.css.map */
+//   .beside1 {
+//     align-items: center;
+//     display: flex;
+//     margin-top: 100px;
+//     margin-left: 100px;
+//   }/*# sourceMappingURL=cover-page.component.css.map */
 
-  .maincontant{
-    margin-bottom: 10%;
-  }
+//   .maincontant{
+//     margin-bottom: 10%;
+//   }
+
+//   .text-beside1{
+//     font-size: 1.5rem;
+//     font-weight: 800;
+//     position: relative;
+//     left: 70px;
+//     top: 100px;
+//     padding: 10px;
+    
+//   }
