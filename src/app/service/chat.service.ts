@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -11,6 +11,8 @@ export class ChatService {
   private client: Client | null = null;
   private isConnectedSubject = new BehaviorSubject<boolean>(false);
   private messageSubject = new BehaviorSubject<any>(null);
+  private messageDeletedSubject = new BehaviorSubject<string | null>(null);
+  private messageReadSubject = new BehaviorSubject<any>(null);
 
   constructor(private http:HttpClient) {
 
@@ -35,7 +37,13 @@ export class ChatService {
   this.client.onConnect = (frame) => {
     this.isConnectedSubject.next(true);
     console.log('Connected: ' + frame);
+
+    // Subscribe to incoming messages
     this.client!.subscribe(`/user/${userId}/queue/messages`, this.onMessageReceived);
+
+   // Subscribe to read receipt notifications
+    this.client!.subscribe(`/user/${userId}/queue/message-read`, this.onReadReceiptReceived);
+
   };
 
   this.client.onStompError = (frame) => {
@@ -83,6 +91,8 @@ export class ChatService {
     this.messageSubject.next(notification);
   };
 
+  
+
   isConnected(): Observable<boolean> {
     return this.isConnectedSubject.asObservable();
   }
@@ -91,7 +101,36 @@ export class ChatService {
     return this.messageSubject.asObservable();
   }
 
+  onMessageRead(): Observable<any> {
+    console.log("onmessage read")
+    return this.messageReadSubject.asObservable();
+  }
+
+  private onReadReceiptReceived = (message: any) => {
+    console.log("hie heijoijlojl")
+    const receipt = JSON.parse(message.body);
+    this.messageReadSubject.next(receipt);
+  };
+
+  
   getInitialMessages(senderId: number, recipientId: number): Observable<any[]> {
+    let headers = new HttpHeaders();
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('jwtToken');
+      if (token) {
+        headers = headers.set('Authorization', `Bearer ${token}`);
+      }
+    }
+    const url = `${this.apiUrl}/messages/${senderId}/${recipientId}`;
+    return this.http.get<any[]>(url, { headers }).pipe(
+      map(messages => messages.map(message => ({
+        ...message,
+        read: message.read || message.senderId !== senderId
+      })))
+    );
+  }
+  
+  delete(id:any){
     let headers = new HttpHeaders();
     
     if (typeof localStorage !== 'undefined') {
@@ -100,9 +139,23 @@ export class ChatService {
         headers = headers.set('Authorization', `Bearer ${token}`);
       }
     }
+    const url = `${this.apiUrl}/message/${id}`;
+    return this.http.delete<any>(url,{headers});
   
-    const url = `${this.apiUrl}/messages/${senderId}/${recipientId}`;
-    
-    return this.http.get<any[]>(url, { headers });
   }
+
+  markMessageAsRead(messageId: number): Observable<any> {
+    let headers = new HttpHeaders();
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('jwtToken');
+      if (token) {
+        headers = headers.set('Authorization', `Bearer ${token}`);
+      }
+    }
+    const url = `${this.apiUrl}/${messageId}/read`;
+    return this.http.post<any>(url, {}, { headers });
+  }
+
+
+  
 }

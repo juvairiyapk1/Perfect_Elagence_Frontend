@@ -15,6 +15,8 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ToastrService } from 'ngx-toastr';
 import { privateDecrypt } from 'crypto';
 import { AuthStateService } from '../../service/auth-state.service';
+import { DeleteConformationModalComponent } from '../delete-conformation-modal/delete-conformation-modal.component';
+import { error } from 'console';
 
 
 @Component({
@@ -83,6 +85,32 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
         console.error('Error fetching profile:', error);
       }
     );
+  }
+
+  confirmDelete(){
+    
+   const dialogRef = this.dialog.open(DeleteConformationModalComponent);
+   dialogRef.afterClosed().subscribe(result => {
+    if(result){
+      this.deleteProfile(result.reason,result.details);
+    }
+   })
+  }
+
+  deleteProfile(reason:string,details:string){
+
+    this.profileService.deleteProfile(reason,details).subscribe(
+      response =>{
+        
+        this.logout();  
+          
+        this.toast.success('Profile deleted successfully');
+      },
+      error=>{
+        this.toast.error("Profile Deleting failed")
+      }
+    )
+
   }
 
   

@@ -1,26 +1,25 @@
 <div class="w-full h-full flex items-center justify-center p-4">
-    <div class="w-full sm:max-w-md mx-auto">
-      <form [formGroup]="userLogin" (ngSubmit)="submitForm()" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 relative">
-        <h1 mat-dialog-title class="text-center text-red-700 text-xl md:text-2xl mb-6">{{inputdata.title}}</h1>
-        <mat-icon class="absolute top-4 right-4 cursor-pointer text-gray-500 hover:text-red-700" (click)="closeLogin()">close</mat-icon>
+  <div class="w-full max-w-xl mx-auto">
+    <form [formGroup]="userLogin" (ngSubmit)="submitForm()" class="bg-white shadow-md rounded-lg px-4 pt-6 pb-8 mb-4 relative">
+      <h1 mat-dialog-title class="text-center text-red-700 text-xl md:text-2xl mb-6">{{inputdata.title}}</h1>
+      <mat-icon class="absolute top-4 right-4 cursor-pointer text-gray-500 hover:text-red-700" (click)="closeLogin()">close</mat-icon>
+      
+      <div mat-dialog-content class="mb-6">
+        <mat-form-field class="w-full mb-4">
+          <mat-label>Enter your email</mat-label>
+          <input matInput placeholder="userName@example.com" formControlName="email" class="py-2">
+        </mat-form-field>
         
-        <div mat-dialog-content class="mb-6">
-          <mat-form-field class="w-full mb-4">
-            <mat-label>Enter your email</mat-label>
-            <input matInput placeholder="userName@example.com" formControlName="email">
-          </mat-form-field>
-          
-          <mat-form-field class="w-full mb-4">
-            <mat-label>Password</mat-label>
-            <input matInput formControlName="password" type="password">
-          </mat-form-field>
-        </div>
-        
-        <div mat-dialog-actions class="flex flex-col items-center">
-          <button mat-raised-button color="primary" class="w-full py-2 mb-4 text-lg">Login</button>
-          <p class="text-red-600 hover:text-red-800 cursor-pointer text-sm md:text-base" (click)="openEmailVerifyPopUp()">Forgot password?</p>
-        </div>
-      </form>
-    </div>
+        <mat-form-field class="w-full mb-4">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" class="py-2">
+        </mat-form-field>
+      </div>
+      
+      <div mat-dialog-actions class="flex flex-col items-center">
+        <button mat-raised-button color="primary" class="w-full py-2 text-lg">Login</button>
+        <p class="text-red-600 hover:text-red-800 cursor-pointer text-sm md:text-base mt-4" (click)="openEmailVerifyPopUp()">Forgot password?</p>
+      </div>
+    </form>
   </div>
-  
+</div>

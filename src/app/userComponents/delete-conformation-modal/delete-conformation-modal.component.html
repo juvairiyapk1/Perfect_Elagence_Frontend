@@ -1,0 +1,19 @@
+<mat-dialog-content>
+    <p>Are you sure you want to delete your profile?</p>
+    <mat-form-field>
+      <mat-label>Reason for deletion</mat-label>
+      <mat-select [(ngModel)]="selectedReason">
+        <mat-option *ngFor="let reason of reasons" [value]="reason.value">
+          {{reason.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="selectedReason === 'other'">
+      <mat-label>Please specify</mat-label>
+      <input matInput [(ngModel)]="otherReason">
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="false">Cancel</button>
+    <button mat-button [mat-dialog-close]="getReason()" color="warn" [disabled]="!isReasonSelected()">Delete</button>
+  </mat-dialog-actions>

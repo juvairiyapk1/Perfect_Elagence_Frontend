@@ -43,7 +43,8 @@
             
             "scripts": [
                 "src/global.js",
-                "node_modules/sockjs-client/dist/sockjs.min.js"
+                "node_modules/sockjs-client/dist/sockjs.min.js",
+                "node_modules/process/browser.js"
 
             ],
 

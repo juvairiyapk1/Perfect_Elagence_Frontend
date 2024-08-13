@@ -1,5 +1,5 @@
 import { USER_ADMIN } from '../../../model/Interface';
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, inject, OnInit, ViewChild} from '@angular/core';
 import { AdminServiceService } from '../../../service/admin-service.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';

@@ -336,4 +336,21 @@ export class ProfileService {
     return this.http.put(`${BASE_URL}/user/updatePartnerPrefEdu/${this.userId}`, request, { headers });
   }
 
+  deleteProfile(reason: string, details: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+  
+    const options = {
+      headers: headers,
+      params: {
+        userId: this.userId.toString(),
+        reason,
+        details
+      }
+    };
+  
+    return this.http.delete(`${BASE_URL}/user/profile`, options);
+  }
+  
 }

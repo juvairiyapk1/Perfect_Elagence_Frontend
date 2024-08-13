@@ -1,14 +1,14 @@
 <div class="flex justify-start items-start m-4 text-black pt-3 gap-96">
   <select id="professionSelect"
-    class="text-xs py-1 px-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-800"
+    class="text-sm py-1 px-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-800"
     (change)="onProfessionChange($event)">
     <option value="" disabled selected hidden>Filter</option>
     @for (item of professions; track item) {
     <option [value]="item">{{item}}</option>
     }
   </select>
-  <mat-form-field class="text-xs py-1 px-2 rounded-lg ">
-    <input matInput (keyup)="filterChange($event)" placeholder="Search" class="text-xs w-16" />
+  <mat-form-field class="text-sm py-1 px-2 rounded-lg ">
+    <input matInput (keyup)="filterChange($event)" placeholder="Search" class="text-sm w-16" />
   </mat-form-field>
 </div>
 @if (showNoProfilesMessage) {
@@ -21,13 +21,13 @@
 <div class="card-container">
 
   @for (profile of dataSource.filteredData; track profile) {
-  <mat-card class="profile-card" (click)="isSubscribed ? userProfilePopUp(profile.id) : null">
+  <mat-card class="profile-card text-xl" (click)="handleCardClick(profile.id)">
     <mat-card-header>
       <div mat-card-avatar class="profile-avatar" [style.background-image]="'url(' + profile.image + ')'"
         [style.background-size]="'cover'" [style.background-position]="'center'"></div>
       <mat-card-title class="card_title">{{profile.name}}</mat-card-title>
       <mat-card-subtitle class="card_subtitle">{{profile.dob}}</mat-card-subtitle>
-      <mat-card-subtitle class="card_subtitle">{{profile.homeLocation}},{{profile.relegion}}</mat-card-subtitle>
+      <mat-card-subtitle class="card_subtitle ">{{profile.homeLocation}},{{profile.relegion}}</mat-card-subtitle>
     </mat-card-header>
 
 
@@ -41,14 +41,14 @@
       }
     </mat-card-content>
     <mat-card-actions>
-      <button mat-icon-button>
-        <mat-icon>favorite</mat-icon>
+      <button mat-icon-button (click)="startCall(profile.id)">
+        <mat-icon>videocam</mat-icon>
       </button>
       <div>
-      <button mat-icon-button (click)="initiateChat(profile.id, profile.name, profile.image)">
-        <mat-icon>message</mat-icon>
-      </button>
-    </div>
+        <button mat-icon-button (click)="initiateChat(profile.id, profile.name, profile.image)">
+          <mat-icon>message</mat-icon>
+        </button>
+      </div>
     </mat-card-actions>
   </mat-card>
   }

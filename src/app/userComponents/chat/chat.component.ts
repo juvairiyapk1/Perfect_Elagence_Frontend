@@ -1,37 +1,50 @@
-import { Component, OnInit, OnDestroy, Input, AfterViewChecked, ViewChild, ElementRef, ChangeDetectorRef, AfterContentInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, AfterViewChecked, ViewChild, ElementRef, ChangeDetectorRef, AfterContentInit, HostListener } from '@angular/core';
 import { ProfileService } from '../../service/profile.service';
 import { Subscription } from 'rxjs';
 import { ChatService } from '../../service/chat.service';
-import { ActivatedRoute,  Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+import { Message } from '@stomp/stompjs';
+import { error } from 'console';
+import { MatMenuTrigger } from '@angular/material/menu';
+
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit, OnDestroy,AfterViewChecked {
+export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   isSubscribed = false;
   messages: any[] = [];
   newMessage = '';
-   currentUserId!: number;
+  currentUserId!: number;
   recipientId!: number;
+  selectedMessage!: number;
+  isContextMenuVisible = false;
+  contextMenuPosition = { x: 0, y: 0 };
 
-  profileName: string ='';
+  profileName: string = '';
   profileImage: any;
   @ViewChild('scrollMe') private myScrollContainer!: ElementRef;
-  
+  @ViewChild('messageInput') messageInput!: ElementRef<HTMLInputElement>;
+
   private connectionSubscription!: Subscription;
   private messageSubscription!: Subscription;
 
   constructor(
-    private service:ChatService,
+    private service: ChatService,
     private profileService: ProfileService,
-    private route:ActivatedRoute,
+    private route: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
-    private router:Router
-  ) {}
+    private router: Router,
+    private toast: ToastrService,
+    private dialog: MatDialog
+  ) { }
 
-  
+
 
   ngAfterViewChecked(): void {
     this.scrollToBottom();
@@ -42,16 +55,15 @@ export class ChatComponent implements OnInit, OnDestroy,AfterViewChecked {
     try {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
       this.cdRef.detectChanges(); // Manually trigger change detection
-    } catch(err) { }
+    } catch (err) { }
   }
-  
+
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.recipientId = Number(params['recipientId']);
       if (isNaN(this.recipientId)) {
         console.error('Invalid recipientId in URL parameters');
-        // Handle the error (e.g., navigate back or show an error message)
       } else {
         this.loadSubscription();
       }
@@ -68,14 +80,23 @@ export class ChatComponent implements OnInit, OnDestroy,AfterViewChecked {
       this.profileImage = history.state.profileImage;
     }
 
-    console.log('Profile Name:', this.profileName);
-    console.log('Profile Image:', this.profileImage);
+    this.service.onMessageRead().subscribe(receipt => {
+      console.log(receipt+"receipt")
+      if (receipt) {
+        const message = this.messages.find(m => m.id === receipt.messageId);
+        if (message) {
+          message.read = true;
+          this.cdRef.detectChanges(); // Trigger change detection
+        }
+      }
+    });
 
-    
+
   }
 
 
-  
+
+
   loadSubscription(): void {
     this.profileService.getProfile().subscribe(
       res => {
@@ -97,9 +118,9 @@ export class ChatComponent implements OnInit, OnDestroy,AfterViewChecked {
 
   initializeChat(): void {
     // Assuming you have a way to get the current user ID
-    if(typeof localStorage !== 'undefined'){
+    if (typeof localStorage !== 'undefined') {
       this.currentUserId = Number(localStorage.getItem('userId')) || 0;
-        }
+    }
 
     this.service.connect(this.currentUserId.toString());
 
@@ -107,45 +128,73 @@ export class ChatComponent implements OnInit, OnDestroy,AfterViewChecked {
       connected => {
         if (connected) {
           this.loadMessages();
+          this.markAllMessagesAsRead();
         }
       }
     );
 
     this.messageSubscription = this.service.onMessage().subscribe(
       message => {
-        if (message && message.senderId !== this.currentUserId) {
-          this.messages.push(message);
-          this.scrollToBottom();
+        if (message) {
+          if (message.senderId !== this.currentUserId) {
+            console.log(message.id+"message")
+            if(message.content === null|| message.content === ''){
+              this.messages = this.messages.filter(m => m.id !== message.id);
+              
+              this.showNotification('message is deleted');
+            }else{
+              const newMessage = { ...message, read: false };
+              this.messages.push(message);
+              this.scrollToBottom();
+              this.showNotification(message);
+              this.markMessageAsRead(newMessage.id);
+
+            }
+            this.cdRef.detectChanges();
+          }
         }
       }
     );
   }
 
-  
+  markAllMessagesAsRead(): void {
+    this.messages.forEach(message => {
+      if (!message.read && message.recipientId === this.currentUserId) {
+        this.markMessageAsRead(message.id);
+      }
+    });
+  }
+
+
 
   sendMessage(): void {
-    if (this.newMessage.trim()) {
-      const message = {
-        senderId: this.currentUserId,
-        recipientId: this.recipientId,
-        content: this.newMessage,
-        timeStamp: new Date() // Add timestamp
-      };
-      
-      // Add message to local array immediately
-      this.messages.push(message);
-      
-      this.service.sendMessage(message)
-        .then(() => {
-          console.log('Message sent');
-          this.newMessage = '';
-          this.scrollToBottom();
-        })
-        .catch(error => {
-          console.error('Error sending message:', error);
-          // Optionally, remove the message from the array if sending fails
-          this.messages.pop();
-        });
+    if (this.isSubscribed) {
+      if (this.newMessage.trim()) {
+        const message = {
+          senderId: this.currentUserId,
+          recipientId: this.recipientId,
+          content: this.newMessage,
+          timeStamp: new Date() // Add timestamp
+        };
+
+        // Add message to local array immediately
+        this.messages.push(message);
+
+        this.service.sendMessage(message)
+          .then(() => {
+            console.log('Message sent');
+            this.newMessage = '';
+            this.scrollToBottom();
+          })
+          .catch(error => {
+            console.error('Error sending message:', error);
+            // Optionally, remove the message from the array if sending fails
+            this.messages.pop();
+          });
+      }
+    }else{
+      this.toast.info("Subscribe");
+      this.router.navigateByUrl("/user/package")
     }
   }
 
@@ -153,13 +202,60 @@ export class ChatComponent implements OnInit, OnDestroy,AfterViewChecked {
     this.service.getInitialMessages(this.currentUserId, this.recipientId)
       .subscribe(
         messages => {
-          this.messages = messages;
+          this.messages = messages.map(message => ({
+            ...message,
+            read: message.read || message.senderId !== this.currentUserId
+          }));
+          
+          this.messages
+          .filter(message => !message.read && message.senderId !== this.currentUserId)
+          .forEach(message => this.markMessageAsRead(message.id));
+
+          this.cdRef.detectChanges(); // Trigger change detection
         },
         error => {
           console.error('Error loading initial messages:', error);
         }
       );
   }
+
+  
+
+
+  public onRightClick(event: MouseEvent, messageId: number) {
+
+    event.preventDefault();
+    
+    this.selectedMessage = messageId;
+    const targetElement = event.target as HTMLElement;
+    const rect = targetElement.getBoundingClientRect();
+    this.contextMenuPosition = { x: rect.left, y: rect.bottom };
+    this.isContextMenuVisible = true;
+  }
+
+  deleteMessage(messageId: number) {
+    console.log(this.selectedMessage + "jhjkl");
+    if (!this.selectedMessage) {
+      return;
+    }
+    if (confirm("Are you sure you want to delete the message?")) {
+      this.service.delete(this.selectedMessage).subscribe(() => {
+        this.messages = this.messages.filter(m => m.id !== this.selectedMessage);
+        this.isContextMenuVisible = false;
+        
+      
+        this.cdRef.detectChanges();
+      },
+      error => {
+        console.error('Error deleting message:', error);
+      });
+    } else {
+      this.isContextMenuVisible = false;
+    }
+  }
+  
+
+
 
   ngOnDestroy(): void {
     this.service.disconnect();
@@ -172,7 +268,26 @@ export class ChatComponent implements OnInit, OnDestroy,AfterViewChecked {
   }
 
 
+  showNotification(message: any) {
+    this.toast.info(`New message: ${message.content}`, 'New Message');
+  }
+
+
+  markMessageAsRead(messageId: number): void {
+    this.service.markMessageAsRead(messageId).subscribe(
+      () => {
+        const message = this.messages.find(m => m.id === messageId);
+        if (message) {
+          message.read = true;
+          this.cdRef.detectChanges(); // Trigger change detection
+        }
+      },
+      error => {
+        console.error('Error marking message as read:', error);
+      }
+    );
+  }
   
 
-  
+
 }

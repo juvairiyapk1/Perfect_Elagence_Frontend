@@ -7,7 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
 import { ProfileService } from '../../service/profile.service';
 import { Router } from '@angular/router';
-import { ChatComponent } from '../chat/chat.component';
+import { CallingService } from '../../service/calling.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -39,7 +40,9 @@ export class HomeComponent implements OnInit{
   constructor(private service:UserService,
     private dialog:MatDialog,
     private profileService:ProfileService,
-    private router:Router
+    private router:Router,
+    private videoCallService:CallingService ,
+    private toast:ToastrService
   ){
     this.professions = ['All professions',...service.getProfession()];
 
@@ -138,6 +141,15 @@ export class HomeComponent implements OnInit{
     });
   }
 
+  handleCardClick(profileId: number): void {
+    if (this.isSubscribed) {
+      this.userProfilePopUp(profileId);
+    } else {
+      this.toast.info("Subscribe");
+      this.router.navigateByUrl("/user/package");
+    }
+  }
+
   
 
   loadMatchCount() {
@@ -159,10 +171,7 @@ export class HomeComponent implements OnInit{
 
   
 
-  // initiateChat(recipientId: number) {
-  //     this.router.navigate(['/user/chat'], { queryParams: { recipientId } });
-    
-  // }
+  
   
   initiateChat(recipientId: number, profileName: string, profileImage: any) {
     console.log(`Initiating chat with recipientId: ${recipientId}, profileName: ${profileName}, profileImage: ${profileImage}`);
@@ -171,6 +180,15 @@ export class HomeComponent implements OnInit{
       state: { profileName, profileImage }
     });
   }
+
+  startCall(profileId:number) {
+    const calleeId = profileId.toString(); 
+    this.videoCallService.startCall(calleeId);
+    this.router.navigate(['/user/video-call']);
+  }
+
+
+  
   
 
 }

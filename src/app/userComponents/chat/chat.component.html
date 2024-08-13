@@ -1,33 +1,54 @@
-<div class="flex flex-col custom-height max-w-full mx-auto border border-gray-300" *ngIf="isSubscribed">
+<div class="flex flex-col custom-height max-w-full mx-auto border border-gray-300">
   <div class="bg-gray-100 p-2 text-center flex justify-center">
     <img [src]="profileImage" alt="{{ profileName }}'s Profile Picture" class=" rounded-full object-cover w-24 h-24">
     <h2> {{ profileName }}</h2>
 
   </div>
-  
+
   <div class="flex flex-col overflow-y-auto p-2 " #scrollMe [scrollTop]="scrollMe.scrollHeight">
     <ng-container *ngFor="let message of messages">
-      <div [ngClass]="{'justify-end': message.senderId === currentUserId, 'justify-start': message.senderId !== currentUserId}" class="w-full flex ">
+      <div
+        [ngClass]="{'justify-end': message.senderId === currentUserId, 'justify-start': message.senderId !== currentUserId}"
+        class="w-full flex ">
         <div class="max-w-[70%] inline-block ">
+
+
           <div class="message-content rounded-lg p-2 mb-2  text-black text-xs"
-               [ngClass]="{'bg-green-100': message.senderId === currentUserId, 'bg-gray-200': message.senderId !== currentUserId}">
+            [ngClass]="{'bg-green-100': message.senderId === currentUserId, 'bg-gray-200': message.senderId !== currentUserId}"
+            (contextmenu)="onRightClick($event,message.id)">
             {{ message.content }}
           </div>
-          <div class="message-time text-xs text-gray-500 mt-1"
-               [ngClass]="{'text-right': message.senderId === currentUserId, 'text-left': message.senderId !== currentUserId}">
-            {{ message.timeStamp | date:'short' }}
+          
+          <div *ngIf="isContextMenuVisible && selectedMessage === message.id"
+            class="bg-white border border-gray-300 rounded-md shadow-lg z-50"
+            [ngStyle]="{'top.px': contextMenuPosition.y, 'left.px': contextMenuPosition.x}">
+            <ul class="list-none m-0 p-1">
+              <li class="p-2 hover:bg-gray-100 cursor-pointer text-sm text-black" (click)="deleteMessage(message.id)">
+                Delete
+              </li>
+              
+            </ul>
           </div>
+          <div class="message-time text-xs text-gray-500 mt-1"
+            [ngClass]="{'text-right': message.senderId === currentUserId, 'text-left': message.senderId !== currentUserId}">
+            {{ message.timeStamp | date:'short' }}
+            <span *ngIf="message.senderId === currentUserId" class="ml-1">
+              <i class="fas fa-check" [ngClass]="{'text-blue-500': message.read}"></i>
+            </span>
+          </div>
+
         </div>
       </div>
     </ng-container>
   </div>
-  
+
   <div class="flex p-2 bg-gray-100">
-    <input type="text" [(ngModel)]="newMessage" 
-           (keyup.enter)="sendMessage()" 
-           class="flex-1 p-2 border border-gray-300 rounded-full mr-2 text-black" 
-           placeholder="Type a message...">
-    <button (click)="sendMessage()" 
-            class="p-2 bg-green-500 text-white rounded-full hover:bg-green-600">Send</button>
+    <!-- <emoji-mart (emojiSelect)="addEmoji($event)"></emoji-mart> -->
+    <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()"
+      class="flex-1 p-2 border border-gray-300 rounded-full mr-2 text-black text-sm" placeholder="Type a message...">
+
+    <button (click)="sendMessage()"
+      class="p-1 bg-green-500 text-white rounded-full hover:bg-green-600 text-sm">Send</button>
+
   </div>
 </div>

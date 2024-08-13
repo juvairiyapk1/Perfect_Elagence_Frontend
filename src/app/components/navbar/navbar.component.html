@@ -1,6 +1,6 @@
 <nav class="bg-red-800">
   <div class="container mx-auto px-4 py-2 flex justify-between items-center">
-    <a href="#" class="text-white text-2xl font-serif">Perfect Elegance</a>
+    <a href="#" class="text-white text-3xl font-serif">Perfect Elegance</a>
     
     <!-- Mobile menu button -->
     <button class="md:hidden text-white" (click)="toggleMenu()">
@@ -10,20 +10,27 @@
     <!-- Menu items -->
     <div
       class="absolute top-full left-0 w-full md:relative md:w-auto md:flex md:items-center transition-all duration-300 ease-in-out"
-      [ngClass]="{'hidden': !isMenuVisible, 'block': isMenuVisible, 'md:flex': true}"
+      [ngClass]="{
+        'hidden': !isMenuVisible, 
+        'block': isMenuVisible, 
+        'md:flex': true,
+        'bg-gray-800': isLoggedIn && isMenuVisible
+      }"
     >
       @if(isLoggedIn==false){
-        <a href="#" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4">Home</a>
-        <a routerLink="/about-us" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4">About us</a>
-        <a routerLink="/contact-us" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4">Contact us</a>
-        <button mat-raised-button class="bg-white text-red-800 h-8 px-4 rounded mt-2 md:mt-0 md:ml-4" (click)="openLoginPopUp()">Login</button>
+        <a href="#" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4 text-xl">Home</a>
+        <a routerLink="/about-us" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4 text-xl">About us</a>
+        <a routerLink="/contact-us" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4 text-xl">Contact us</a>
+        <button mat-raised-button class="bg-white text-red-800 h-8 px-4 rounded mt-2 md:mt-0 md:ml-4 " (click)="openLoginPopUp()">Login</button>
       }
       @else if(isLoggedIn==true && isAdmin== false){
-        <a routerLink="user/home" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4">Home</a>
-        <!-- <a routerLink="user/package" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4">Packages</a> -->
-        <a href="#" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4">Explore</a>
-        <a href="#" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4">Help</a>
-        <div class="user-profile text-white mt-2 md:mt-0 md:ml-4">
+        <a routerLink="user/home" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4 text-xl">Home</a>
+        <a routerLink="user/package" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4 text-xl">Packages</a>
+        <!-- <a href="#" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4">Explore</a> -->
+        <a href="#" class="block text-white hover:text-gray-300 py-2 md:inline-block md:ml-4 text-xl">Help
+          
+        </a>
+        <div class="user-profile text-white mt-2 md:mt-0 md:ml-4 text-xl">
           <span>{{ user }}</span>
         </div>
       }

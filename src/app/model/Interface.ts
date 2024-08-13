@@ -232,3 +232,11 @@ export interface MonthlyUserSubscriptionDTO {
     contact: string;
   }
 
+
+   export interface Message {
+    id: number;
+    content: string;
+    senderId: string;
+    timeStamp: Date;
+  }
+
