@@ -7,7 +7,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
 import { ProfileService } from '../../service/profile.service';
 import { Router } from '@angular/router';
-import { CallingService } from '../../service/calling.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -41,7 +40,6 @@ export class HomeComponent implements OnInit{
     private dialog:MatDialog,
     private profileService:ProfileService,
     private router:Router,
-    private videoCallService:CallingService ,
     private toast:ToastrService
   ){
     this.professions = ['All professions',...service.getProfession()];
@@ -182,9 +180,9 @@ export class HomeComponent implements OnInit{
   }
 
   startCall(profileId:number) {
-    const calleeId = profileId.toString(); 
-    this.videoCallService.startCall(calleeId);
+    if(this.isSubscribed)
     this.router.navigate(['/user/video-call']);
+    
   }
 
 

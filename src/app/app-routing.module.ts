@@ -19,7 +19,7 @@ import { authGuard } from './gurd/auth.guard';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ContacUsComponent } from './components/contac-us/contac-us.component';
 import { ChatComponent } from './userComponents/chat/chat.component';
-import { VideoCallComponent } from './userComponents/video-call/video-call.component';
+import { VedioCallComponent } from './userComponents/vedio-call/vedio-call.component';
 
 
 
@@ -52,7 +52,7 @@ const routes: Routes = [
       { path: 'success', component: SucessComponent },
       { path: 'cancel', component: CancelComponent },
       { path: 'chat', component: ChatComponent },
-      { path: 'video-call', component: VideoCallComponent },
+      { path: 'video-call', component: VedioCallComponent },
 
     ]
   },
