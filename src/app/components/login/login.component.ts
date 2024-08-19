@@ -53,58 +53,72 @@ export class LoginComponent implements OnInit{
   }
 
 
-  submitForm() {
+  submitForm(): void {
     if (this.userLogin.valid) {
-      const userData: LOGIN = {
-        email: this.userLogin.value.email,
-        password: this.userLogin.value.password
-      };
-      this.service.login(userData).subscribe(
-        (response) => {
-          if (response.token != null) {
-            localStorage.setItem('userName', response.name);
-            const jwtToken = response.token;
-            localStorage.setItem('jwtToken', jwtToken);
+        const userData: LOGIN = {
+            email: this.userLogin.value.email,
+            password: this.userLogin.value.password
+        };
+       this.service.login(userData).subscribe(
+            (response) => {
+                if (response.token != null) {
+                    console.log(response.blocked);
+                    if (response.blocked) {
+                        this.toast.error("Your account has been blocked by the admin");
+                        return;
+                    }
 
-            console.log(jwtToken+"inside login");
-            
-            // Set the logged in state and username
-            this.authStateService.setLoggedIn(true);
-            this.authStateService.setUserName(response.name);
-  
-            this.jwtService.getRoles().subscribe((roles) => {
-              const loggedIn = response.logged;
-              const userId = response.id;
-              if (typeof localStorage !== 'undefined') {
-                localStorage.setItem('isLoggedIn', loggedIn);
-                localStorage.setItem('userId', userId);
-              }
-  
-             
-              this.closeLogin();
-              if (roles.includes(Roles.USER)) {
-                this.router.navigateByUrl("/user/home");
-                
-                this.toast.success("Login successful");
-              } else if (roles.includes(Roles.ADMIN)) {
-                this.router.navigateByUrl("/admin/dashboard");
-                this.toast.success("Login successful");
-              }
+                    localStorage.clear();
+                    sessionStorage.clear();
 
-               // Set the admin status
-               this.authStateService.setIsAdmin(roles.includes(Roles.ADMIN));
-  
-            });
-          }
-        },
-        (error) => {
-          this.toast.error("Invalid Password or email");
-        }
-      );
+                    localStorage.setItem('userName', response.name);
+                    const jwtToken = response.token;
+                    localStorage.setItem('jwtToken', jwtToken);
+
+                    // Set the logged in state and username
+                    this.authStateService.setLoggedIn(true);
+                    this.authStateService.setUserName(response.name);
+
+                    this.jwtService.getRoles().subscribe((roles) => {
+                        const loggedIn = response.logged;
+                        const userId = response.id;
+                        if (typeof localStorage !== 'undefined') {
+                            localStorage.setItem('isLoggedIn', loggedIn);
+                            localStorage.setItem('userId', userId);
+                        }
+
+                        this.closeLogin();
+
+                        if (roles.includes(Roles.USER)) {
+                            this.router.navigateByUrl("/user/home");
+                            console.log(jwtToken + " inside login");
+
+                            this.toast.success("Login successful");
+                        } else if (roles.includes(Roles.ADMIN)) {
+                            this.router.navigateByUrl("/admin/dashboard");
+                            this.toast.success("Login successful");
+                        }
+
+                        // Set the admin status
+                        this.authStateService.setIsAdmin(roles.includes(Roles.ADMIN));
+                    });
+                }
+            },
+            (error) => {
+                if (error.status === 403) { // Check for the 403 Forbidden status
+                    this.toast.error("Your account has been blocked by the admin");
+                } else if (error.status === 400) {
+                    this.toast.error("Invalid Password or email");
+                } else {
+                    this.toast.error("An error occurred. Please try again.");
+                }
+            }
+        );
     } else {
-      console.error('Form is invalid');
+        console.error('Form is invalid');
     }
-  }
+}
+
     
     
 

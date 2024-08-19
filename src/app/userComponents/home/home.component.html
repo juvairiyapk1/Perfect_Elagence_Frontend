@@ -36,6 +36,19 @@
       <p>Education: {{profile.education}}</p>
       <p>Occupation: {{profile.profession}}</p>
 
+      <p>
+        
+        <span *ngIf="profile.online; else offlineStatus" class="inline-flex items-center">
+          <span class="w-2.5 h-2.5 bg-green-500 rounded-full mr-2"></span>Online
+        </span>
+        <ng-template #offlineStatus>
+          <span class="inline-flex items-center">
+            <span class="w-2.5 h-2.5 bg-red-500 rounded-full mr-2"></span>Offline
+          </span>
+        </ng-template>
+      </p>
+      
+
       @if(isSubscribed){
       <p>MatchScore: {{profile.matchScore}}</p>
       }
@@ -45,10 +58,11 @@
         <mat-icon>videocam</mat-icon>
       </button>
       <div>
-        <button mat-icon-button (click)="initiateChat(profile.id, profile.name, profile.image)">
+        <button mat-icon-button (click)="initiateChat(profile.id, profile.name, profile.image)"  >
           <mat-icon>message</mat-icon>
         </button>
       </div>
+      
     </mat-card-actions>
   </mat-card>
   }

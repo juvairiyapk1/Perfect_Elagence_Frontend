@@ -8,6 +8,7 @@ import { forkJoin } from 'rxjs';
 import { ProfileService } from '../../service/profile.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ChatService } from '../../service/chat.service';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,8 @@ export class HomeComponent implements OnInit{
   matchScores:number[]=[];  
   showchat=false;
   currentUserId: string|null; 
+  newMessageCount: number = 0;
+
   
 
   
@@ -40,9 +43,11 @@ export class HomeComponent implements OnInit{
     private dialog:MatDialog,
     private profileService:ProfileService,
     private router:Router,
-    private toast:ToastrService
+    private toast:ToastrService,
   ){
     this.professions = ['All professions',...service.getProfession()];
+
+    
 
     if(typeof window !== 'undefined' && window.localStorage){
        this.token =localStorage.getItem('jwtToken');
@@ -70,29 +75,36 @@ export class HomeComponent implements OnInit{
   }
 
   
-  loadProfiles():void{
+  loadProfiles(): void {
     const profession = this.selectedProfession === 'All Professions' ? '' : this.selectedProfession;
-
-    this.service.getAllUsers(this.pageNo, this.pageSize,profession).subscribe(
+  
+    this.service.getAllUsers(this.pageNo, this.pageSize, profession).subscribe(
       data => {
+        // Remove transformation to see if data is correct
         this.profiles = data;
+  
+        console.log('Transformed Response:', this.profiles);
+  
+        this.profiles.forEach((profile: PROFILE) => {
+          console.log(`User ID: ${profile.id}, Name: ${profile.name}, Online: ${profile.online}, Profession: ${profile.profession}`);
+        });
+  
         this.dataSource.data = this.profiles;
         this.loadMatchCount();
         this.showNoProfilesMessage = this.profiles.length === 0;
-        
       },
       error => {
         console.error('Error fetching profiles:', error);
       }
     );
   }
-
+  
+  
   loadSubscription(): void {
     this.profileService.getProfile().subscribe(
       res => {
         if (res && typeof res.subscribed === 'boolean') {
           this.isSubscribed = res.subscribed;
-          console.log(this.isSubscribed); // Should log true or false
         } else {
           console.error('Unexpected response structure:', res);
         }
@@ -172,12 +184,12 @@ export class HomeComponent implements OnInit{
   
   
   initiateChat(recipientId: number, profileName: string, profileImage: any) {
-    console.log(`Initiating chat with recipientId: ${recipientId}, profileName: ${profileName}, profileImage: ${profileImage}`);
     this.router.navigate(['/user/chat'], {
       queryParams: { recipientId },
       state: { profileName, profileImage }
     });
   }
+  
 
   startCall(profileId:number) {
     if(this.isSubscribed)

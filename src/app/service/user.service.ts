@@ -43,10 +43,10 @@ export class UserService {
   
 
   getAllUsers(pageNo: number, pageSize: number, profession: string): Observable<PROFILE[]> {
-    
+    const token =localStorage.getItem("jwtToken")
     // Create headers with the token
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${token}`
     });
   
     // Create params
@@ -145,10 +145,16 @@ export class UserService {
 
   
 
-  // isUserIsSubscribed(){
-  //   if(this.token != null){
+  logout(): Observable<void> {
+    const token = localStorage.getItem("jwtToken");
+    console.log("Token to be sent:", token);
+    
+    const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+    });
 
-  //   }
-  // }
+    return this.http.post<void>(BASE_URL + 'user/logout', {}, { headers });
+}
+
 
 }

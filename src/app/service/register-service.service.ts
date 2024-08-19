@@ -175,10 +175,7 @@ export class RegisterServiceService {
   }
 
 
-  logout(): Observable<void> {
-    return this.http.post<void>(BASE_URL + 'logout', {})
-  }
-
+  
 
   private createAuthorizationHeader() {
     const jwtToken = localStorage.getItem('jwt');
@@ -192,6 +189,11 @@ export class RegisterServiceService {
     return null;
   }
 
+  logout(): Observable<void> {
+   
+
+    return this.http.post<void>(BASE_URL + 'logout', {});
+}
 
 
 

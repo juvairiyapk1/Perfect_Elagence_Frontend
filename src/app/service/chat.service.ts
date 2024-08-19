@@ -19,6 +19,7 @@ export class ChatService {
   }
 
   private apiUrl ='http://localhost:8080/user';
+  private newMessageCount = 0;
 
   connect(userId: string): void {
   this.client = new Client({
@@ -156,6 +157,8 @@ export class ChatService {
     return this.http.post<any>(url, {}, { headers });
   }
 
+
+  
 
   
 }

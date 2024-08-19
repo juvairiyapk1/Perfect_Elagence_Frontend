@@ -24,7 +24,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {LayoutModule} from '@angular/cdk/layout'; 
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
-
+import {MatBadgeModule} from '@angular/material/badge'; 
 
 @NgModule({
     exports:[
@@ -54,6 +54,7 @@ import { MatMenuModule } from '@angular/material/menu';
         LayoutModule,
         MatGridListModule,
         MatMenuModule,
+        MatBadgeModule
         
     ]
 })

@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { clearToken } from '../../state/auth.actions';
 import { AuthStateService } from '../../service/auth-state.service';
+import { UserService } from '../../service/user.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -14,7 +15,7 @@ export class SideNavComponent {
   constructor(private service:RegisterServiceService,
     private store:Store,
     private router:Router,
-    private authStateService:AuthStateService
+    private authStateService:AuthStateService,
   ){}
 
   logout(): void {

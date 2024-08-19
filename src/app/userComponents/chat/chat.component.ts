@@ -54,7 +54,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   scrollToBottom(): void {
     try {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-      this.cdRef.detectChanges(); // Manually trigger change detection
+      this.cdRef.detectChanges(); 
     } catch (err) { }
   }
 
@@ -75,7 +75,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.profileName = navigation.extras.state['profileName'];
       this.profileImage = navigation.extras.state['profileImage'];
     } else {
-      // Fallback to history.state if Router.getCurrentNavigation() is null
+
       this.profileName = history.state.profileName;
       this.profileImage = history.state.profileImage;
     }
@@ -86,7 +86,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
         const message = this.messages.find(m => m.id === receipt.messageId);
         if (message) {
           message.read = true;
-          this.cdRef.detectChanges(); // Trigger change detection
+          this.cdRef.detectChanges(); 
         }
       }
     });
@@ -102,7 +102,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       res => {
         if (res && typeof res.subscribed === 'boolean') {
           this.isSubscribed = res.subscribed;
-          console.log(this.isSubscribed);
           if (this.isSubscribed) {
             this.initializeChat();
           }
@@ -148,6 +147,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
               this.scrollToBottom();
               this.showNotification(message);
               this.markMessageAsRead(newMessage.id);
+
+
 
             }
             this.cdRef.detectChanges();

@@ -26,10 +26,12 @@ export class ProfileService {
     if (typeof localStorage !== 'undefined') {
        this.token = localStorage.getItem('jwtToken')
       this.userId = Number(localStorage.getItem('userId'));
+      
     } else {
       this.token = null;
       this.userId = 0;
     }
+    console.log(this.userId+"constructor")
   }
 
 
@@ -37,14 +39,16 @@ export class ProfileService {
 
   getUser(): Observable<USER_PROFILE> {
 
+    const user =localStorage.getItem("userId")
+    const token =localStorage.getItem("jwtToken")
 
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${token}`
     });
 
     console.log(this.token + "getUser")
 
-    return this.http.get<USER_PROFILE>(`${BASE_URL}/user/profile/${this.userId}`, { headers });
+    return this.http.get<USER_PROFILE>(`${BASE_URL}/user/profile/${user}`, { headers });
   }
 
   profileUpdated$ = this.profileUpdatedSource.asObservable();
@@ -95,11 +99,13 @@ export class ProfileService {
 
 
   getProfile(): Observable<ProfileResponse> {
+    const token =localStorage.getItem('jwtToken')
+     const user =localStorage.getItem("userId")
     
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ProfileResponse>(`${BASE_URL}/user/getProfile/${this.userId}`, { headers })
+    return this.http.get<ProfileResponse>(`${BASE_URL}/user/getProfile/${user}`, { headers })
 
   }
 

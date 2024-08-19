@@ -56,7 +56,7 @@ export interface PROFILE {
     profession: string;
     image?: string;
     matchScore?: number | 'N/A';
-
+    online: boolean;
 }
 
 export interface USER_PROFILE {

@@ -19,6 +19,8 @@ export class PackagesComponent implements OnInit{
 
   stripePromise = loadStripe(env.stripe);
 
+  isLoading = true;
+
   packages: PACKAGE[] = [];
 
   constructor(private service:PackageService,
@@ -34,6 +36,7 @@ export class PackagesComponent implements OnInit{
   ngOnInit(): void {
     this.service.getPackage().subscribe(res=>{
       this.packages=res;
+      this.isLoading=false;
     })
   }
 

@@ -80,6 +80,7 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
         this.profileImg = res.profile;
         this.isSubscribed =res.subscribed;
         console.log(this.profileImg)
+        console.log(res.profile)
       },
       error => {
         console.error('Error fetching profile:', error);
@@ -136,16 +137,16 @@ export class UserSideNavComponent implements AfterViewInit,OnInit{
   }
 
   logout(): void {
-    this.service.logout().subscribe(() => {
-      // this.store.dispatch(clearToken());
-      localStorage.removeItem('jwtToken');
-      localStorage.clear();
+    this.userService.logout().subscribe(() => {
+      
 
 
-      // this.authStateService.setLoggedIn(false);
-      // this.authStateService.setIsAdmin(false);
-      // this.authStateService.setUserName(null);
       this.authStateService.resetUserState();
+      localStorage.removeItem('jwtToken');
+     this.isSubscribed = false;
+     sessionStorage.clear();
+      localStorage.clear();
+      
 
       this.router.navigateByUrl('coverPage');
     }, error => {
