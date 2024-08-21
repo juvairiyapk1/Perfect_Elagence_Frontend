@@ -191,11 +191,11 @@ export class HomeComponent implements OnInit{
   }
   
 
-  startCall(profileId:number) {
-    if(this.isSubscribed)
-    this.router.navigate(['/user/video-call']);
+  // startCall(profileId:number) {
+  //   if(this.isSubscribed)
+  //   this.router.navigate(['/user/video-call']);
     
-  }
+  // }
 
 
   

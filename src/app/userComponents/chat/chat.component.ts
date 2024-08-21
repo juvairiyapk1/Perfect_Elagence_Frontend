@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Message } from '@stomp/stompjs';
 import { error } from 'console';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { UserService } from '../../service/user.service';
 
 
 @Component({
@@ -41,7 +42,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     private cdRef: ChangeDetectorRef,
     private router: Router,
     private toast: ToastrService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private userService:UserService
   ) { }
 
 
@@ -90,6 +92,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
       }
     });
+
+    this.service.onMessageDeleted().subscribe((deletedMessageId)=>{
+      this.messages = this.messages.filter(m=>m.id !== deletedMessageId)
+      this.cdRef.detectChanges()
+    })
 
 
   }
@@ -299,5 +306,41 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     return !!urlPattern.test(str);
   }
 
+  startCall(): void {
+    if (this.isSubscribed) {
+     this.userService.createChatRoom().subscribe(
+        roomName => {
+          const callNotification = {
+            senderId: this.currentUserId,
+            recipientId: this.recipientId,
+            content:  `https://meet.jit.si/${roomName}`,
+            timeStamp: new Date(),
+          };
+  
+          this.service.sendMessage(callNotification)
+            .then(() => {
+              this.router.navigate(['/user/video-call'], { queryParams: { recipientId: this.recipientId, roomName } });
+            })
+            .catch(error => {
+              console.error('Error sending video call notification:', error);
+              this.toast.error('Failed to initiate video call.');
+            });
+        },
+        error => {
+          console.error('Error creating chat room:', error);
+          this.toast.error('Failed to create video call room.');
+        }
+      );
+    } else {
+      this.toast.info('Subscribe to initiate a video call.');
+      this.router.navigateByUrl('/user/package');
+    }
+  }
+  
+ 
+  
+  
+  
+  
 
 }

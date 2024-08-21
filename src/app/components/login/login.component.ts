@@ -14,6 +14,7 @@ import { AuthService } from '../../state/auth.service';
 import { JwtServiceService } from '../../service/jwt-service.service';
 import { VerifyEmailComponent } from '../verify-email/verify-email.component';
 import { AuthStateService } from '../../service/auth-state.service';
+import { ChatService } from '../../service/chat.service';
 
 
 @Component({
@@ -31,7 +32,6 @@ export class LoginComponent implements OnInit{
   private builder:FormBuilder,
   private service:RegisterServiceService,
   private router:Router,
-  // private store:Store<any>,
   private toast:ToastrService,
   private dialog:MatDialog,
   private jwtService:JwtServiceService,
@@ -90,6 +90,7 @@ export class LoginComponent implements OnInit{
                         this.closeLogin();
 
                         if (roles.includes(Roles.USER)) {
+                          
                             this.router.navigateByUrl("/user/home");
                             console.log(jwtToken + " inside login");
 

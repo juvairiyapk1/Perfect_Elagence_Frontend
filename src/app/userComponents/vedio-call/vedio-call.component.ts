@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 declare var JitsiMeetExternalAPI: any;
 
 @Component({
@@ -16,34 +17,18 @@ export class VedioCallComponent implements OnInit {
   api: any;
   token: string | null;
 
-  constructor(private http: HttpClient) {
-    if (typeof localStorage !== 'undefined') {
-      this.token = localStorage.getItem('jwtToken')
-    } else {
-      this.token = null;
-    }
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute
+  ) {
+    this.token = localStorage.getItem('jwtToken') || null;
   }
 
   ngOnInit() {
-    this.createRoom();
-  }
-
-  createRoom() {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`
+    this.route.queryParams.subscribe(params => {
+      this.room = params['roomName']; // Retrieve room name from query params
+      this.initializeJitsiMeet();
     });
-
-    this.http.post<{ roomName: string }>(
-      `${this.apiUrl}/video-call/create-room`,
-      {},
-      { headers }
-    ).subscribe(
-      (response) => {
-        this.room = response.roomName;
-        this.initializeJitsiMeet();
-      },
-      (error) => console.error('Error creating room:', error)
-    );
   }
 
   initializeJitsiMeet() {
@@ -55,5 +40,7 @@ export class VedioCallComponent implements OnInit {
     };
 
     this.api = new JitsiMeetExternalAPI(this.domain, this.options);
+  
   }
+
 }

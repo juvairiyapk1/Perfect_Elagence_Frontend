@@ -45,6 +45,8 @@ export class ChatService {
    // Subscribe to read receipt notifications
     this.client!.subscribe(`/user/${userId}/queue/message-read`, this.onReadReceiptReceived);
 
+    this.client!.subscribe(`/user/${userId}/queue/messages/delete`, this.handleMessageDeleted);
+
   };
 
   this.client.onStompError = (frame) => {
@@ -70,7 +72,7 @@ export class ChatService {
 
   sendMessage(message: any): Promise<void> {
     return new Promise((resolve, reject) => {
-      console.log(this.isConnectedSubject+"kjhhjl")
+      
       if (this.isConnectedSubject.value) {
         console.log('Sending message:', message);
         this.client!.publish({
@@ -159,6 +161,17 @@ export class ChatService {
 
 
   
+  private handleMessageDeleted = (message: any) => {
+    const messageId = JSON.parse(message.body);
+    console.log('Message deleted:', messageId);
+    this.messageDeletedSubject.next(messageId);
+  };
+  
+  onMessageDeleted(): Observable<any> {
+    return this.messageDeletedSubject.asObservable();
+  }
 
+
+  
   
 }

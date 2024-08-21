@@ -2,7 +2,7 @@ import { UserSideNavComponent } from './../userComponents/user-side-nav/user-sid
 import { MatchResponse, PROFILEBYUSER } from './../model/Interface';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, switchMap, take } from 'rxjs';
+import { map, Observable, switchMap, take } from 'rxjs';
 import { PROFILE } from '../model/Interface';
 import { Store } from '@ngrx/store';
 import { selectToken } from '../state/auth.selectors';
@@ -154,6 +154,17 @@ export class UserService {
     });
 
     return this.http.post<void>(BASE_URL + 'user/logout', {}, { headers });
+}
+
+
+createChatRoom() {
+  return this.http.post<{ roomName: string }>(
+    `${BASE_URL}user/video-call/create-room`,
+    {},
+    { headers: new HttpHeaders({ 'Authorization': `Bearer ${this.token}` }) }
+  ).pipe(
+    map(response => response.roomName)
+  );
 }
 
 
