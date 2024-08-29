@@ -5,8 +5,8 @@ import { Observable, of, switchMap, take } from 'rxjs';
 import { MonthlyUserSubscriptionDTO, PACKAGE, SUBCRIPTION, SUBSCRIBR, USER_ADMIN } from '../model/Interface';
 import { Store } from '@ngrx/store';
 import { selectToken } from '../state/auth.selectors';
+import { env } from '../model/enviornment';
 
-const BASE_URL = ['http://localhost:8080/'];
 
 
 
@@ -34,7 +34,7 @@ export class AdminServiceService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.get<USER_ADMIN[]>(BASE_URL + 'admin/user-list', { headers });
+    return this.http.get<USER_ADMIN[]>(env.serverUrl + 'admin/user-list', { headers });
   }
 
 
@@ -45,7 +45,7 @@ export class AdminServiceService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.post(BASE_URL + `admin/${id}/block`, {}, { headers });
+    return this.http.post(env.serverUrl + `admin/${id}/block`, {}, { headers });
   }
 
 
@@ -55,7 +55,7 @@ export class AdminServiceService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.post(BASE_URL + `admin/${id}/unblock`, {}, { headers });
+    return this.http.post(env.serverUrl + `admin/${id}/unblock`, {}, { headers });
   }
 
 
@@ -65,7 +65,7 @@ export class AdminServiceService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.get<PACKAGE[]>(BASE_URL + 'admin/getPackages', { headers });
+    return this.http.get<PACKAGE[]>(env.serverUrl + 'admin/getPackages', { headers });
   }
 
 
@@ -75,7 +75,7 @@ export class AdminServiceService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.post<PACKAGE>(BASE_URL + 'admin/package', request, { headers })
+    return this.http.post<PACKAGE>(env.serverUrl + 'admin/package', request, { headers })
   }
 
 
@@ -87,7 +87,7 @@ export class AdminServiceService {
       'Authorization': `Bearer ${this.token}`
     });
 
-    return this.http.get<SUBSCRIBR[]>(BASE_URL + 'admin/subscribers', { headers })
+    return this.http.get<SUBSCRIBR[]>(env.serverUrl + 'admin/subscribers', { headers })
   }
 
 
@@ -96,7 +96,7 @@ export class AdminServiceService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     })
-    return this.http.get(`${BASE_URL}admin/count`, { headers });
+    return this.http.get(`${env.serverUrl}admin/count`, { headers });
   }
 
 
@@ -107,7 +107,7 @@ export class AdminServiceService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.get<MonthlyUserSubscriptionDTO>(`${BASE_URL}admin/user-subscription`, { headers });
+    return this.http.get<MonthlyUserSubscriptionDTO>(`${env.serverUrl}admin/user-subscription`, { headers });
   }
 
 
@@ -117,7 +117,7 @@ export class AdminServiceService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.get(`${BASE_URL}admin/monthly`, { headers });
+    return this.http.get(`${env.serverUrl}admin/monthly`, { headers });
   }
 
 

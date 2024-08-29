@@ -1,10 +1,9 @@
 import { Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { RegisterServiceService } from '../../../service/register-service.service';
 import { ProfileService } from '../../../service/profile.service';
-import { PROFILE, USER_PROFILE } from '../../../model/Interface';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { USER_PROFILE } from '../../../model/Interface';
+import { FormBuilder, FormGroup,} from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import e from 'express';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

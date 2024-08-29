@@ -10,7 +10,7 @@ import { env } from '../model/enviornment';
 import { ToastrService } from 'ngx-toastr';
 
 
-const BASE_URL = 'http://localhost:8080/';
+const BASE_URL = env.serverUrl;
 
 
 @Injectable({

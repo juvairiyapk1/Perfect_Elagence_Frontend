@@ -4,8 +4,9 @@ import { PACKAGE } from '../model/Interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { selectToken } from '../state/auth.selectors';
+import { env } from '../model/enviornment';
 
-const BASE_URL = ['http://localhost:8080/'];
+const BASE_URL = env.serverUrl;
 
 
 @Injectable({

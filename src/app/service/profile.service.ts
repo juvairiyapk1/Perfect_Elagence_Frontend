@@ -5,9 +5,10 @@ import { Observable, Subject, catchError, map, switchMap, take, throwError } fro
 import { selectToken } from '../state/auth.selectors';
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { PROFILE_PROFILE, ProfileResponse, USER_PROFILE } from '../model/Interface';
+import { env } from '../model/enviornment';
 
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = env.serverUrl;
 
 @Injectable({
   providedIn: 'root'

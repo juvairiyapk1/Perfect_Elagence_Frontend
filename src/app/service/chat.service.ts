@@ -3,6 +3,7 @@ import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { env } from '../model/enviornment';
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +19,12 @@ export class ChatService {
 
   }
 
-  private apiUrl ='http://localhost:8080/user';
+  
   private newMessageCount = 0;
 
   connect(userId: string): void {
   this.client = new Client({
-    webSocketFactory: () => new SockJS('http://localhost:8080/user/ws'),
+    webSocketFactory: () => new SockJS(`${env.serverUrl}/user/ws`),
     connectHeaders: {
       userId: userId,
     },
@@ -124,7 +125,7 @@ export class ChatService {
         headers = headers.set('Authorization', `Bearer ${token}`);
       }
     }
-    const url = `${this.apiUrl}/messages/${senderId}/${recipientId}`;
+    const url = `${env.serverUrl}/user/messages/${senderId}/${recipientId}`;
     return this.http.get<any[]>(url, { headers }).pipe(
       map(messages => messages.map(message => ({
         ...message,
@@ -142,7 +143,7 @@ export class ChatService {
         headers = headers.set('Authorization', `Bearer ${token}`);
       }
     }
-    const url = `${this.apiUrl}/message/${id}`;
+    const url = `${env.serverUrl}/user/message/${id}`;
     return this.http.delete<any>(url,{headers});
   
   }
@@ -155,7 +156,7 @@ export class ChatService {
         headers = headers.set('Authorization', `Bearer ${token}`);
       }
     }
-    const url = `${this.apiUrl}/${messageId}/read`;
+    const url = `${env.serverUrl}/user/${messageId}/read`;
     return this.http.post<any>(url, {}, { headers });
   }
 

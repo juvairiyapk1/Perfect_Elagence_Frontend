@@ -4,11 +4,10 @@ import { UserService } from '../../service/user.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserProfileModalComponent } from '../user-profile-modal/user-profile-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { forkJoin } from 'rxjs';
 import { ProfileService } from '../../service/profile.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ChatService } from '../../service/chat.service';
+
 
 @Component({
   selector: 'app-home',
@@ -191,12 +190,7 @@ export class HomeComponent implements OnInit{
   }
   
 
-  // startCall(profileId:number) {
-  //   if(this.isSubscribed)
-  //   this.router.navigate(['/user/video-call']);
-    
-  // }
-
+  
 
   
   

@@ -7,9 +7,10 @@ import { LOGIN, USER } from '../model/Interface';
 import { Store } from '@ngrx/store';
 import { clearToken } from '../state/auth.actions';
 import { Router } from '@angular/router';
+import { env } from '../model/enviornment';
 
 
-const BASE_URL = ['http://localhost:8080/auth/'];
+const BASE_URL = `${env.serverUrl}/auth/`;
 
 @Injectable({
   providedIn: 'root'

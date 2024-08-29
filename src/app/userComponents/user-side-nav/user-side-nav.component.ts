@@ -4,7 +4,6 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout'
 import { RegisterServiceService } from '../../service/register-service.service';
 import { Store } from '@ngrx/store';
-import { clearToken } from '../../state/auth.actions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProfileService } from '../../service/profile.service';
@@ -13,10 +12,9 @@ import { VerifyEmailComponent } from '../../components/verify-email/verify-email
 import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ToastrService } from 'ngx-toastr';
-import { privateDecrypt } from 'crypto';
 import { AuthStateService } from '../../service/auth-state.service';
 import { DeleteConformationModalComponent } from '../delete-conformation-modal/delete-conformation-modal.component';
-import { error } from 'console';
+
 
 
 @Component({

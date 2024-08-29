@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { env } from '../../model/enviornment';
 declare var JitsiMeetExternalAPI: any;
 
 @Component({
@@ -9,7 +10,7 @@ declare var JitsiMeetExternalAPI: any;
   styleUrl: './vedio-call.component.scss'
 })
 export class VedioCallComponent implements OnInit {
-  private apiUrl = 'http://localhost:8080/user';
+  private apiUrl = `${env.serverUrl}/user`;
 
   domain: string = 'meet.jit.si';
   room: string = '';

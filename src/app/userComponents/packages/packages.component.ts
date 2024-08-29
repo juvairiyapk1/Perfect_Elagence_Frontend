@@ -5,10 +5,7 @@ import { PackageService } from '../../service/package.service';
 import { env } from '../../model/enviornment';
 import { loadStripe } from '@stripe/stripe-js';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Store } from '@ngrx/store';
-import { Observable} from 'rxjs';
-import { selectToken } from '../../state/auth.selectors';
-import { StripeService } from 'ngx-stripe';
+
 
 @Component({
   selector: 'app-packages',
