@@ -1,10 +1,9 @@
-import { ReactiveFormsModule } from '@angular/forms';
+
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, switchMap, take } from 'rxjs';
-import { MonthlyUserSubscriptionDTO, PACKAGE, SUBCRIPTION, SUBSCRIBR, USER_ADMIN } from '../model/Interface';
+import { Observable} from 'rxjs';
+import { MonthlyUserSubscriptionDTO, PACKAGE, SUBSCRIBR, USER_ADMIN } from '../model/Interface';
 import { Store } from '@ngrx/store';
-import { selectToken } from '../state/auth.selectors';
 import { env } from '../model/enviornment';
 
 

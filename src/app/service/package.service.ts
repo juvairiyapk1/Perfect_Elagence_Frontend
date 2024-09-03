@@ -3,7 +3,6 @@ import { Observable, switchMap, take } from 'rxjs';
 import { PACKAGE } from '../model/Interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import { selectToken } from '../state/auth.selectors';
 import { env } from '../model/enviornment';
 
 const BASE_URL = env.serverUrl;
@@ -33,7 +32,7 @@ export class PackageService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.get<PACKAGE[]>(BASE_URL + 'user/getPackages', { headers })
+    return this.http.get<PACKAGE[]>(BASE_URL + '/user/getPackages', { headers })
 
   }
 

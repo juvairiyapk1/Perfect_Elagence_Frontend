@@ -193,7 +193,7 @@ export class RegisterServiceService {
   logout(): Observable<void> {
    
 
-    return this.http.post<void>(BASE_URL + 'logout', {});
+    return this.http.post<void>(BASE_URL + '/logout', {});
 }
 
 

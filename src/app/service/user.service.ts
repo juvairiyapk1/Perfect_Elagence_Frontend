@@ -59,7 +59,7 @@ export class UserService {
     }
   
     // Make the HTTP request
-    return this.http.get<PROFILE[]>(`${BASE_URL}user/OtherUsersByProfession`, { headers, params });
+    return this.http.get<PROFILE[]>(`${BASE_URL}/user/OtherUsersByProfession`, { headers, params });
   }
   
 
@@ -88,7 +88,7 @@ export class UserService {
     });
 
     const params = new HttpParams().set('userId', userId.toString());
-    return this.http.get<PROFILEBYUSER>(`${BASE_URL}user/profileByUser`,{ headers,params});
+    return this.http.get<PROFILEBYUSER>(`${BASE_URL}/user/profileByUser`,{ headers,params});
 
   }
 
@@ -102,7 +102,7 @@ export class UserService {
       'Authorization': `Bearer ${this.token}`
     });
 
-    const urlWithParams = `${BASE_URL}user/findMatch?userId=${this.userId}`;
+    const urlWithParams = `${BASE_URL}/user/findMatch?userId=${this.userId}`;
      return this.http.get<any>(urlWithParams,{ headers });
   }
 
@@ -115,7 +115,7 @@ export class UserService {
 
 
 
-    const endpoint = BASE_URL + 'user/toggleProfileVisibility';
+    const endpoint = BASE_URL + '/user/toggleProfileVisibility';
     const requestBody = { userId: this.userId, hidden: isProfileHidden };
 
     const headers = new HttpHeaders({
@@ -137,7 +137,7 @@ export class UserService {
       'Authorization': `Bearer ${this.token}`
     });
 
-    return this.http.get<boolean>(`${BASE_URL}user/profileVisibility/${this.userId}`, { headers });
+    return this.http.get<boolean>(`${BASE_URL}/user/profileVisibility/${this.userId}`, { headers });
 
 
   }
@@ -153,13 +153,13 @@ export class UserService {
         'Authorization': `Bearer ${token}`
     });
 
-    return this.http.post<void>(BASE_URL + 'user/logout', {}, { headers });
+    return this.http.post<void>(BASE_URL + '/user/logout', {}, { headers });
 }
 
 
 createChatRoom() {
   return this.http.post<{ roomName: string }>(
-    `${BASE_URL}user/video-call/create-room`,
+    `${BASE_URL}/user/video-call/create-room`,
     {},
     { headers: new HttpHeaders({ 'Authorization': `Bearer ${this.token}` }) }
   ).pipe(
