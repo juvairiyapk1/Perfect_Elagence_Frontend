@@ -2,11 +2,8 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable} from 'rxjs';
 import { LOGIN, USER } from '../model/Interface';
-import { Store } from '@ngrx/store';
-import { clearToken } from '../state/auth.actions';
-import { Router } from '@angular/router';
 import { env } from '../model/enviornment';
 
 
@@ -193,7 +190,7 @@ export class RegisterServiceService {
   logout(): Observable<void> {
    
 
-    return this.http.post<void>(BASE_URL + '/logout', {});
+    return this.http.post<void>(BASE_URL + 'logout', {});
 }
 
 
