@@ -123,6 +123,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   initializeChat(): void {
+    // Assuming you have a way to get the current user ID
     if (typeof localStorage !== 'undefined') {
       this.currentUserId = Number(localStorage.getItem('userId')) || 0;
     }
@@ -133,7 +134,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       connected => {
         if (connected) {
           this.loadMessages();
-          // this.markAllMessagesAsRead();
+          this.markAllMessagesAsRead();
         }
       }
     );
@@ -142,25 +143,22 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       message => {
         if (message) {
           if (message.senderId !== this.currentUserId) {
-              const newMessage = {...message,read:false};
-              this.messages.push(newMessage);
+            console.log(message.id+"message")
+            if(message.content === null|| message.content === ''){
+              this.messages = this.messages.filter(m => m.id !== message.id);
+              
+              this.showNotification('message is deleted');
+            }else{
+              const newMessage = { ...message, read: false };
+              this.messages.push(message);
               this.scrollToBottom();
               this.showNotification(message);
-            // if(message.content === null|| message.content === ''){
-            //   this.messages = this.messages.filter(m => m.id !== message.id);
-              
-            //   this.showNotification('message is deleted');
-            // }else{
-            //   const newMessage = { ...message, read: false };
-            //   this.messages.push(message);
-            //   this.scrollToBottom();
-            //   this.showNotification(message);
-            //   this.markMessageAsRead(newMessage.id);
+              this.markMessageAsRead(newMessage.id);
 
 
 
-            // }
-            // this.cdRef.detectChanges();
+            }
+            this.cdRef.detectChanges();
           }
         }
       }
@@ -292,9 +290,9 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
           this.cdRef.detectChanges(); // Trigger change detection
         }
       },
-      // error => {
-      //   console.error('Error marking message as read:', error);
-      // }
+      error => {
+        console.error('Error marking message as read:', error);
+      }
     );
   }
   
